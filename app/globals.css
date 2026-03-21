@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-gold: #F1B91E;
+  --color-gold-dark: #C99200;
+  --color-black-st: #191919;
+  --color-carbon: #4A4A4A;
+  --color-bg-dark: #1E1E1E;
+  --color-gray-light: #F4F4F4;
+  --color-gray-mid: #DDDDDD;
+
+  --font-display: var(--font-barlow), 'Arial Black', sans-serif;
+  --font-body: var(--font-inter), 'Arial', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #191919;
+  color: #ffffff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: #F1B91E;
+  color: #191919;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #191919;
+}
+::-webkit-scrollbar-thumb {
+  background: #F1B91E;
+}
+
+/* Typography utilities */
+.font-display {
+  font-family: var(--font-display);
+}
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* Gold diagonal line decoration */
+.diagonal-line {
+  position: absolute;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, #F1B91E 30%, #F1B91E 70%, transparent);
+  transform-origin: center;
+}
+
+/* Geometric grid overlay */
+.geo-grid {
+  background-image:
+    linear-gradient(rgba(241, 185, 30, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(241, 185, 30, 0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* Section label style */
+.section-label {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #F1B91E;
+}
+
+/* Gold underline accent */
+.gold-underline {
+  position: relative;
+}
+.gold-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #F1B91E;
+}
+
+/* Clip path for diagonal sections */
+.clip-diagonal-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+}
+
+.clip-diagonal-top {
+  clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 100%);
+}
+
+/* No-scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
