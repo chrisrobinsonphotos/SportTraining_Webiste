@@ -38,7 +38,7 @@ export default function Adaptado() {
       <div className="relative z-10 ml-auto w-full lg:w-[58%] flex flex-col px-6 md:px-12 lg:px-16 py-24 min-h-screen">
 
         {/* ── BLOCK 1: Title — positioned in middle (below man's head) ── */}
-        <div className="flex flex-col justify-center" style={{ marginTop: '580px' }}>
+        <div className="flex flex-col justify-center lg:mt-[580px]">
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -85,7 +85,7 @@ export default function Adaptado() {
 
 
         {/* ── BLOCK 2: Features — below where man is laying ── */}
-        <div className="flex-shrink-0 pb-16" style={{ marginTop: '460px' }}>
+        <div className="flex-shrink-0 pb-16 lg:mt-[460px]">
 
           <div className="space-y-10 mb-12">
             {[

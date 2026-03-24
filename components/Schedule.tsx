@@ -97,7 +97,7 @@ function SpotsGrid({ taken, max, color }: { taken: number; max: number; color: s
   return (
     <div className="flex flex-col items-end gap-3">
       {/* Dot grid */}
-      <div className="flex flex-wrap-reverse justify-end gap-[5px]" style={{ maxWidth: max <= 2 ? 32 : 200 }}>
+      <div className="hidden md:flex flex-wrap-reverse justify-end gap-[5px]" style={{ maxWidth: max <= 2 ? 32 : 200 }}>
         {Array.from({ length: max }).map((_, i) => (
           <div
             key={i}
@@ -122,18 +122,18 @@ function SpotsGrid({ taken, max, color }: { taken: number; max: number; color: s
         ) : isAlmostFull ? (
           <>
             <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900, color }}
-              className="text-[32px] leading-none block">
+              className="text-[22px] md:text-[32px] leading-none block">
               {remaining}
             </span>
             <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color }}
-              className="text-[11px] tracking-[0.18em] uppercase">
+              className="text-[10px] md:text-[11px] tracking-[0.18em] uppercase">
               {remaining === 1 ? 'Plaza libre' : 'Plazas libres'}
             </span>
           </>
         ) : (
           <>
             <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
-              className="text-white text-[32px] leading-none block">
+              className="text-white text-[22px] md:text-[32px] leading-none block">
               {remaining}
             </span>
             <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
@@ -282,15 +282,15 @@ export default function Schedule() {
                           initial={{ opacity: 0, x: -16 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ duration: 0.5, delay: ti * 0.05 + ci * 0.07 }}
-                          className={`group relative flex items-center gap-6 md:gap-10 px-0 py-8 md:py-10 ${cfg.glow}
+                          className={`group relative flex items-center gap-4 md:gap-10 px-0 py-6 md:py-10 ${cfg.glow}
                             hover:bg-white/[0.02] transition-all duration-300 cursor-pointer border-l-0
                             hover:border-l-[3px] hover:pl-4 transition-all duration-200`}
                           style={{ borderLeftColor: cfg.color }}
                         >
                           {/* Left: Time */}
-                          <div className="flex-shrink-0 w-[90px] md:w-[110px]">
+                          <div className="flex-shrink-0 w-[72px] md:w-[110px]">
                             <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
-                              className="text-white/80 text-[36px] md:text-[44px] leading-none tracking-tight tabular-nums">
+                              className="text-white/80 text-[26px] md:text-[44px] leading-none tracking-tight tabular-nums">
                               {time}
                             </span>
                           </div>
@@ -315,7 +315,7 @@ export default function Schedule() {
 
                             {/* Class name */}
                             <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
-                              className={`text-[28px] md:text-[36px] lg:text-[40px] uppercase leading-none mb-2 truncate ${
+                              className={`text-[17px] md:text-[30px] lg:text-[40px] uppercase leading-none mb-2 truncate ${
                                 isFull ? 'text-white/35' : 'text-white'
                               }`}>
                               {cls.name}
@@ -323,7 +323,7 @@ export default function Schedule() {
 
                             {/* Trainer */}
                             <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                              className="text-white/40 text-[14px] md:text-[15px]">
+                              className="text-white/40 text-[12px] md:text-[15px] truncate">
                               {cls.trainer}
                             </p>
 

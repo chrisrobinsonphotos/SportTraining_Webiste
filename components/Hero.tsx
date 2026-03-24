@@ -90,7 +90,7 @@ export default function Hero() {
             initial={{ y: 120, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 1, delay: 0.2 }}
-            className="text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] text-white uppercase whitespace-nowrap"
+            className="text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] text-white uppercase sm:whitespace-nowrap"
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
           >
             CUERPOS
@@ -102,7 +102,7 @@ export default function Hero() {
             initial={{ y: 120, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 1, delay: 0.32 }}
-            className="text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] uppercase whitespace-nowrap"
+            className="text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] uppercase sm:whitespace-nowrap"
             style={{
               fontFamily: 'var(--font-barlow)',
               fontWeight: 900,
@@ -119,7 +119,7 @@ export default function Hero() {
             initial={{ y: 120, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 1, delay: 0.44 }}
-            className="text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] text-[#F1B91E] uppercase whitespace-nowrap"
+            className="text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] text-[#F1B91E] uppercase sm:whitespace-nowrap"
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
           >
             CUERPOS CAPACES.

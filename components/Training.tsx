@@ -64,7 +64,7 @@ function DisciplineCard({ item, index }: { item: typeof disciplines[0]; index: n
             src={item.image}
             alt={item.name}
             fill
-            sizes="25vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
             quality={80}
           />
@@ -181,7 +181,7 @@ export default function Training() {
       </div>
 
       {/* Image card grid — fills all remaining space */}
-      <div className="flex-1 grid grid-cols-2 lg:grid-cols-4 gap-0.5 min-h-0 items-stretch auto-rows-fr">
+      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0.5 min-h-0 items-stretch auto-rows-fr">
         {disciplines.map((item, i) => (
           <DisciplineCard key={item.num} item={item} index={i} />
         ))}

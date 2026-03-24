@@ -81,7 +81,7 @@ function PricingBack({ tier }: { tier: Tier }) {
 
   return (
     <div
-      className="absolute inset-0 flex flex-col justify-between px-14 md:px-16 lg:px-20 py-10 overflow-hidden"
+      className="absolute inset-0 flex flex-col justify-between px-8 md:px-16 lg:px-20 py-10 overflow-hidden"
       style={{ backgroundColor: bg, backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
     >
       {/* Top: Tier label */}
@@ -181,6 +181,7 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
       style={{ height: '100%', minHeight: '60vh', perspective: '1200px' }}
       onMouseEnter={() => setFlipped(true)}
       onMouseLeave={() => setFlipped(false)}
+      onClick={() => setFlipped(f => !f)}
     >
       {/* Flip container */}
       <div style={{
@@ -252,8 +253,12 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
 
             <div className="flex items-center gap-2">
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                className={`text-[11px] tracking-[0.2em] uppercase ${tier.highlight ? 'text-[#F1B91E]' : 'text-white/50'} transition-colors`}>
+                className={`hidden lg:inline text-[11px] tracking-[0.2em] uppercase ${tier.highlight ? 'text-[#F1B91E]' : 'text-white/50'} transition-colors`}>
                 Más Información
+              </span>
+              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+                className={`lg:hidden text-[11px] tracking-[0.2em] uppercase ${tier.highlight ? 'text-[#F1B91E]' : 'text-white/50'}`}>
+                Toca para ver precios
               </span>
               <svg className="w-3.5 h-3.5 text-[#F1B91E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />

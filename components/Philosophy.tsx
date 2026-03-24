@@ -67,7 +67,7 @@ export default function Philosophy() {
         </div>
 
         {/* Values list */}
-        <div className="flex flex-col gap-[10px]" style={{ marginTop: 'calc(3rem + 100px)' }}>
+        <div className="flex flex-col gap-[10px] mt-12 lg:mt-[148px]">
           {values.map((item, i) => (
             <motion.div
               key={item.num}
