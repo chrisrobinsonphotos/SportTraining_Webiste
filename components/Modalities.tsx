@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -8,7 +8,7 @@ import Link from 'next/link'
 const tiers = [
   {
     tier: 'ORO',
-    name: 'Personal Training',
+    name: 'Entrenamiento Personal',
     tagline: 'La experiencia definitiva',
     description: 'Entrenamiento completamente personalizado, diseñado en función de tus objetivos, condición física y necesidades. En instalaciones o a domicilio.',
     features: ['Programa 100% personalizado', 'Seguimiento continuo de progreso', 'Flexibilidad de horario', 'A domicilio disponible'],
@@ -16,17 +16,40 @@ const tiers = [
     highlight: true,
     tierColor: '#F1B91E',
     image: '/hyrox-bw.jpg',
+    splitImage: undefined,
+    pricing: {
+      subtitle: 'Entrenamiento Personal incluido',
+      plans: [
+        { label: 'ORO 4',  price: '€150', period: '/mes', detail: '4 PT / mes' },
+        { label: 'ORO 8',  price: '€250', period: '/mes', detail: '8 PT / mes' },
+        { label: 'ORO 12', price: '€350', period: '/mes', detail: '12 PT / mes' },
+        { label: 'ORO 16', price: '€450', period: '/mes', detail: '16 PT / mes' },
+      ],
+      included: ['Grupos ilimitados', 'HYROX · CrossTraining · Funcional', 'Gimnasio libre ilimitado'],
+      note: 'Todos los planes Oro incluyen grupos ilimitados y gimnasio libre.',
+    },
   },
   {
     tier: 'PLATA',
     name: 'Entrenamiento en Grupo',
     tagline: 'Comunidad y rendimiento',
     description: 'Sesiones dinámicas en grupos reducidos donde se combina motivación, técnica y acompañamiento profesional.',
-    features: ['Grupos reducidos', 'Atención personalizada', 'Amplio horario disponible', 'Comunidad motivadora'],
+    features: ['Clases de HYROX', 'Clases en grupo', 'Atención personalizada', 'Comunidad motivadora'],
     href: '/modalidades/grupo',
     highlight: false,
     tierColor: '#DDDDDD',
     image: '/hyrox-women.jpg',
+    splitImage: undefined,
+    pricing: {
+      subtitle: 'Clases en grupo y acceso libre',
+      plans: [
+        { label: 'PLATA 8',   price: '€50', period: '/mes', detail: '8 sesiones' },
+        { label: 'PLATA 12',  price: '€60', period: '/mes', detail: '12 sesiones' },
+        { label: 'ILIMITADA', price: '€70', period: '/mes', detail: 'Sin límite', popular: true },
+      ],
+      included: ['HYROX · CrossTraining · Funcional', 'Gimnasio libre ilimitado'],
+      note: 'No incluye Entrenamiento Personal.',
+    },
   },
   {
     tier: 'BRONCE',
@@ -38,14 +61,116 @@ const tiers = [
     highlight: false,
     tierColor: '#C9966B',
     image: '/gym-rig.jpg',
+    splitImage: '/gym-machines.jpg',
+    pricing: {
+      subtitle: 'Acceso libre al gimnasio',
+      plans: [
+        { label: 'BRONCE', price: '€25', period: '/mes', detail: 'Gimnasio libre' },
+      ],
+      included: ['Acceso completo a instalaciones', 'Espacio amplio con luz natural', 'Todo el equipamiento disponible'],
+      note: 'Créditos sueltos: 8€ / grupo · 30€ / sesión PT',
+    },
   },
 ]
 
 type Tier = typeof tiers[number]
 
+function PricingBack({ tier }: { tier: Tier }) {
+  const bg = tier.tierColor
+  const textDark = '#191919'
+
+  return (
+    <div
+      className="absolute inset-0 flex flex-col justify-between px-14 md:px-16 lg:px-20 py-10 overflow-hidden"
+      style={{ backgroundColor: bg, backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+    >
+      {/* Top: Tier label */}
+      <div>
+        <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color: textDark }}
+          className="text-[12px] tracking-[0.35em] uppercase opacity-60">
+          {tier.tier}
+        </span>
+        <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900, color: textDark }}
+          className="text-[32px] md:text-[36px] uppercase leading-tight mt-1">
+          {tier.name}
+        </h3>
+        <div className="h-[1px] mt-4" style={{ backgroundColor: `${textDark}25` }} />
+      </div>
+
+      {/* Middle: Plan rows — fills available space */}
+      <div className="flex flex-col gap-4 flex-1 py-6">
+        {tier.pricing.plans.map((plan) => (
+          <div key={plan.label}
+            className="relative flex flex-col items-center justify-center flex-1 py-3 gap-1"
+            style={{
+              backgroundColor: `${'popular' in plan && plan.popular ? `${textDark}20` : `${textDark}12`}`,
+              border: `${'popular' in plan && plan.popular ? `3px solid ${textDark}` : `1px solid ${textDark}25`}`
+            }}>
+            {'popular' in plan && plan.popular && (
+              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color: bg, backgroundColor: textDark }}
+                className="absolute -top-3 right-4 text-[9px] tracking-[0.15em] uppercase px-2.5 py-1 whitespace-nowrap">
+                + popular
+              </span>
+            )}
+            <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900, color: textDark }}
+              className="text-[32px] md:text-[36px] tracking-[0.06em] uppercase leading-none text-center">
+              {plan.label}
+            </span>
+            <div className="flex items-baseline gap-1">
+              <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900, color: textDark }}
+                className="text-[56px] md:text-[64px] leading-none">
+                {plan.price}
+              </span>
+              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, color: textDark }}
+                className="text-[15px] opacity-55 pb-1">
+                {plan.period}
+              </span>
+            </div>
+            <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, color: textDark }}
+              className="text-[13px] tracking-[0.08em] uppercase opacity-65 text-center">
+              {plan.detail}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Bottom: features + CTA */}
+      <div>
+        <div className="h-[1px] mb-4" style={{ backgroundColor: `${textDark}25` }} />
+        <ul className="flex flex-col gap-2 mb-5">
+          {tier.pricing.included.map((item) => (
+            <li key={item} className="flex items-center gap-3">
+              <div className="w-4 h-4 flex-shrink-0 flex items-center justify-center"
+                style={{ backgroundColor: textDark }}>
+                <svg className="w-2 h-2" viewBox="0 0 24 24" fill="none" stroke={bg} strokeWidth={3.5}>
+                  <path strokeLinecap="square" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 500, color: textDark }}
+                className="text-[14px] opacity-80">
+                {item}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <a href="/contacto"
+          className="flex items-center justify-center gap-2 py-4 px-5 transition-opacity duration-200 hover:opacity-80"
+          style={{ backgroundColor: textDark, fontFamily: 'var(--font-inter)', fontWeight: 700, color: bg }}>
+          <span className="text-[13px] tracking-[0.25em] uppercase">Contratar</span>
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  )
+}
+
 function TierCard({ tier, index }: { tier: Tier; index: number }) {
   const ref = useRef<HTMLDivElement>(null)
   const cardInView = useInView(ref, { once: true, margin: '-60px' })
+  const [flipped, setFlipped] = useState(false)
 
   return (
     <motion.div
@@ -53,79 +178,93 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
       initial={{ opacity: 0, y: 50 }}
       animate={cardInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.9, delay: index * 0.12 }}
-      className="relative group overflow-hidden"
-      style={{ minHeight: '55vh' }}
+      style={{ height: '100%', minHeight: '60vh', perspective: '1200px' }}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
     >
-      <Link href={tier.href} className="block h-full">
-        {/* Background image */}
-        <div className="absolute inset-0">
-          <Image src={tier.image} alt={tier.name} fill sizes="33vw"
-            className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-            quality={80} />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#161616] via-[#161616]/75 to-[#161616]/30" />
-          {tier.highlight && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#F1B91E]" />}
-        </div>
+      {/* Flip container */}
+      <div style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        minHeight: '60vh',
+        transformStyle: 'preserve-3d',
+        transition: 'transform 0.91s cubic-bezier(0.16, 1, 0.3, 1)',
+        transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+      }}>
 
-        {/* Content — bottom aligned */}
-        <div className="relative z-10 flex flex-col justify-end h-full p-6 md:p-8 lg:p-10" style={{ minHeight: '55vh' }}>
-          {/* Tier badge */}
-          <div className="flex items-center gap-3 mb-5">
-            <span
-              style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, backgroundColor: tier.tierColor }}
-              className="text-[10px] tracking-[0.3em] uppercase text-[#191919] px-3 py-1.5"
-            >
-              {tier.tier}
-            </span>
-            {tier.highlight && (
-              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                className="text-[10px] tracking-[0.15em] uppercase text-[#F1B91E] border border-[#F1B91E]/40 px-2.5 py-1">
-                Recomendado
-              </span>
-            )}
-          </div>
+        {/* ── FRONT FACE ── */}
+        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden' }}
+          className="overflow-hidden">
 
-          <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
-            className="text-white text-[36px] md:text-[40px] lg:text-[44px] uppercase leading-none mb-2">
-            {tier.name}
-          </h3>
-
-          <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-            className="text-[#F1B91E]/60 text-[10px] tracking-[0.2em] uppercase mb-5">
-            {tier.tagline}
-          </p>
-
-          <div className={`h-[1px] mb-5 ${tier.highlight ? 'bg-[#F1B91E]/40' : 'bg-white/10'}`} />
-
-          <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
-            className="text-white/50 text-[13px] leading-relaxed mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 max-w-[280px]">
-            {tier.description}
-          </p>
-
-          <ul className="space-y-2 mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75">
-            {tier.features.map((feat) => (
-              <li key={feat} className="flex items-center gap-2">
-                <div className={`w-3.5 h-3.5 flex-shrink-0 flex items-center justify-center ${tier.highlight ? 'bg-[#F1B91E]' : 'border border-white/20'}`}>
-                  <svg className={`w-2 h-2 ${tier.highlight ? 'text-[#191919]' : 'text-white/40'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path strokeLinecap="square" d="M5 13l4 4L19 7" />
-                  </svg>
+          {/* Background image */}
+          <div className="absolute inset-0">
+            {tier.splitImage ? (
+              <>
+                <div className="absolute inset-y-0 left-0 w-1/2 overflow-hidden">
+                  <Image src={tier.image} alt={tier.name} fill sizes="17vw"
+                    className="object-cover object-center"
+                    quality={85} />
                 </div>
-                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                  className="text-white/55 text-[12px]">{feat}</span>
-              </li>
-            ))}
-          </ul>
+                <div className="absolute inset-y-0 right-0 w-1/2 overflow-hidden">
+                  <Image src={tier.splitImage} alt="Máquinas" fill sizes="17vw"
+                    className="object-cover object-left"
+                    quality={85} />
+                </div>
+              </>
+            ) : (
+              <Image src={tier.image} alt={tier.name} fill sizes="33vw"
+                className="object-cover object-center"
+                quality={80} />
+            )}
+            <div className={`absolute inset-0 bg-gradient-to-t ${tier.splitImage ? 'from-[#161616]/85 via-[#161616]/35 to-transparent' : 'from-[#161616] via-[#161616]/75 to-[#161616]/30'}`} />
+            {tier.highlight && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#F1B91E]" />}
+          </div>
 
-          <div className="flex items-center gap-2">
-            <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-              className={`text-[11px] tracking-[0.2em] uppercase ${tier.highlight ? 'text-[#F1B91E]' : 'text-white/50 group-hover:text-white/80'} transition-colors`}>
-              Más Información
-            </span>
-            <svg className="w-3.5 h-3.5 text-[#F1B91E] group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
+          {/* Front content */}
+          <div className="relative z-10 flex flex-col justify-end h-full p-6 md:p-8 lg:p-10">
+            <div className="flex items-center gap-3 mb-5">
+              <span
+                style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, backgroundColor: tier.tierColor }}
+                className="text-[10px] tracking-[0.3em] uppercase text-[#191919] px-3 py-1.5"
+              >
+                {tier.tier}
+              </span>
+              {tier.highlight && (
+                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                  className="text-[10px] tracking-[0.15em] uppercase text-[#F1B91E] border border-[#F1B91E]/40 px-2.5 py-1">
+                  Recomendado
+                </span>
+              )}
+            </div>
+
+            <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+              className="text-white text-[36px] md:text-[40px] lg:text-[44px] uppercase leading-none mb-2">
+              {tier.name}
+            </h3>
+
+            <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+              className="text-[#F1B91E]/60 text-[10px] tracking-[0.2em] uppercase mb-5">
+              {tier.tagline}
+            </p>
+
+            <div className={`h-[1px] mb-5 ${tier.highlight ? 'bg-[#F1B91E]/40' : 'bg-white/10'}`} />
+
+            <div className="flex items-center gap-2">
+              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+                className={`text-[11px] tracking-[0.2em] uppercase ${tier.highlight ? 'text-[#F1B91E]' : 'text-white/50'} transition-colors`}>
+                Más Información
+              </span>
+              <svg className="w-3.5 h-3.5 text-[#F1B91E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </div>
           </div>
         </div>
-      </Link>
+
+        {/* ── BACK FACE ── */}
+        <PricingBack tier={tier} />
+      </div>
     </motion.div>
   )
 }
@@ -135,9 +274,9 @@ export default function Modalities() {
   const inView = useInView(titleRef, { once: true, margin: '-80px' })
 
   return (
-    <section className="relative bg-[#161616] min-h-screen flex flex-col overflow-hidden">
+    <section id="modalidades" className="relative bg-[#161616] min-h-screen flex flex-col overflow-hidden" style={{ scrollMarginTop: '90px' }}>
 
-      {/* Header — left-aligned */}
+      {/* Header */}
       <div ref={titleRef} className="px-6 md:px-12 lg:px-16 pt-20 pb-10 flex-shrink-0">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -161,8 +300,8 @@ export default function Modalities() {
         </div>
       </div>
 
-      {/* Three tier cards — horizontal fill */}
-      <div className="flex-1 grid md:grid-cols-3 gap-0.5 min-h-0">
+      {/* Three tier cards */}
+      <div className="flex-1 grid md:grid-cols-3 gap-0.5" style={{ minHeight: '60vh' }}>
         {tiers.map((tier, i) => (
           <TierCard key={tier.tier} tier={tier} index={i} />
         ))}

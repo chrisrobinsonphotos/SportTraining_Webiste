@@ -118,5 +118,40 @@ function getMockReviews(): PlaceReview[] {
       text: 'Completé mi primer HYROX gracias al equipo de Sport Training. La preparación fue brutal pero siempre sintiéndome apoyado. El trato personalizado marca la diferencia.',
       relativeDate: 'hace 1 mes',
     },
+    {
+      authorName: 'Sofía Moreno',
+      authorPhoto: null,
+      rating: 5,
+      text: 'Llevo 6 meses entrenando aquí y los cambios son visibles. Los entrenadores tienen un nivel técnico altísimo y se nota que disfrutan lo que hacen. Las instalaciones son de las mejores de Murcia.',
+      relativeDate: 'hace 3 semanas',
+    },
+    {
+      authorName: 'Diego Navarro',
+      authorPhoto: null,
+      rating: 5,
+      text: 'Empecé sin experiencia en HYROX y ahora ya he competido dos veces. El equipo de Miguel Ángel te prepara de forma integral, tanto física como mentalmente. No podría estar más contento.',
+      relativeDate: 'hace 2 semanas',
+    },
+    {
+      authorName: 'Isabel Torres',
+      authorPhoto: null,
+      rating: 5,
+      text: 'El entrenamiento adaptado que ofrecen es increíble. Tenía una lesión previa y en ningún otro sitio me habían dado tanta seguridad y confianza. Los profesionales son de primer nivel.',
+      relativeDate: 'hace 5 semanas',
+    },
+    {
+      authorName: 'Álvaro Jiménez',
+      authorPhoto: null,
+      rating: 5,
+      text: 'Sin duda el mejor gimnasio en el que he estado. La metodología de entrenamiento es muy completa, combinando fuerza, cardio y técnica. Los resultados llegan rápido y el ambiente es inmejorable.',
+      relativeDate: 'hace 1 mes',
+    },
+    {
+      authorName: 'Lucía Ramírez',
+      authorPhoto: null,
+      rating: 5,
+      text: 'Sport Training es mucho más que un gimnasio. La comunidad que han creado es especial — todo el mundo se apoya y eso te empuja a dar el 100% cada día. Totalmente recomendado.',
+      relativeDate: 'hace 2 meses',
+    },
   ]
 }

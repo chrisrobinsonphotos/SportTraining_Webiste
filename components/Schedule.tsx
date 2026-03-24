@@ -172,6 +172,23 @@ export default function Schedule() {
 
       <div className="absolute inset-0 geo-grid opacity-20 pointer-events-none" />
 
+      {/* Coming Soon overlay */}
+      <div className="absolute inset-0 z-50 bg-[#0F0F0F]/92 flex flex-col items-center justify-center gap-6 pointer-events-none">
+        <div className="flex items-center gap-4 mb-2">
+          <div className="w-2 h-2 bg-[#F1B91E]" />
+          <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+            className="text-[#F1B91E] text-[12px] tracking-[0.35em] uppercase">Reserva de Clases</span>
+        </div>
+        <h2 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+          className="text-[14vw] md:text-[9vw] lg:text-[7vw] leading-none uppercase text-white text-center tracking-tight">
+          PRÓXIMAMENTE
+        </h2>
+        <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
+          className="text-white/40 text-[15px] tracking-[0.08em] text-center">
+          Reserva tus clases aquí · En breve disponible
+        </p>
+      </div>
+
       {/* ── HEADER ── */}
       <div className="relative z-10 px-6 md:px-12 lg:px-16 pt-20 pb-0 flex-shrink-0">
 

@@ -6,11 +6,53 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const carouselImages = [
-  { src: '/hyrox-team.jpg', caption: 'HYROX Murcia — Equipo Sport Training' },
+  { src: '/mas-que-un-gimnasio.jpg', caption: 'HYROX Murcia — Equipo Sport Training' },
+  { src: '/hyrox-group.jpg', caption: 'Sport Training · Comunidad' },
   { src: '/hyrox-women.jpg', caption: 'Entrenamiento en Grupo · Comunidad ST' },
   { src: '/hyrox-medball.jpg', caption: 'Competición HYROX · Intensidad máxima' },
-  { src: '/hyrox-community.jpg', caption: 'Coraje. Comunidad. Eventos.' },
-  { src: '/hyrox-event.jpg', caption: 'Evento Sport Training · Murcia' },
+  { src: '/_MG_4351.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4352.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4359.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4372.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4374.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4376.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4404.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4410.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4417.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4513.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4522.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4535.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4578.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4605.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4628.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4670.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4701.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4729.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4758.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4795.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4839.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4918.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_4930.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5004.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5017.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5058.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5103.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5111.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5185.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5196.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5211.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5256.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5312.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5313.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5385.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5386.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5395.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5401.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5408.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5426.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5433.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5438.jpg', caption: 'Sport Training · Murcia' },
+  { src: '/_MG_5450.jpg', caption: 'Sport Training · Murcia' },
 ]
 
 const events = [
@@ -49,7 +91,7 @@ export default function Community() {
               src={carouselImages[activeSlide].src}
               alt={carouselImages[activeSlide].caption}
               fill
-              className="object-cover object-top"
+              className="object-cover object-left-top"
               quality={85}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-[#0D0D0D]/30 via-transparent to-[#0D0D0D]" />
@@ -78,13 +120,10 @@ export default function Community() {
               <path strokeLinecap="square" d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
           </button>
-          <div className="flex items-center gap-1.5">
-            {carouselImages.map((_, i) => (
-              <button key={i} onClick={() => paginate(i)}
-                className={`transition-all duration-300 ${i === activeSlide ? 'w-6 h-1 bg-[#F1B91E]' : 'w-1 h-1 bg-white/30 hover:bg-white/60'}`}
-              />
-            ))}
-          </div>
+          <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+            className="text-[12px] tracking-[0.15em] text-white/50 tabular-nums w-16 text-center">
+            {String(activeSlide + 1).padStart(2, '0')} / {String(carouselImages.length).padStart(2, '0')}
+          </span>
           <button onClick={() => paginate(activeSlide + 1)}
             className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-[#F1B91E] hover:text-[#F1B91E] text-white/40 transition-all duration-300">
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -113,10 +152,21 @@ export default function Community() {
             { src: '/flash-1.jpg', caption: 'Equipo ST · HYROX' },
             { src: '/flash-2.jpg', caption: 'Comunidad' },
             { src: '/flash-3.jpg', caption: 'Wall Ball' },
+            { src: '/_MG_4351.jpg', caption: 'Sport Training' },
             { src: '/flash-4.jpg', caption: 'Esfuerzo' },
+            { src: '/_MG_4374.jpg', caption: 'Entrenamiento' },
             { src: '/flash-5.jpg', caption: 'Intensidad' },
+            { src: '/_MG_4513.jpg', caption: 'Fuerza' },
             { src: '/flash-6.jpg', caption: 'El Trabajo' },
+            { src: '/_MG_4670.jpg', caption: 'Rendimiento' },
             { src: '/flash-7.jpg', caption: 'Pasión' },
+            { src: '/_MG_4795.jpg', caption: 'Superación' },
+            { src: '/_MG_4918.jpg', caption: 'HYROX' },
+            { src: '/_MG_5058.jpg', caption: 'Técnica' },
+            { src: '/_MG_5185.jpg', caption: 'Constancia' },
+            { src: '/_MG_5312.jpg', caption: 'Comunidad ST' },
+            { src: '/_MG_5401.jpg', caption: 'Competición' },
+            { src: '/_MG_5438.jpg', caption: 'Sport Training' },
           ].map((img, i) => (
             <div key={i} className="relative flex-shrink-0 overflow-hidden group"
               style={{ width: '28vw', height: '22vw', maxWidth: 400, maxHeight: 320 }}>
@@ -194,7 +244,7 @@ export default function Community() {
         </div>
 
         {/* Right: Event cards */}
-        <div className="space-y-3">
+        <div className="space-y-3 self-center">
           {events.map((event, i) => (
             <motion.div
               key={i}

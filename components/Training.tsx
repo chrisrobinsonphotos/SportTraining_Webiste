@@ -31,14 +31,14 @@ const disciplines = [
     description: 'Halterofilia, gimnasia y trabajo metabólico combinados. Sesiones dinámicas, resultados integrales.',
     href: '/entrenamientos/crosstraining',
     image: '/hyrox-coaching.jpg',
-    accent: false,
+    accent: true,
   },
   {
     num: '04',
-    name: 'ADAPTADO',
-    tagline: 'Para Todos',
-    description: 'Entrenamiento real, adaptado y guiado por profesionales. Porque nadie queda excluido.',
-    href: '/entrenamientos/adaptado',
+    name: 'PERSONAL',
+    tagline: 'Atención Individual',
+    description: 'Entrenamiento diseñado exclusivamente para ti. Tu entrenador, tu programa, tus resultados.',
+    href: '/entrenamientos/personal',
     image: '/gym-crossfit.jpg',
     accent: false,
   },
@@ -55,15 +55,16 @@ function DisciplineCard({ item, index }: { item: typeof disciplines[0]; index: n
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.9, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       className="relative group overflow-hidden"
-      style={{ minHeight: '60vh' }}
+      style={{ minHeight: '60vh', height: '100%' }}
     >
-      <Link href={item.href} className="block h-full">
+      <Link href={item.href} className="block" style={{ height: '100%', minHeight: '60vh' }}>
         {/* Background image */}
         <div className="absolute inset-0">
           <Image
             src={item.image}
             alt={item.name}
             fill
+            sizes="25vw"
             className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
             quality={80}
           />
@@ -73,8 +74,8 @@ function DisciplineCard({ item, index }: { item: typeof disciplines[0]; index: n
           {item.accent && <div className="absolute top-0 left-0 right-0 h-[3px] bg-[#F1B91E] z-10" />}
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 flex flex-col justify-end h-full p-6 md:p-8" style={{ minHeight: '60vh' }}>
+        {/* Content — absolutely anchored to bottom */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col p-6 md:p-8">
           {/* Number */}
           <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
             className="text-[#F1B91E] text-[13px] tracking-[0.3em] block mb-4">
@@ -89,11 +90,13 @@ function DisciplineCard({ item, index }: { item: typeof disciplines[0]; index: n
             {item.name}
           </h3>
 
-          {/* Tagline */}
-          <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-            className="text-[13px] tracking-[0.2em] uppercase text-white/65 block mb-3">
-            {item.tagline}
-          </span>
+          {/* Tagline — fixed min-height so all 4 cards align regardless of wrapping */}
+          <div className="min-h-[2.5rem] mb-3 flex items-start">
+            <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+              className="text-[13px] tracking-[0.2em] uppercase text-white/65">
+              {item.tagline}
+            </span>
+          </div>
 
           {/* Gold line that expands on hover */}
           <div className="overflow-hidden h-[1px] mb-4">
@@ -107,8 +110,8 @@ function DisciplineCard({ item, index }: { item: typeof disciplines[0]; index: n
             />
           </div>
 
-          {/* Description — appears on hover */}
-          <div className="overflow-hidden">
+          {/* Description — appears on hover, h-0 when hidden so it doesn't affect layout */}
+          <div className="overflow-hidden max-h-0 group-hover:max-h-[120px] transition-all duration-500">
             <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
               className="text-white/75 text-[15px] leading-relaxed max-w-[280px] translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
               {item.description}
@@ -116,6 +119,7 @@ function DisciplineCard({ item, index }: { item: typeof disciplines[0]; index: n
           </div>
 
           {/* CTA arrow */}
+          <div className="overflow-hidden max-h-0 group-hover:max-h-[40px] transition-all duration-500">
           <div className="flex items-center gap-2 mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
             <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
               className={`text-[13px] tracking-[0.2em] uppercase ${item.accent ? 'text-[#F1B91E]' : 'text-white/70'}`}>
@@ -124,6 +128,7 @@ function DisciplineCard({ item, index }: { item: typeof disciplines[0]; index: n
             <svg className="w-3.5 h-3.5 text-[#F1B91E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
             </svg>
+          </div>
           </div>
         </div>
       </Link>
@@ -136,7 +141,7 @@ export default function Training() {
   const inView = useInView(titleRef, { once: true, margin: '-80px' })
 
   return (
-    <section className="relative bg-[#191919] min-h-screen flex flex-col overflow-hidden">
+    <section id="entrenamientos" className="relative bg-[#191919] min-h-screen flex flex-col overflow-hidden" style={{ scrollMarginTop: '90px' }}>
 
       {/* Header strip — left-aligned, not centered */}
       <div ref={titleRef} className="px-6 md:px-12 lg:px-16 pt-20 pb-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6 flex-shrink-0">
@@ -176,7 +181,7 @@ export default function Training() {
       </div>
 
       {/* Image card grid — fills all remaining space */}
-      <div className="flex-1 grid grid-cols-2 lg:grid-cols-4 gap-0.5 min-h-0">
+      <div className="flex-1 grid grid-cols-2 lg:grid-cols-4 gap-0.5 min-h-0 items-stretch auto-rows-fr">
         {disciplines.map((item, i) => (
           <DisciplineCard key={item.num} item={item} index={i} />
         ))}

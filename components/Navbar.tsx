@@ -8,43 +8,41 @@ import Link from 'next/link'
 const navItems = [
   {
     label: 'El Gym',
-    href: '/gym',
+    href: '/#filosofia',
     children: [
-      { label: 'Historia', href: '/gym/historia' },
-      { label: 'Equipo', href: '/gym/equipo' },
-      { label: 'Instalaciones', href: '/gym/instalaciones' },
+      { label: 'Nuestra Filosofía', href: '/#filosofia' },
+      { label: 'Nuestro Equipo', href: '/#equipo' },
+      { label: 'Instalaciones', href: '/#modalidades' },
     ],
   },
   {
     label: 'Entrenamientos',
-    href: '/entrenamientos',
+    href: '/#entrenamientos',
     children: [
-      { label: 'HYROX', href: '/entrenamientos/hyrox' },
-      { label: 'Funcional', href: '/entrenamientos/funcional' },
-      { label: 'CrossTraining', href: '/entrenamientos/crosstraining' },
-      { label: 'Entrenamiento Adaptado', href: '/entrenamientos/adaptado' },
+      { label: 'HYROX', href: '/#entrenamientos' },
+      { label: 'Funcional', href: '/#entrenamientos' },
+      { label: 'CrossTraining', href: '/#entrenamientos' },
+      { label: 'Entrenamiento Adaptado', href: '/#adaptado' },
     ],
   },
   {
     label: 'Modalidades',
-    href: '/modalidades',
+    href: '/#modalidades',
     children: [
-      { label: 'Personal Training · Oro', href: '/modalidades/personal' },
-      { label: 'Entrenamiento en Grupo · Plata', href: '/modalidades/grupo' },
-      { label: 'Entrenamiento Libre · Bronce', href: '/modalidades/libre' },
+      { label: 'Personal Training · Oro', href: '/#modalidades' },
+      { label: 'Entrenamiento en Grupo · Plata', href: '/#modalidades' },
+      { label: 'Entrenamiento Libre · Bronce', href: '/#modalidades' },
     ],
   },
   {
     label: 'Nutrición',
-    href: '/nutricion',
+    href: '/#nutricion',
     children: [
-      { label: 'Alimentación', href: '/nutricion/alimentacion' },
-      { label: 'Suplementación', href: '/nutricion/suplementacion' },
-      { label: 'Textil', href: '/nutricion/textil' },
+      { label: 'Alimentación', href: '/#nutricion' },
+      { label: 'Suplementación', href: '/#nutricion' },
+      { label: 'Ropa', href: '/#nutricion' },
     ],
   },
-  { label: 'Comunidad', href: '/comunidad' },
-  { label: 'Tienda', href: '/tienda' },
 ]
 
 export default function Navbar() {
@@ -170,7 +168,7 @@ export default function Navbar() {
                           <div className="py-2">
                             {item.children.map((child, i) => (
                               <Link
-                                key={child.href}
+                                key={child.label}
                                 href={child.href}
                                 className="flex items-center gap-3 px-5 py-3 group/item"
                                 onClick={() => setActiveDropdown(null)}
@@ -291,7 +289,7 @@ export default function Navbar() {
                         <div className="pl-8 py-2 space-y-1">
                           {item.children.map((child) => (
                             <Link
-                              key={child.href}
+                              key={child.label}
                               href={child.href}
                               className="block py-2.5 text-white/50 hover:text-white transition-colors"
                               onClick={() => setMobileOpen(false)}

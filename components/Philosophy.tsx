@@ -16,7 +16,7 @@ export default function Philosophy() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="relative bg-[#1E1E1E] min-h-screen flex overflow-hidden">
+    <section id="filosofia" ref={ref} className="relative bg-[#1E1E1E] min-h-screen flex overflow-hidden" style={{ scrollMarginTop: '90px' }}>
 
       {/* LEFT: text column — full left side */}
       <div className="relative z-10 w-full lg:w-[55%] flex flex-col justify-center px-6 md:px-12 lg:px-16 py-24">
@@ -67,7 +67,7 @@ export default function Philosophy() {
         </div>
 
         {/* Values list */}
-        <div className="space-y-0" style={{ marginTop: '3rem' }}>
+        <div className="flex flex-col gap-[10px]" style={{ marginTop: 'calc(3rem + 100px)' }}>
           {values.map((item, i) => (
             <motion.div
               key={item.num}

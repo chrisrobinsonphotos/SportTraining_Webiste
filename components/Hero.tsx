@@ -154,7 +154,7 @@ export default function Hero() {
               </svg>
             </Link>
             <Link
-              href="/gym"
+              href="/#filosofia"
               className="group flex items-center gap-3 border border-white/20 text-white px-7 py-4 hover:border-[#F1B91E] transition-all duration-300"
             >
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}

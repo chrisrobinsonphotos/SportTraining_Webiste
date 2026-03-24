@@ -135,7 +135,7 @@ export default function Trainers() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="relative bg-[#0F0F0F] min-h-screen flex flex-col overflow-hidden border-b-4 border-[#F1B91E]">
+    <section id="equipo" ref={ref} className="relative bg-[#0F0F0F] min-h-screen flex flex-col overflow-hidden border-b-4 border-[#F1B91E]" style={{ scrollMarginTop: '90px' }}>
 
       {/* Header */}
       <div className="px-6 md:px-12 lg:px-16 pt-20 pb-10 flex-shrink-0">

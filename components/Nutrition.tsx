@@ -8,7 +8,7 @@ import Link from 'next/link'
 const pillars = [
   { num: '01', label: 'ALIMENTACIÓN', href: '/nutricion/alimentacion', image: '/nutrition-food.jpg', desc: 'La base real de cualquier progreso. Hábitos sólidos sobre los que construir resultados duraderos.' },
   { num: '02', label: 'SUPLEMENTACIÓN', href: '/nutricion/suplementacion', image: '/nutrition-supplements.jpg', desc: 'Solo cuando aporta valor. Pocos productos, calidad contrastada, dosis efectivas.' },
-  { num: '03', label: 'TEXTIL', href: '/nutricion/textil', image: '/textil-apparel.jpg', desc: 'Equipamiento y ropa técnica para rendir al máximo dentro y fuera del gimnasio.' },
+  { num: '03', label: 'ROPA', href: '/nutricion/ropa', image: '/ropa.png', desc: 'Equipamiento y ropa técnica para rendir al máximo dentro y fuera del gimnasio.' },
 ]
 
 type Pillar = typeof pillars[number]
@@ -55,7 +55,7 @@ export default function Nutrition() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="relative bg-[#191919] min-h-screen flex flex-col overflow-hidden">
+    <section id="nutricion" ref={ref} className="relative bg-[#191919] min-h-screen flex flex-col overflow-hidden" style={{ scrollMarginTop: '90px' }}>
 
       {/* Header — left-aligned */}
       <div className="px-6 md:px-12 lg:px-16 pt-20 pb-10 flex-shrink-0">
@@ -98,16 +98,6 @@ export default function Nutrition() {
           </motion.div>
         </div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
-          className="text-white/40 text-[14px] leading-relaxed mt-4 max-w-[500px]"
-        >
-          Los suplementos ayudan. Los hábitos transforman. El rendimiento se construye sobre
-          una base sólida de entrenamiento, alimentación y descanso.
-        </motion.p>
       </div>
 
       {/* Three image-backed pillar cards */}
