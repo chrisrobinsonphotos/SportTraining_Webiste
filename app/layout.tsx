@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow_Condensed, Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const barlow = Barlow_Condensed({
@@ -36,6 +37,11 @@ export default function RootLayout({
     >
       <body className="bg-black-st text-white antialiased overflow-x-hidden">
         {children}
+        <Script
+          id="mcjs"
+          strategy="beforeInteractive"
+          src="https://chimpstatic.com/mcjs-connected/js/users/e00011af0ea4215e668560151/70fc22bcead51ae5a17dae24a.js"
+        />
       </body>
     </html>
   );
