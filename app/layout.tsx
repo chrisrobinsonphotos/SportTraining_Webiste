@@ -39,7 +39,7 @@ export default function RootLayout({
         {children}
         <Script
           id="mcjs"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           src="https://chimpstatic.com/mcjs-connected/js/users/e00011af0ea4215e668560151/70fc22bcead51ae5a17dae24a.js"
         />
       </body>

@@ -89,13 +89,12 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-[90px]">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-4 group flex-shrink-0">
-              <div className="relative w-14 h-14">
-                <div className="absolute inset-0 rounded-sm bg-gradient-to-br from-black/55 via-black/35 to-transparent" />
+              <div className="relative w-16 h-16">
                 <Image
-                  src="/st-logo-transparent.png"
+                  src="/st-logo-new.png"
                   alt="Sport Training"
                   fill
-                  className="object-contain relative z-10"
+                  className="object-contain"
                   priority
                 />
               </div>
