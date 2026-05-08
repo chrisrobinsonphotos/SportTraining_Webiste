@@ -92,9 +92,8 @@ export default function ContactPage() {
               initial={{ y: 100, opacity: 0 }}
               animate={heroInView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none' }}
               className="text-[18vw] md:text-[13vw] lg:text-[10vw] leading-[0.85] uppercase text-[#F1B91E]"
-              style={{ fontStyle: 'italic', textTransform: 'none' }}
             >
               mos.
             </motion.h1>
