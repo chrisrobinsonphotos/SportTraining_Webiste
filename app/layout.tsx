@@ -25,6 +25,9 @@ const SITE_TAGLINE = "Cuerpos Fuertes. Cuerpos Capaces.";
 const SITE_DESCRIPTION =
   "Centro integral de entrenamiento de alto rendimiento en Murcia. HYROX, Funcional, CrossTraining y Entrenamiento Adaptado desde 2007.";
 
+// Google Analytics 4 — property: sporttraining.es (Miguel Ángel's Google account)
+const GA_MEASUREMENT_ID = "G-V1SPWK5DVB";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -362,6 +365,20 @@ export default function RootLayout({
         {children}
         <Analytics />
         <SpeedInsights />
+        {/* Google Analytics 4 — gtag.js loader + config */}
+        <Script
+          id="ga-loader"
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        />
+        <Script id="ga-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
         <Script
           id="mcjs"
           strategy="afterInteractive"
