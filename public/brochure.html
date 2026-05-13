@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sport Training — Brochure 2024</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+/* ─────────────────────────────────────────────────────────────────
+   RESET
+───────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ─────────────────────────────────────────────────────────────────
+   BRAND TOKENS  (mirrors globals.css @theme)
+───────────────────────────────────────────────────────────────── */
+:root {
+  --gold:      #F1B91E;
+  --gold-dark: #C99200;
+  --black-st:  #191919;
+  --bg-dark:   #1E1E1E;
+  --bg-deep:   #161616;
+  --bg-deepest:#0D0D0D;
+  --carbon:    #4A4A4A;
+  --plata:     #DDDDDD;
+  --bronce:    #C9966B;
+
+  --display: 'Barlow Condensed', 'Arial Black', sans-serif;
+  --body:    'Inter', 'Arial', sans-serif;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   SCREEN SHELL
+───────────────────────────────────────────────────────────────── */
+body {
+  background: #080808;
+  padding: 48px 24px;
+  font-family: var(--body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.brochure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   PAGE — A4 LANDSCAPE
+───────────────────────────────────────────────────────────────── */
+.page {
+  width: 297mm;
+  height: 210mm;
+  position: relative;
+  overflow: hidden;
+  background: var(--black-st);
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 24px 80px rgba(0,0,0,0.7);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   PRINT
+───────────────────────────────────────────────────────────────── */
+@media print {
+  body { padding: 0; background: transparent; }
+  .brochure { gap: 0; }
+  .page { box-shadow: none; page-break-after: always; break-after: page; }
+}
+@page { size: 297mm 210mm; margin: 0; }
+
+/* ─────────────────────────────────────────────────────────────────
+   SHARED LAYOUT HELPERS
+───────────────────────────────────────────────────────────────── */
+.bg-cover {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+.abs { position: absolute; }
+
+/* Standard page padding */
+.pad { padding: 11mm 13mm; }
+
+/* Overlay helpers */
+.ov-dark  { position: absolute; inset: 0; background: rgba(25,25,25,0.55); }
+.ov-left  { position: absolute; inset: 0; background: linear-gradient(to right, #191919 0%, rgba(25,25,25,0.82) 40%, transparent 100%); }
+.ov-left-heavy { position: absolute; inset: 0; background: linear-gradient(to right, #191919 0%, rgba(25,25,25,0.9) 50%, transparent 100%); }
+.ov-bottom { position: absolute; inset: 0; background: linear-gradient(to top, #191919 0%, rgba(25,25,25,0.65) 35%, transparent 70%); }
+.ov-bottom-deep { position: absolute; inset: 0; background: linear-gradient(to top, #191919 0%, rgba(25,25,25,0.80) 45%, transparent 75%); }
+.ov-right { position: absolute; inset: 0; background: linear-gradient(to left, rgba(25,25,25,0) 0%, rgba(25,25,25,0.75) 100%); }
+
+/* ─────────────────────────────────────────────────────────────────
+   TYPOGRAPHY SCALE
+───────────────────────────────────────────────────────────────── */
+
+/* Display — Barlow Condensed */
+.disp-hero   { font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: 0.85; letter-spacing: -0.01em; }
+.disp-xl     { font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: 0.88; }
+.disp-lg     { font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: 0.90; }
+.disp-md     { font-family: var(--display); font-weight: 800; text-transform: uppercase; line-height: 0.92; }
+.disp-sm     { font-family: var(--display); font-weight: 700; text-transform: uppercase; line-height: 1.0; }
+
+/* Body — Inter */
+.body-lg  { font-family: var(--body); font-weight: 300; font-size: 12pt;   line-height: 1.82; color: rgba(255,255,255,0.63); }
+.body-md  { font-family: var(--body); font-weight: 300; font-size: 11pt;   line-height: 1.78; color: rgba(255,255,255,0.60); }
+.body-sm  { font-family: var(--body); font-weight: 300; font-size: 10pt;   line-height: 1.72; color: rgba(255,255,255,0.55); }
+.label    { font-family: var(--body); font-weight: 700; font-size: 7pt; letter-spacing: 0.30em; text-transform: uppercase; }
+.label-sm { font-family: var(--body); font-weight: 600; font-size: 6.5pt; letter-spacing: 0.28em; text-transform: uppercase; }
+.caption  { font-family: var(--body); font-weight: 600; font-size: 6pt; letter-spacing: 0.22em; text-transform: uppercase; }
+
+/* Color utilities */
+.c-white  { color: #ffffff; }
+.c-gold   { color: var(--gold); }
+.c-dim    { color: rgba(255,255,255,0.50); }
+.c-faint  { color: rgba(255,255,255,0.25); }
+.c-ghost  { color: rgba(255,255,255,0.18); }
+
+/* Rule utilities */
+.rule-h       { display: block; height: 0.5pt; background: rgba(255,255,255,0.10); width: 100%; }
+.rule-h-gold  { display: block; height: 1pt;   background: rgba(241,185,30,0.30); width: 100%; }
+.rule-v-gold  { position: absolute; top: 0; bottom: 0; width: 2pt; background: var(--gold); }
+.rule-v-dim   { position: absolute; top: 0; bottom: 0; width: 0.5pt; background: rgba(255,255,255,0.08); }
+
+/* Section label with dot */
+.section-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-tag .dot {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+/* Gold line */
+.gold-bar { display: block; height: 3pt; background: var(--gold); }
+
+/* Page number */
+.pg-num {
+  font-family: var(--body);
+  font-weight: 600;
+  font-size: 6pt;
+  letter-spacing: 0.25em;
+  color: rgba(255,255,255,0.18);
+  text-transform: uppercase;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE 01 — COVER
+═══════════════════════════════════════════════════════════════ */
+
+.p01 { background: var(--black-st); }
+
+.p01 .bg {
+  background-image: url('./gym-wide.jpg');
+  background-position: center 30%;
+}
+.p01 .ov-dark { background: rgba(25,25,25,0.58); }
+.p01 .ov-left-heavy { background: linear-gradient(to right, #191919 0%, rgba(25,25,25,0.88) 38%, rgba(25,25,25,0.30) 70%, transparent 100%); }
+.p01 .ov-bottom { background: linear-gradient(to top, #191919 0%, rgba(25,25,25,0.7) 30%, transparent 60%); }
+.p01 .ov-top { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(25,25,25,0.55) 0%, transparent 30%); }
+
+.p01 .brand-mark {
+  position: absolute;
+  top: 9mm; left: 12mm;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+}
+.p01 .brand-mark .logo-block {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.p01 .brand-mark .logo-s {
+  font-family: var(--display); font-weight: 900;
+  font-size: 14pt;
+  color: var(--gold);
+  line-height: 1;
+}
+.p01 .brand-mark .logo-t {
+  font-family: var(--display); font-weight: 900;
+  font-size: 14pt;
+  color: #ffffff;
+  line-height: 1;
+}
+.p01 .brand-mark .brand-sep {
+  width: 0.5pt; height: 10mm;
+  background: rgba(255,255,255,0.18);
+  margin: 0 7px;
+}
+.p01 .brand-mark .brand-name {
+  font-family: var(--body); font-weight: 600;
+  font-size: 6.5pt; letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+
+/* Diagonal SVG accent */
+.p01 .diag-svg {
+  position: absolute; inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Cover headline */
+.p01 .cover-hl {
+  position: absolute;
+  bottom: 26mm; left: 12mm;
+  z-index: 10;
+}
+.p01 .cover-hl .line1 {
+  display: block;
+  font-size: 70pt;
+  color: #ffffff;
+  margin-bottom: -2mm;
+}
+.p01 .cover-hl .line1 .word-dark {
+  color: rgba(255,255,255,0.30);
+}
+.p01 .cover-hl .line3 {
+  display: block;
+  font-size: 70pt;
+  color: var(--gold);
+}
+
+/* Tagline */
+.p01 .cover-tagline {
+  position: absolute;
+  bottom: 14mm; left: 12mm;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+/* Location */
+.p01 .cover-location {
+  position: absolute;
+  bottom: 14mm; right: 12mm;
+  z-index: 10;
+  text-align: right;
+}
+
+/* Stats bar */
+.p01 .stats-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 10mm;
+  background: rgba(25,25,25,0.72);
+  backdrop-filter: blur(8px);
+  border-top: 0.5pt solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  padding: 0 12mm;
+  gap: 0;
+  z-index: 15;
+}
+.p01 .stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-right: 9mm;
+  margin-right: 9mm;
+  border-right: 0.5pt solid rgba(255,255,255,0.10);
+}
+.p01 .stat-item:last-child { border-right: none; }
+.p01 .stat-value {
+  font-family: var(--display); font-weight: 800;
+  font-size: 11pt;
+  color: var(--gold);
+}
+.p01 .stat-label {
+  font-family: var(--body); font-weight: 600;
+  font-size: 6pt; letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.30);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE 02 — STATEMENT
+═══════════════════════════════════════════════════════════════ */
+
+.p02 { background: var(--bg-dark); }
+
+.p02 .midline {
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  height: 1pt;
+  background: linear-gradient(to right, rgba(241,185,30,0.0), rgba(241,185,30,0.35) 20%, rgba(241,185,30,0.35) 80%, rgba(241,185,30,0.0));
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.p02 .hl-col {
+  position: absolute;
+  left: 12mm; top: 11mm;
+  width: 57%;
+  z-index: 5;
+}
+.p02 .hl-line {
+  display: block;
+  font-size: 62pt;
+}
+
+.p02 .text-col {
+  position: absolute;
+  right: 12mm; top: 11mm;
+  width: 38%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  height: calc(210mm - 22mm);
+  justify-content: space-between;
+  padding-bottom: 11mm;
+}
+.p02 .sub-hl {
+  font-family: var(--body); font-weight: 300;
+  font-size: 12pt; line-height: 1.5;
+  color: rgba(255,255,255,0.80);
+  margin-bottom: 8mm;
+  text-align: center;
+}
+.p02 .body-lg {
+  text-align: center;
+}
+.p02 .anchor {
+  font-family: var(--display); font-weight: 700;
+  font-size: 20pt; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* Vertical page label */
+.pg-label-vert {
+  position: absolute;
+  right: 4mm; bottom: 12mm;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  z-index: 10;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE 03 — THE PROBLEM
+═══════════════════════════════════════════════════════════════ */
+
+.p03 { background: var(--black-st); }
+
+.p03 .img-strip {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 21%;
+}
+.p03 .img-strip .bg-cover {
+  background-image: url('./hyrox-effort.jpg');
+  background-position: center top;
+}
+.p03 .img-strip .ov-fade {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, var(--black-st) 0%, rgba(25,25,25,0.4) 40%, transparent 100%);
+}
+.p03 .img-strip .ov-top2 {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, var(--black-st) 0%, transparent 15%, transparent 85%, var(--black-st) 100%);
+}
+
+.p03 .content {
+  position: absolute;
+  left: 12mm; top: 11mm;
+  width: 72%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  height: calc(210mm - 22mm);
+  padding-bottom: 0;
+}
+
+.p03 .sub-label {
+  margin-bottom: 6mm;
+}
+.p03 .problem-hl {
+  margin-bottom: 8mm;
+}
+.p03 .problem-hl .line1 { display: block; font-size: 32pt; color: #ffffff; }
+.p03 .problem-hl .line2 { display: block; font-size: 32pt; color: rgba(255,255,255,0.45); }
+
+.p03 .body-block {
+  flex: 1;
+}
+.p03 .body-block p { margin-bottom: 5mm; }
+.p03 .body-block p:last-child { margin-bottom: 0; }
+
+.p03 .closing-couplet {
+  margin-top: 7mm;
+  padding-top: 7mm;
+  border-top: 0.5pt solid rgba(255,255,255,0.10);
+}
+.p03 .closing-couplet .line {
+  display: block;
+  font-family: var(--display); font-weight: 700;
+  font-size: 13pt; letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gold);
+  line-height: 1.3;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE 02 — subtle background image
+═══════════════════════════════════════════════════════════════ */
+.p02 .subtle-bg {
+  position: absolute; inset: 0;
+  background-image: url('./hyrox-bw.jpg');
+  background-size: cover;
+  background-position: center 30%;
+  opacity: 0.07;
+  z-index: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE 04 — THE METHOD LEFT
+═══════════════════════════════════════════════════════════════ */
+
+.p04 { background: var(--bg-dark); }
+
+.p04 .img-panel {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 38%;
+}
+.p04 .img-panel .bg-cover {
+  background-image: url('./hyrox-medball.jpg');
+  background-position: center;
+}
+.p04 .img-panel .ov-left-fade {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, var(--bg-dark) 0%, rgba(30,30,30,0.55) 55%, transparent 100%);
+}
+.p04 .img-panel .ov-top-fade {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, var(--bg-dark) 0%, transparent 12%, transparent 88%, var(--bg-dark) 100%);
+}
+
+.p04 .content {
+  position: absolute;
+  left: 12mm; top: 11mm;
+  width: 58%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  height: calc(210mm - 22mm);
+  padding-bottom: 11mm;
+}
+
+.p04 .method-hl .l1 { display: block; font-size: 42pt; color: #ffffff; }
+.p04 .method-hl .l2 { display: block; font-size: 42pt; color: #ffffff; }
+.p04 .method-hl .l3 { display: block; font-size: 42pt; color: var(--gold); }
+
+.p04 .method-intro { flex: 1; margin-top: 7mm; }
+.p04 .method-intro p { margin-bottom: 4.5mm; }
+
+.p04 .method-anchor {
+  font-family: var(--display); font-weight: 700;
+  font-size: 10pt; letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  line-height: 1.5;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE 05 — THE METHOD RIGHT (disciplines)
+═══════════════════════════════════════════════════════════════ */
+
+.p05 { background: var(--black-st); }
+
+.p05 .gold-spine {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3pt;
+  background: var(--gold);
+  z-index: 5;
+}
+
+.p05 .content {
+  position: absolute;
+  top: 0; bottom: 0; left: 8mm;
+  right: 36%;
+  padding: 11mm 8mm 0 10mm;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Discipline image strip — right 36% */
+.p05 .disc-images {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 36%;
+  display: flex;
+  flex-direction: column;
+  z-index: 4;
+}
+.p05 .disc-img-cell {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 0.5pt solid rgba(255,255,255,0.06);
+}
+.p05 .disc-img-cell:last-child { border-bottom: none; }
+.p05 .disc-img-cell .bg-cover {
+  background-position: center;
+  transition: transform 0.6s ease;
+}
+.p05 .disc-img-cell .ov-img {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, var(--black-st) 0%, rgba(25,25,25,0.55) 45%, rgba(25,25,25,0.10) 100%);
+}
+.p05 .disc-img-cell .cell-label {
+  position: absolute;
+  bottom: 3.5mm; right: 5mm;
+  font-family: var(--body); font-weight: 700;
+  font-size: 5.5pt; letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.30);
+  z-index: 5;
+}
+
+.p05 .disc-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4.5mm 0;
+  border-bottom: 0.5pt solid rgba(255,255,255,0.08);
+}
+.p05 .disc-item:last-child { border-bottom: none; }
+
+.p05 .disc-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8mm;
+  margin-bottom: 2mm;
+}
+.p05 .disc-num {
+  font-family: var(--body); font-weight: 700;
+  font-size: 7pt; letter-spacing: 0.30em;
+  color: var(--gold);
+  flex-shrink: 0;
+  width: 12mm;
+}
+.p05 .disc-name {
+  font-family: var(--display); font-weight: 900;
+  font-size: 22pt;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.p05 .disc-tagline {
+  font-family: var(--body); font-weight: 600;
+  font-size: 6.5pt; letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-left: 20mm;
+  margin-bottom: 2.5mm;
+}
+.p05 .disc-rule {
+  height: 1pt;
+  margin-left: 20mm;
+  margin-bottom: 2.5mm;
+  background: linear-gradient(to right, var(--gold) 0%, var(--gold) 12%, transparent 12%);
+}
+.p05 .disc-body {
+  font-family: var(--body); font-weight: 300;
+  font-size: 8.5pt; line-height: 1.65;
+  color: rgba(255,255,255,0.58);
+  margin-left: 20mm;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE 06 — THE EXPERIENCE
+═══════════════════════════════════════════════════════════════ */
+
+.p06 { background: var(--black-st); }
+
+.p06 .img-panel {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 30%;
+}
+.p06 .img-panel .bg-cover {
+  background-image: url('./hyrox-coaching.jpg');
+  background-position: center;
+}
+.p06 .img-panel .ov-right-fade {
+  position: absolute; inset: 0;
+  background: linear-gradient(to left, var(--black-st) 0%, rgba(25,25,25,0.5) 50%, transparent 100%);
+}
+.p06 .img-panel .ov-v {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, var(--black-st) 0%, transparent 12%, transparent 88%, var(--black-st) 100%);
+}
+
+.p06 .content {
+  position: absolute;
+  left: 33%; right: 0;
+  top: 11mm; bottom: 11mm;
+  padding-right: 12mm;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.p06 .exp-hl .l1 { display: block; font-size: 26pt; color: #ffffff; }
+.p06 .exp-hl .l2 { display: block; font-size: 26pt; color: rgba(255,255,255,0.40); }
+
+.p06 .exp-body { flex: 1; margin-top: 7mm; }
+.p06 .exp-body p { margin-bottom: 4.5mm; }
+
+.p06 .exp-couplet {
+  padding-top: 7mm;
+  border-top: 0.5pt solid rgba(255,255,255,0.10);
+}
+.p06 .exp-couplet span {
+  display: block;
+  font-family: var(--display); font-weight: 700;
+  font-size: 11.5pt; letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gold);
+  line-height: 1.35;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE 07 — CREDIBILITY
+═══════════════════════════════════════════════════════════════ */
+
+.p07 { background: var(--bg-dark); }
+
+/* Gold credential strip at very bottom */
+.p07 .cred-strip {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 9mm;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  gap: 0;
+}
+.p07 .cred-strip .cred-items {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.p07 .cred-strip .cred-item {
+  font-family: var(--body); font-weight: 700;
+  font-size: 6.5pt; letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--black-st);
+  padding: 0 7mm;
+}
+.p07 .cred-strip .cred-sep {
+  width: 1px; height: 3mm;
+  background: rgba(25,25,25,0.25);
+}
+
+/* Portrait image right panel */
+.p07 .portrait-panel {
+  position: absolute;
+  right: 0; top: 0; bottom: 9mm;
+  width: 43%;
+}
+.p07 .portrait-panel .bg-cover {
+  background-image: url('./portrait-miguel.jpg');
+  background-position: center top;
+}
+.p07 .portrait-panel .ov-left-fade {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, var(--bg-dark) 0%, rgba(30,30,30,0.55) 40%, transparent 100%);
+}
+.p07 .portrait-panel .ov-v {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, var(--bg-dark) 0%, transparent 12%);
+}
+
+/* Text left column */
+.p07 .content {
+  position: absolute;
+  left: 12mm; top: 11mm;
+  width: 52%;
+  bottom: 12mm;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 9mm; /* above cred strip */
+}
+
+.p07 .cred-hl .l1 { display: block; font-size: 40pt; color: #ffffff; }
+.p07 .cred-hl .l2 { display: block; font-size: 40pt; color: rgba(255,255,255,0.20); }
+
+.p07 .cred-body { flex: 1; margin-top: 7mm; }
+.p07 .cred-body p { margin-bottom: 4mm; }
+
+.p07 .founder-block {
+  border-left: 2pt solid rgba(241,185,30,0.35);
+  padding-left: 5mm;
+  margin-top: 6mm;
+}
+.p07 .founder-name {
+  font-family: var(--display); font-weight: 700;
+  font-size: 11pt; text-transform: uppercase;
+  color: #ffffff; margin-bottom: 1.5mm;
+}
+.p07 .founder-role {
+  font-family: var(--body); font-weight: 500;
+  font-size: 6.5pt; letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 3.5mm;
+}
+.p07 .founder-quote {
+  font-family: var(--body); font-weight: 300; font-style: italic;
+  font-size: 9pt; line-height: 1.65;
+  color: rgba(255,255,255,0.55);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE 08 — COMMITMENT
+═══════════════════════════════════════════════════════════════ */
+
+.p08 { background: var(--black-st); }
+
+.p08 .content {
+  position: absolute;
+  inset: 0;
+  padding: 11mm 12mm;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+}
+
+.p08 .commit-hl {
+  margin-bottom: 2.5mm;
+}
+.p08 .commit-hl .l1 { display: block; font-size: 24pt; color: #ffffff; }
+.p08 .commit-hl .l2 { display: block; font-size: 24pt; color: rgba(255,255,255,0.38); }
+
+.p08 .commit-counter {
+  font-family: var(--body); font-weight: 300; font-style: italic;
+  font-size: 11pt; color: rgba(255,255,255,0.40);
+  margin-bottom: 6mm;
+}
+
+.p08 .cols {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  position: relative;
+}
+
+.p08 .col-divider {
+  position: absolute;
+  left: 50%; top: 0; bottom: 0;
+  width: 0;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+.p08 .col-divider::before {
+  content: '';
+  display: block;
+  width: 1pt;
+  background: linear-gradient(to bottom, transparent 0%, rgba(241,185,30,0.22) 15%, rgba(241,185,30,0.22) 85%, transparent 100%);
+}
+
+.p08 .col {
+  padding: 0 7mm;
+  display: flex;
+  flex-direction: column;
+}
+.p08 .col:first-child { padding-left: 0; }
+.p08 .col:last-child { padding-right: 0; }
+
+.p08 .col-body { flex: 1; }
+.p08 .col-body p { margin-bottom: 4mm; }
+
+.p08 .col-img {
+  height: 55mm;
+  margin-top: 5mm;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+.p08 .col-img::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(25,25,25,0.60);
+}
+
+.p08 .commit-close {
+  margin-top: 6mm;
+  padding-top: 5.5mm;
+  border-top: 1pt solid rgba(241,185,30,0.20);
+  text-align: center;
+}
+.p08 .commit-close span {
+  font-family: var(--display); font-weight: 700;
+  font-size: 12pt; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE 09 — MODALITIES
+═══════════════════════════════════════════════════════════════ */
+
+.p09 { background: var(--bg-deep); }
+
+.p09 .header {
+  position: absolute;
+  top: 11mm; left: 12mm; right: 12mm;
+  z-index: 5;
+}
+
+.p09 .mod-hl { font-size: 22pt; color: #ffffff; }
+.p09 .mod-sub {
+  font-family: var(--body); font-weight: 600;
+  font-size: 6.5pt; letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2.5mm;
+}
+
+.p09 .cols {
+  position: absolute;
+  top: 34mm; left: 0; right: 0; bottom: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+}
+
+.p09 .tier {
+  position: relative;
+  padding: 0 10mm 11mm 14mm;
+  display: flex;
+  flex-direction: column;
+  border-right: 0.5pt solid rgba(255,255,255,0.10);
+  overflow: hidden;
+}
+.p09 .tier:last-child { border-right: none; }
+
+/* Tier background image */
+.p09 .tier-bg {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+.p09 .tier-bg-ov {
+  position: absolute; inset: 0;
+  background: rgba(18,18,18,0.84);
+  z-index: 1;
+}
+/* Gradient fade top — blends into page header */
+.p09 .tier-top-fade {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, var(--bg-deep) 0%, transparent 18%);
+  z-index: 2;
+}
+/* All direct children above the bg */
+.p09 .tier > .tier-stripe,
+.p09 .tier > .tier-num,
+.p09 .tier > .tier-name,
+.p09 .tier > .tier-tagline,
+.p09 .tier > .tier-rule,
+.p09 .tier > .tier-desc,
+.p09 .tier > .tier-plans,
+.p09 .tier > .tier-includes {
+  position: relative;
+  z-index: 3;
+}
+
+.p09 .tier-stripe {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3pt;
+}
+
+.p09 .tier-num {
+  font-family: var(--body); font-weight: 700;
+  font-size: 7pt; letter-spacing: 0.28em;
+  margin-bottom: 2mm;
+}
+.p09 .tier-name {
+  font-family: var(--display); font-weight: 900;
+  font-size: 20pt; text-transform: uppercase;
+  line-height: 0.9;
+  margin-bottom: 1.5mm;
+}
+.p09 .tier-tagline {
+  font-family: var(--body); font-weight: 600; font-style: italic;
+  font-size: 7.5pt;
+  color: rgba(255,255,255,0.38);
+  margin-bottom: 5mm;
+}
+.p09 .tier-rule {
+  height: 0.5pt;
+  background: rgba(255,255,255,0.10);
+  margin-bottom: 5mm;
+}
+.p09 .tier-desc {
+  font-family: var(--body); font-weight: 300;
+  font-size: 8.5pt; line-height: 1.68;
+  color: rgba(255,255,255,0.58);
+  flex: 1;
+  margin-bottom: 5mm;
+}
+.p09 .tier-plans { margin-bottom: 4mm; }
+.p09 .tier-plan-row {
+  display: flex;
+  align-items: baseline;
+  gap: 3mm;
+  padding: 2mm 0;
+  border-bottom: 0.5pt solid rgba(255,255,255,0.06);
+}
+.p09 .tier-plan-row:last-child { border-bottom: none; }
+.p09 .plan-label {
+  font-family: var(--body); font-weight: 700;
+  font-size: 6pt; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  flex: 1;
+}
+.p09 .plan-price {
+  font-family: var(--display); font-weight: 900;
+  font-size: 16pt;
+  line-height: 1;
+}
+.p09 .plan-period {
+  font-family: var(--body); font-weight: 400;
+  font-size: 7pt;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 1mm;
+}
+.p09 .tier-includes { }
+.p09 .tier-include-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 1.5mm;
+}
+.p09 .tier-include-item .check {
+  width: 8px; height: 8px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.p09 .tier-include-text {
+  font-family: var(--body); font-weight: 400;
+  font-size: 7pt; letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.45);
+}
+
+.p09 .footer-note {
+  position: absolute;
+  bottom: 3mm; left: 12mm; right: 12mm;
+  font-family: var(--body); font-weight: 400;
+  font-size: 6pt; letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.22);
+  text-align: center;
+  border-top: 0.5pt solid rgba(255,255,255,0.06);
+  padding-top: 2mm;
+  z-index: 5;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE 10 — CLOSING
+═══════════════════════════════════════════════════════════════ */
+
+.p10 { background: var(--black-st); }
+
+.p10 .img-bg {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 44%;
+  background-image: url('./mas-que-un-gimnasio.jpg');
+  background-size: cover;
+  background-position: center 40%;
+}
+.p10 .img-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, var(--black-st) 0%, rgba(25,25,25,0.25) 40%, transparent 100%);
+}
+.p10 .img-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(25,25,25,0.45);
+}
+
+.p10 .gold-divide {
+  position: absolute;
+  left: 0; right: 0;
+  top: 56%;
+  height: 1pt;
+  background: linear-gradient(to right, transparent, rgba(241,185,30,0.45) 15%, rgba(241,185,30,0.45) 85%, transparent);
+  z-index: 10;
+}
+
+.p10 .content {
+  position: absolute;
+  left: 12mm; top: 10mm; right: 12mm;
+  height: 55%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+}
+
+.p10 .close-hl { margin-bottom: 1mm; }
+.p10 .close-hl .l1 { display: block; font-size: 27pt; color: #ffffff; }
+.p10 .close-hl .l2 { display: block; font-size: 27pt; color: rgba(255,255,255,0.38); }
+
+.p10 .close-body { flex: 1; margin-top: 6mm; }
+.p10 .close-body p { margin-bottom: 3.5mm; }
+
+.p10 .contact-block {
+  position: absolute;
+  left: 12mm; right: 12mm;
+  bottom: 7mm;
+  z-index: 15;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.p10 .contact-left .brand-name-lg {
+  font-family: var(--display); font-weight: 900;
+  font-size: 14pt;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.80);
+  margin-bottom: 2mm;
+}
+.p10 .contact-lines {
+  font-family: var(--body); font-weight: 300;
+  font-size: 7pt; line-height: 1.9;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.06em;
+}
+.p10 .contact-right {
+  text-align: right;
+}
+.p10 .close-sign {
+  font-family: var(--display); font-weight: 900;
+  font-size: 38pt;
+  text-transform: uppercase;
+  color: var(--gold);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+}
+
+</style>
+</head>
+<body>
+<div class="brochure">
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 01 — COVER
+═══════════════════════════════════════════════════════════════ -->
+<div class="page p01">
+
+  <!-- Background -->
+  <div class="bg-cover bg" style="background-image: url('./gym-wide.jpg'); background-position: center 30%;"></div>
+  <div class="ov-dark"></div>
+  <div class="ov-left-heavy"></div>
+  <div class="ov-bottom"></div>
+  <div class="ov-top"></div>
+
+  <!-- Diagonal accent -->
+  <svg class="diag-svg" viewBox="0 0 1122 794" fill="none" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <line x1="820" y1="0" x2="1122" y2="460" stroke="#F1B91E" stroke-width="0.8" stroke-opacity="0.18"/>
+    <line x1="900" y1="0" x2="1122" y2="340" stroke="#F1B91E" stroke-width="0.4" stroke-opacity="0.10"/>
+    <!-- Corner bracket top-left -->
+    <path d="M28 42 L28 26 L44 26" stroke="#F1B91E" stroke-width="1.5" stroke-opacity="0.55" fill="none"/>
+    <!-- Corner bracket bottom-right -->
+    <path d="M1094 768 L1094 784 L1078 784" stroke="#F1B91E" stroke-width="1.5" stroke-opacity="0.35" fill="none"/>
+  </svg>
+
+  <!-- Brand mark top-left -->
+  <div class="brand-mark">
+    <div style="background:#ffffff; padding: 4px 6px; display:inline-flex; align-items:center;">
+      <img src="./st-logo-transparent.png" alt="Sport Training" style="height:32px; width:auto; display:block;" />
+    </div>
+    <div class="brand-sep"></div>
+    <span class="brand-name">Sport Training</span>
+  </div>
+
+  <!-- Cover headline bottom-left -->
+  <div class="cover-hl">
+    <span class="disp-hero line1">CUERPOS <span class="word-dark">FUERTES.</span></span>
+    <span class="disp-hero line3">CUERPOS CAPACES.</span>
+  </div>
+
+  <!-- Tagline -->
+  <div class="cover-tagline">
+    <div class="gold-dot"></div>
+    <span class="label c-dim" style="font-size:6.5pt; letter-spacing:0.22em;">Construye un cuerpo lo suficientemente fuerte para la vida</span>
+  </div>
+
+  <!-- Location bottom-right -->
+  <div class="cover-location">
+    <span class="label-sm c-faint">Centro de Entrenamiento · Murcia, España · Est. 2007</span>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-value">2007</span>
+      <span class="stat-label">Fundado</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value">3</span>
+      <span class="stat-label">Modalidades</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value">4</span>
+      <span class="stat-label">Disciplinas</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-value">Murcia</span>
+      <span class="stat-label">España</span>
+    </div>
+  </div>
+
+</div><!-- /p01 -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 02 — STATEMENT
+═══════════════════════════════════════════════════════════════ -->
+<div class="page p02">
+
+  <!-- Subtle photo background — heavily overlaid, typography stays dominant -->
+  <div class="subtle-bg"></div>
+
+
+  <!-- Left: stacked headline -->
+  <div class="hl-col">
+    <div class="section-tag" style="margin-bottom:7mm;">
+      <div class="dot"></div>
+      <span class="label c-gold" style="font-size:6.5pt;">Nuestra Filosofía</span>
+    </div>
+    <span class="disp-hero hl-line c-white">ENTRENA</span>
+    <span class="disp-hero hl-line c-gold">PARA LA</span>
+    <span class="disp-hero hl-line c-white">VIDA.</span>
+  </div>
+
+  <!-- Right: body text -->
+  <div class="text-col">
+
+    <div style="margin-top: auto;">
+      <p class="sub-hl">No para el espejo.<br>No para la báscula.<br>Para todo lo que te espera fuera de aquí.</p>
+      <span class="rule-h" style="margin-bottom:7mm;"></span>
+      <div class="body-lg">
+        <p style="margin-bottom:5mm;">La mayoría de los gimnasios te prometen un cuerpo diferente. Nosotros te preparamos para una vida diferente.</p>
+        <p style="margin-bottom:5mm;">Hay una diferencia entre estar en forma y ser capaz. Entre parecer fuerte y serlo de verdad. Entre entrenar por miedo y entrenar por propósito.</p>
+        <p>Desde 2007, Sport Training existe para esa diferencia. Entrenamos para lo que el cuerpo puede hacer. No solo para cómo se ve.</p>
+      </div>
+    </div>
+
+    <div class="anchor" style="margin-top:10px;">Capacidad<br>ante la estética.</div>
+
+  </div>
+
+  <!-- Vertical page label -->
+  <div class="pg-label-vert">
+    <span class="pg-num">02 · Filosofía</span>
+  </div>
+
+</div><!-- /p02 -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 03 — THE PROBLEM
+═══════════════════════════════════════════════════════════════ -->
+<div class="page p03">
+
+  <!-- Right image strip -->
+  <div class="img-strip">
+    <div class="bg-cover" style="background-image: url('./hyrox-effort.jpg'); background-position: center top;"></div>
+    <div class="ov-fade"></div>
+    <div class="ov-top2"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <div class="sub-label section-tag">
+      <div class="dot"></div>
+      <span class="label c-gold" style="font-size:6.5pt;">El Problema</span>
+    </div>
+
+    <div class="problem-hl disp-lg" style="margin-top:5mm; margin-bottom:7mm;">
+      <span class="line1">La mayoría entrena.</span>
+      <span class="line2">Pocos progresan.</span>
+    </div>
+
+    <span class="rule-h" style="margin-bottom:6mm;"></span>
+
+    <div class="body-block body-md">
+      <p>La mayoría comienza con intención genuina. Un plan. Un horario. Expectativas razonables.</p>
+      <p>Y entonces: mesetas sin explicación. Lesiones repetidas. Sesiones que no llevan a ninguna parte. El cuerpo que no responde como debería.</p>
+      <p>No es falta de esfuerzo. Es falta de estructura.</p>
+      <p>La mayor parte del entrenamiento popular está diseñado para parecer efectivo. Para generar sudor, fatiga, la sensación de que algo está pasando. No para producir adaptación real, progreso medible, resultados que duran.</p>
+      <p>Hay una industria construida sobre mantener esa confusión. Sobre vender variedad como método. Sobre confundir intensidad con inteligencia.</p>
+      <p style="color:rgba(255,255,255,0.75);">Sport Training no funciona así.</p>
+    </div>
+
+    <div class="closing-couplet">
+      <span class="line">Cada sesión tiene un propósito.</span>
+      <span class="line">Cada ejercicio, un impacto medible.</span>
+    </div>
+
+  </div>
+
+  <div class="pg-label-vert">
+    <span class="pg-num">03 · Diagnóstico</span>
+  </div>
+
+</div><!-- /p03 -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 04 — THE METHOD (LEFT)
+═══════════════════════════════════════════════════════════════ -->
+<div class="page p04">
+
+  <!-- Right image panel -->
+  <div class="img-panel">
+    <div class="bg-cover" style="background-image: url('./hyrox-medball.jpg'); background-position: center;"></div>
+    <div class="ov-left-fade"></div>
+    <div class="ov-top-fade"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <div class="section-tag" style="margin-bottom:6mm;">
+      <div class="dot"></div>
+      <span class="label c-gold" style="font-size:6.5pt;">El Método</span>
+    </div>
+
+    <div class="method-hl disp-xl">
+      <span class="l1">CUATRO</span>
+      <span class="l1">DISCIPLINAS.</span>
+      <span class="l3">UNA METODOLOGÍA.</span>
+    </div>
+
+    <div class="method-intro body-lg">
+      <p>No ofrecemos colecciones de clases.<br>Ofrecemos un sistema.</p>
+      <p>Cada disciplina en Sport Training existe por una razón específica. Cada una aporta algo que las otras no pueden reemplazar. Juntas, construyen el perfil físico más completo posible.</p>
+      <p>Sin redundancia. Sin relleno.<br>Solo lo que funciona, en el orden correcto.</p>
+    </div>
+
+    <div class="method-anchor">
+      Un objetivo: construir un cuerpo<br>
+      que te permita vivir la vida que quieres.
+    </div>
+
+  </div>
+
+  <div class="pg-label-vert">
+    <span class="pg-num">04 · El Método</span>
+  </div>
+
+</div><!-- /p04 -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 05 — THE METHOD (RIGHT) — DISCIPLINES
+═══════════════════════════════════════════════════════════════ -->
+<div class="page p05">
+
+  <!-- Gold spine left -->
+  <div class="gold-spine"></div>
+
+  <div class="content">
+
+    <!-- 01 HYROX -->
+    <div class="disc-item">
+      <div class="disc-header">
+        <span class="disc-num">01</span>
+        <span class="disc-name c-gold">HYROX</span>
+      </div>
+      <div class="disc-tagline">Fuerza + Resistencia</div>
+      <div class="disc-rule"></div>
+      <p class="disc-body">8km de carrera intercalados con 8 estaciones de trabajo funcional. El estándar global del fitness funcional aplicado al entrenamiento diario. No solo una competición — un marco de progreso medible.</p>
+    </div>
+
+    <!-- 02 FUNCIONAL -->
+    <div class="disc-item">
+      <div class="disc-header">
+        <span class="disc-num">02</span>
+        <span class="disc-name c-white">FUNCIONAL</span>
+      </div>
+      <div class="disc-tagline">Base del Movimiento</div>
+      <div class="disc-rule"></div>
+      <p class="disc-body">Los patrones que el cuerpo humano ha ejecutado siempre: empujar, traccionar, agacharse, rotar, cargar. El fundamento sin el cual todo lo demás es estructura sin base.</p>
+    </div>
+
+    <!-- 03 CROSSTRAINING -->
+    <div class="disc-item">
+      <div class="disc-header">
+        <span class="disc-num">03</span>
+        <span class="disc-name c-gold">CROSSTRAINING</span>
+      </div>
+      <div class="disc-tagline">Alta Intensidad Estructurada</div>
+      <div class="disc-rule"></div>
+      <p class="disc-body">Halterofilia, gimnasia y trabajo metabólico combinados con criterio, no al azar. Sesiones dinámicas que producen adaptaciones integrales.</p>
+    </div>
+
+    <!-- 04 PERSONAL -->
+    <div class="disc-item">
+      <div class="disc-header">
+        <span class="disc-num">04</span>
+        <span class="disc-name c-white">PERSONAL</span>
+      </div>
+      <div class="disc-tagline">Atención Individual</div>
+      <div class="disc-rule"></div>
+      <p class="disc-body">Cuando el grupo no es suficiente. Tu entrenador, tu programa, tus resultados. Diseñado exclusivamente en función de tus objetivos, condición y necesidades.</p>
+    </div>
+
+  </div>
+
+  <!-- Right image strip — 4 cells, one per discipline -->
+  <div class="disc-images">
+    <div class="disc-img-cell">
+      <div class="bg-cover" style="background-image: url('./_MG_4729.jpg'); background-position: center 20%;"></div>
+      <div class="ov-img"></div>
+      <span class="cell-label">HYROX</span>
+    </div>
+    <div class="disc-img-cell">
+      <div class="bg-cover" style="background-image: url('./gym-functional.jpg'); background-position: center;"></div>
+      <div class="ov-img"></div>
+      <span class="cell-label">FUNCIONAL</span>
+    </div>
+    <div class="disc-img-cell">
+      <div class="bg-cover" style="background-image: url('./gym-crossfit.jpg'); background-position: center;"></div>
+      <div class="ov-img"></div>
+      <span class="cell-label">CROSSTRAINING</span>
+    </div>
+    <div class="disc-img-cell">
+      <div class="bg-cover" style="background-image: url('./hyrox-coaching.jpg'); background-position: center 25%;"></div>
+      <div class="ov-img"></div>
+      <span class="cell-label">PERSONAL</span>
+    </div>
+  </div>
+
+  <div class="pg-label-vert" style="right:4mm; bottom:12mm; writing-mode:vertical-rl; transform:rotate(180deg); position:absolute; z-index:10;">
+    <span class="pg-num">05 · Disciplinas</span>
+  </div>
+
+</div><!-- /p05 -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 06 — THE EXPERIENCE
+═══════════════════════════════════════════════════════════════ -->
+<div class="page p06">
+
+  <!-- Left image panel -->
+  <div class="img-panel">
+    <div class="bg-cover" style="background-image: url('./hyrox-coaching.jpg');"></div>
+    <div class="ov-right-fade"></div>
+    <div class="ov-v"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <div>
+      <div class="section-tag" style="margin-bottom:5mm;">
+        <div class="dot"></div>
+        <span class="label c-gold" style="font-size:6.5pt;">La Experiencia</span>
+      </div>
+
+      <div class="exp-hl disp-lg">
+        <span class="l1">Un lugar que no</span>
+        <span class="l2">necesita explicarse.</span>
+      </div>
+    </div>
+
+    <div class="exp-body body-lg">
+      <p>Hay espacios que lo dicen todo en el primer minuto.</p>
+      <p>El equipo. La luz. El sonido de lo que ocurre. La forma en que el entrenador habla con un atleta. La forma en que ese atleta escucha.</p>
+      <p>En Sport Training no hay música diseñada para mantenerte activo. No hay pantallas contando calorías. No hay espejos en cada pared.</p>
+      <p>Hay trabajo real. Gente real. Un entorno construido para producir rendimiento, no para venderlo.</p>
+      <p>Cada detalle del espacio responde a una pregunta concreta: ¿qué necesita alguien para mejorar de verdad?</p>
+      <p>La respuesta es siempre la misma. Estructura. Guía. Un lugar donde el nivel exige más de ti sin que nadie tenga que pedírtelo.</p>
+    </div>
+
+    <div class="exp-couplet">
+      <span>No vendrás por obligación.</span>
+      <span>Volverás porque funciona.</span>
+    </div>
+
+  </div>
+
+  <div style="position:absolute; right:4mm; bottom:12mm; writing-mode:vertical-rl; transform:rotate(180deg); z-index:10;">
+    <span class="pg-num">06 · Experiencia</span>
+  </div>
+
+</div><!-- /p06 -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 07 — CREDIBILITY
+═══════════════════════════════════════════════════════════════ -->
+<div class="page p07">
+
+  <!-- Portrait right -->
+  <div class="portrait-panel">
+    <div class="bg-cover" style="background-image: url('./portrait-miguel.jpg'); background-position: center top;"></div>
+    <div class="ov-left-fade"></div>
+    <div class="ov-v"></div>
+  </div>
+
+  <!-- Gold credential strip bottom -->
+  <div class="cred-strip">
+    <div class="cred-items">
+      <span class="cred-item">HYROX Official Partner</span>
+      <div class="cred-sep"></div>
+      <span class="cred-item">Entrenamiento Funcional</span>
+      <div class="cred-sep"></div>
+      <span class="cred-item">CrossTraining</span>
+      <div class="cred-sep"></div>
+      <span class="cred-item">Entrenamiento Adaptado</span>
+      <div class="cred-sep"></div>
+      <span class="cred-item">Nutrición Aplicada</span>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <div class="section-tag" style="margin-bottom:5mm;">
+      <div class="dot"></div>
+      <span class="label c-gold" style="font-size:6.5pt;">Trayectoria</span>
+    </div>
+
+    <div class="cred-hl disp-xl">
+      <span class="l1">Desde 2007.</span>
+      <span class="l2" style="font-size:18pt; font-family:var(--body); font-weight:300; font-style:italic; text-transform:none; letter-spacing:0; color:rgba(255,255,255,0.30); margin-top:5px;">No hemos cambiado lo que funciona.</span>
+    </div>
+
+    <div class="cred-body body-md">
+      <p>Sport Training lleva más de 17 años en Murcia. No porque hayamos seguido las tendencias. Porque no lo hemos hecho.</p>
+      <p>Cuando el mercado giraba hacia el entrenamiento de moda, nosotros refinábamos la metodología que ya funcionaba. Cuando los gimnasios añadían más, nosotros eliminábamos lo innecesario.</p>
+      <p>El resultado: personas que llevan años entrenando aquí y siguen progresando. Atletas que compiten. Profesionales que recuperan su cuerpo. Personas mayores que descubren que el límite era otro.</p>
+      <p>Fundado por Miguel Ángel — entrenador, no empresario — Sport Training fue construido desde el conocimiento, no desde el marketing.</p>
+    </div>
+
+    <div class="founder-block">
+      <div class="founder-name">Miguel Ángel</div>
+      <div class="founder-role">Fundador · Head Coach · Sport Training · 2007</div>
+      <div class="founder-quote">"Entrenamos para lo que el cuerpo puede hacer. No para lo que se ve en una foto."</div>
+    </div>
+
+  </div>
+
+  <div style="position:absolute; right:4mm; bottom:14mm; writing-mode:vertical-rl; transform:rotate(180deg); z-index:10;">
+    <span class="pg-num">07 · Trayectoria</span>
+  </div>
+
+</div><!-- /p07 -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 08 — COMMITMENT
+═══════════════════════════════════════════════════════════════ -->
+<div class="page p08" style="background-image:url('./hyrox-group.jpg'); background-size:cover; background-position:center 72%;">
+
+  <!-- Dark overlay to fade photo behind content -->
+  <div style="position:absolute; inset:0; background:rgba(18,18,18,0.78); z-index:0;"></div>
+
+  <div class="content" style="position:relative; z-index:1;">
+
+    <!-- Headline -->
+    <div>
+      <div class="section-tag" style="margin-bottom:4mm;">
+        <div class="dot"></div>
+        <span class="label c-gold" style="font-size:6.5pt;">Compromiso</span>
+      </div>
+      <div class="commit-hl disp-lg">
+        <span class="l1">Este lugar es para ti.</span>
+        <span class="l2">Si sabes lo que buscas.</span>
+      </div>
+      <span class="rule-h" style="margin-top:5mm; margin-bottom:0;"></span>
+    </div>
+
+    <!-- Two columns -->
+    <div class="cols">
+
+      <div class="col-divider"></div>
+
+      <!-- Left col -->
+      <div class="col">
+        <div class="col-body body-md" style="margin-top:5mm;">
+          <p>Sport Training es para quien entiende que el entrenamiento es una inversión, no un gasto.</p>
+          <p>Para el atleta que quiere competir con criterio. Para el profesional que necesita rendimiento, no solo ejercicio. Para la persona que ha probado otros métodos y sabe que algo falta.</p>
+          <p>Para quien está dispuesto a comprometerse con un proceso en lugar de esperar resultados inmediatos.</p>
+          <p>Para el cuerpo que ha pasado por algo difícil y necesita un entorno donde volver a confiar en sí mismo.</p>
+        </div>
+      </div>
+
+      <!-- Right col -->
+      <div class="col">
+        <div class="col-body body-md" style="margin-top:5mm;">
+          <p>No es para quien busca entrenar solo cuando le apetece. No es para quien quiere variedad por encima de progreso. No es para quien espera resultados sin estructura.</p>
+          <p>No porque aquí no se admitan las dudas. Las dudas son bienvenidas.</p>
+          <p>Sino porque el trabajo aquí exige presencia. Y la presencia exige decisión.</p>
+          <p>Si aún no estás seguro, ven. Observa. Pregunta. La conversación no compromete a nada. El entrenamiento sí.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Closing line -->
+    <div class="commit-close">
+      <span>El entrenamiento es para todos. El compromiso, también.</span>
+    </div>
+
+  </div>
+
+  <div style="position:absolute; right:4mm; bottom:12mm; writing-mode:vertical-rl; transform:rotate(180deg); z-index:2;">
+    <span class="pg-num">08 · Compromiso</span>
+  </div>
+
+</div><!-- /p08 -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 09 — MODALITIES
+═══════════════════════════════════════════════════════════════ -->
+<div class="page p09">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="mod-sub">Elige Tu Modalidad</div>
+    <div class="disp-md mod-hl">ENTRENA A TU <span style="color:var(--gold);">MANERA.</span></div>
+  </div>
+
+  <!-- Three tier columns -->
+  <div class="cols">
+
+    <!-- ORO -->
+    <div class="tier">
+      <div class="tier-bg" style="background-image: url('./hyrox-bw.jpg'); background-position: center 25%;"></div>
+      <div class="tier-bg-ov"></div>
+      <div class="tier-top-fade"></div>
+      <div class="tier-stripe" style="background: var(--gold);"></div>
+      <div class="tier-num c-gold">ORO</div>
+      <div class="tier-name c-white">Entrenamiento<br>Personal</div>
+      <div class="tier-tagline">La experiencia definitiva</div>
+      <div class="tier-rule"></div>
+      <div class="tier-desc">Entrenamiento completamente personalizado, diseñado en función de tus objetivos, condición física y necesidades. En instalaciones o a domicilio.</div>
+      <div class="tier-plans">
+        <div class="tier-plan-row">
+          <span class="plan-label">ORO 4 · 4 PT/mes</span>
+          <span class="plan-price c-gold">€150</span>
+          <span class="plan-period">/mes</span>
+        </div>
+        <div class="tier-plan-row">
+          <span class="plan-label">ORO 8 · 8 PT/mes</span>
+          <span class="plan-price c-gold">€250</span>
+          <span class="plan-period">/mes</span>
+        </div>
+        <div class="tier-plan-row">
+          <span class="plan-label">ORO 12 · 12 PT/mes</span>
+          <span class="plan-price c-gold">€350</span>
+          <span class="plan-period">/mes</span>
+        </div>
+        <div class="tier-plan-row">
+          <span class="plan-label">ORO 16 · 16 PT/mes</span>
+          <span class="plan-price c-gold">€450</span>
+          <span class="plan-period">/mes</span>
+        </div>
+      </div>
+      <div class="tier-includes">
+        <div class="tier-include-item">
+          <span class="check" style="color:var(--gold);">◆</span>
+          <span class="tier-include-text">Grupos ilimitados incluidos</span>
+        </div>
+        <div class="tier-include-item">
+          <span class="check" style="color:var(--gold);">◆</span>
+          <span class="tier-include-text">HYROX · CrossTraining · Funcional</span>
+        </div>
+        <div class="tier-include-item">
+          <span class="check" style="color:var(--gold);">◆</span>
+          <span class="tier-include-text">Gimnasio libre ilimitado</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLATA -->
+    <div class="tier">
+      <div class="tier-bg" style="background-image: url('./hyrox-women.jpg'); background-position: center 20%;"></div>
+      <div class="tier-bg-ov"></div>
+      <div class="tier-top-fade"></div>
+      <div class="tier-stripe" style="background: var(--plata);"></div>
+      <div class="tier-num" style="color: var(--plata);">PLATA</div>
+      <div class="tier-name c-white">Entrenamiento<br>en Grupo</div>
+      <div class="tier-tagline">Comunidad y rendimiento</div>
+      <div class="tier-rule"></div>
+      <div class="tier-desc">Sesiones dinámicas en grupos reducidos donde se combina motivación, técnica y acompañamiento profesional. Acceso a todas las disciplinas.</div>
+      <div class="tier-plans">
+        <div class="tier-plan-row">
+          <span class="plan-label">PLATA 8 · 8 sesiones</span>
+          <span class="plan-price" style="color:var(--plata);">€50</span>
+          <span class="plan-period">/mes</span>
+        </div>
+        <div class="tier-plan-row">
+          <span class="plan-label">PLATA 12 · 12 sesiones</span>
+          <span class="plan-price" style="color:var(--plata);">€60</span>
+          <span class="plan-period">/mes</span>
+        </div>
+        <div class="tier-plan-row" style="border: 1pt solid rgba(221,221,221,0.30); background: rgba(221,221,221,0.06);">
+          <span class="plan-label" style="color:var(--plata);">ILIMITADA · Sin límite ★</span>
+          <span class="plan-price" style="color:var(--plata);">€70</span>
+          <span class="plan-period">/mes</span>
+        </div>
+      </div>
+      <div class="tier-includes">
+        <div class="tier-include-item">
+          <span class="check" style="color:var(--plata);">◆</span>
+          <span class="tier-include-text">HYROX · CrossTraining · Funcional</span>
+        </div>
+        <div class="tier-include-item">
+          <span class="check" style="color:var(--plata);">◆</span>
+          <span class="tier-include-text">Gimnasio libre ilimitado</span>
+        </div>
+        <div class="tier-include-item">
+          <span class="check" style="color:rgba(255,255,255,0.20);">◇</span>
+          <span class="tier-include-text" style="color:rgba(255,255,255,0.28);">No incluye Entrenamiento Personal</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BRONCE -->
+    <div class="tier">
+      <div class="tier-bg" style="background-image: url('./gym-rig.jpg'); background-position: center;"></div>
+      <div class="tier-bg-ov"></div>
+      <div class="tier-top-fade"></div>
+      <div class="tier-stripe" style="background: var(--bronce);"></div>
+      <div class="tier-num" style="color: var(--bronce);">BRONCE</div>
+      <div class="tier-name c-white">Entrenamiento<br>Libre</div>
+      <div class="tier-tagline">Autonomía total</div>
+      <div class="tier-rule"></div>
+      <div class="tier-desc">Acceso libre a todo el gimnasio. Espacio amplio, equipado y con luz natural para entrenar a tu ritmo, en tu horario.</div>
+      <div class="tier-plans">
+        <div class="tier-plan-row">
+          <span class="plan-label">BRONCE · Gimnasio libre</span>
+          <span class="plan-price" style="color:var(--bronce);">€25</span>
+          <span class="plan-period">/mes</span>
+        </div>
+      </div>
+      <div class="tier-includes" style="margin-top:2mm;">
+        <div class="tier-include-item">
+          <span class="check" style="color:var(--bronce);">◆</span>
+          <span class="tier-include-text">Acceso completo a instalaciones</span>
+        </div>
+        <div class="tier-include-item">
+          <span class="check" style="color:var(--bronce);">◆</span>
+          <span class="tier-include-text">Espacio amplio con luz natural</span>
+        </div>
+        <div class="tier-include-item">
+          <span class="check" style="color:var(--bronce);">◆</span>
+          <span class="tier-include-text">Todo el equipamiento disponible</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    Créditos sueltos disponibles · 8€ / clase en grupo · 30€ / sesión personal · Consulta horarios en sporttraining.es
+  </div>
+
+  <div style="position:absolute; right:4mm; bottom:12mm; writing-mode:vertical-rl; transform:rotate(180deg); z-index:10;">
+    <span class="pg-num">09 · Modalidades</span>
+  </div>
+
+</div><!-- /p09 -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PAGE 10 — CLOSING
+═══════════════════════════════════════════════════════════════ -->
+<div class="page p10">
+
+  <!-- Background image bottom portion -->
+  <div class="img-bg"></div>
+
+  <!-- Gold dividing rule -->
+  <div class="gold-divide"></div>
+
+  <!-- Top text content -->
+  <div class="content">
+
+    <div class="section-tag" style="margin-bottom:5mm;">
+      <div class="dot"></div>
+      <span class="label c-gold" style="font-size:6.5pt;">El Primer Paso</span>
+    </div>
+
+    <div class="close-hl disp-lg">
+      <span class="l1">El primer paso no es una matrícula.</span>
+      <span class="l2">Es una conversación.</span>
+    </div>
+
+    <div class="close-body body-md">
+      <p>Si has llegado hasta aquí, algo en estas páginas ha resonado.</p>
+      <p>No necesitas estar en tu mejor momento. No necesitas saber exactamente lo que quieres. Solo necesitas estar dispuesto a descubrirlo.</p>
+      <p>Ven. Conoce el espacio. Habla con Miguel Ángel o con su equipo. Sin compromiso. Sin presión de tiempo. Una conversación honesta es el comienzo de un proceso honesto.</p>
+    </div>
+
+  </div>
+
+  <!-- Contact block floating on image zone -->
+  <div class="contact-block">
+    <div class="contact-left">
+      <div class="brand-name-lg">Sport Training</div>
+      <div class="contact-lines">
+        Murcia, España · sporttraining.es<br>
+        @sporttrainingmurcia<br>
+        Centro de Entrenamiento · Est. 2007
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="close-sign">CUERPOS<br>CAPACES.</div>
+    </div>
+  </div>
+
+</div><!-- /p10 -->
+
+
+</div><!-- /.brochure -->
+</body>
+</html>
