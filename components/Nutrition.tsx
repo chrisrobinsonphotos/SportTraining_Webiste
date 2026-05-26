@@ -9,8 +9,8 @@ import Link from 'next/link'
 // /contacto. Restore per-pillar routes when those pages ship.
 const pillars = [
   { num: '01', label: 'ALIMENTACIÓN', href: '/contacto', image: '/nutrition-food.jpg', desc: 'La base real de cualquier progreso. Hábitos sólidos sobre los que construir resultados duraderos.' },
-  { num: '02', label: 'SUPLEMENTACIÓN', href: '/contacto', image: '/nutrition-supplements.jpg', desc: 'Solo cuando aporta valor. Pocos productos, calidad contrastada, dosis efectivas.' },
-  { num: '03', label: 'ROPA', href: '/contacto', image: '/ropa.png', desc: 'Equipamiento y ropa técnica para rendir al máximo dentro y fuera del gimnasio.' },
+  { num: '02', label: 'EVENTOS', href: '/#comunidad', image: '/hyrox-group.jpg', desc: 'Competiciones HYROX, retos mensuales y talleres técnicos. Más que un entrenamiento — una experiencia.' },
+  { num: '03', label: 'SUPLEMENTACIÓN', href: '/contacto', image: '/nutrition-supplements.jpg', desc: 'Solo cuando aporta valor. Pocos productos, calidad contrastada, dosis efectivas.' },
 ]
 
 type Pillar = typeof pillars[number]

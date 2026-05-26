@@ -39,8 +39,8 @@ const navItems = [
     href: '/#nutricion',
     children: [
       { label: 'Alimentación', href: '/#nutricion' },
+      { label: 'Eventos', href: '/#comunidad' },
       { label: 'Suplementación', href: '/#nutricion' },
-      { label: 'Ropa', href: '/#nutricion' },
     ],
   },
 ]
