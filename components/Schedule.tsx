@@ -121,7 +121,7 @@ function SpotsGrid({ taken, max, color }: { taken: number; max: number; color: s
           </span>
         ) : isAlmostFull ? (
           <>
-            <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900, color }}
+            <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, color }}
               className="text-[22px] md:text-[32px] leading-none block">
               {remaining}
             </span>
@@ -132,7 +132,7 @@ function SpotsGrid({ taken, max, color }: { taken: number; max: number; color: s
           </>
         ) : (
           <>
-            <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+            <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-white text-[22px] md:text-[32px] leading-none block">
               {remaining}
             </span>
@@ -179,7 +179,7 @@ export default function Schedule() {
           <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
             className="text-[#F1B91E] text-[12px] tracking-[0.35em] uppercase">Reserva de Clases</span>
         </div>
-        <h2 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+        <h2 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
           className="text-[14vw] md:text-[9vw] lg:text-[7vw] leading-none uppercase text-white text-center tracking-tight">
           PRÓXIMAMENTE
         </h2>
@@ -204,10 +204,10 @@ export default function Schedule() {
               initial={{ y: 80, opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-[11vw] md:text-[7vw] lg:text-[5.5vw] leading-[0.88] uppercase text-white"
             >
-              ELIGE TU <span className="text-[#F1B91E]">SESIÓN.</span>
+              ELIGE TU <span style={{ fontStyle: 'italic', textTransform: 'none' }} className="text-[#F1B91E]">sesión.</span>
             </motion.h2>
           </div>
           <motion.p
@@ -235,7 +235,7 @@ export default function Schedule() {
                   isActive ? 'bg-[#F1B91E] border-[#F1B91E]' : 'bg-white/4 border-transparent hover:bg-white/8 hover:border-white/20'
                 }`}
               >
-                <div style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+                <div style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
                   className={`text-[18px] md:text-[22px] tracking-[0.08em] uppercase leading-none ${
                     isActive ? 'text-[#191919]' : 'text-white/55 group-hover:text-white'
                   }`}>
@@ -289,7 +289,7 @@ export default function Schedule() {
                         >
                           {/* Left: Time */}
                           <div className="flex-shrink-0 w-[72px] md:w-[110px]">
-                            <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+                            <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
                               className="text-white/80 text-[26px] md:text-[44px] leading-none tracking-tight tabular-nums">
                               {time}
                             </span>
@@ -299,7 +299,7 @@ export default function Schedule() {
                           <div className="flex-1 min-w-0">
                             {/* Type pill */}
                             <div className="flex items-center gap-3 mb-2">
-                              <div className="w-[10px] h-[10px] rounded-full flex-shrink-0"
+                              <div className="w-[10px] h-[10px] flex-shrink-0"
                                 style={{ backgroundColor: cfg.color }} />
                               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color: cfg.color }}
                                 className="text-[12px] tracking-[0.22em] uppercase">
@@ -314,7 +314,7 @@ export default function Schedule() {
                             </div>
 
                             {/* Class name */}
-                            <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+                            <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
                               className={`text-[17px] md:text-[30px] lg:text-[40px] uppercase leading-none mb-2 truncate ${
                                 isFull ? 'text-white/35' : 'text-white'
                               }`}>
@@ -357,7 +357,7 @@ export default function Schedule() {
                 className="text-white/30 text-[14px]">
                 ¿Necesitas ver el horario completo o gestionar reservas?
               </p>
-              <Link href="/horario"
+              <Link href="/contacto"
                 className="inline-flex items-center gap-3 border border-[#F1B91E]/40 text-[#F1B91E] px-6 py-4 hover:bg-[#F1B91E] hover:text-[#191919] transition-all duration-300 group flex-shrink-0 ml-8">
                 <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
                   className="text-[12px] tracking-[0.2em] uppercase">Horario Completo</span>

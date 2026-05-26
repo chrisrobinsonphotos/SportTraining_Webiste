@@ -25,7 +25,7 @@ export default function Adaptado() {
         >
           <Image
             src="/hyrox-coaching.jpg"
-            alt="Entrenamiento Adaptado"
+            alt="Entrenamiento adaptado en Murcia para personas con discapacidad — Sport Training"
             fill
             className="object-cover object-center"
             quality={85}
@@ -53,7 +53,7 @@ export default function Adaptado() {
               initial={{ y: 80, opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-[13vw] lg:text-[7vw] leading-[0.85] uppercase text-white"
             >
               EL ENTRENA-
@@ -64,10 +64,11 @@ export default function Adaptado() {
               initial={{ y: 80, opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-[13vw] lg:text-[7vw] leading-[0.85] uppercase text-[#F1B91E]"
+              style={{ fontStyle: 'italic', textTransform: 'none' }}
             >
-              MIENTO
+              miento
             </motion.h2>
           </div>
           <div className="overflow-hidden">
@@ -75,7 +76,7 @@ export default function Adaptado() {
               initial={{ y: 80, opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.26, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-[13vw] lg:text-[7vw] leading-[0.85] uppercase text-white"
             >
               ES PARA TODOS.
@@ -113,7 +114,8 @@ export default function Adaptado() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.7 }}
           >
-            <Link href="/entrenamientos/adaptado"
+            <Link href="/contacto"
+              aria-label="Conocer el programa de entrenamiento adaptado en Sport Training Murcia"
               className="inline-flex items-center gap-3 border border-[#F1B91E]/40 text-[#F1B91E] px-7 py-4 hover:bg-[#F1B91E] hover:text-[#191919] transition-all duration-300 group">
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
                 className="text-[11px] tracking-[0.25em] uppercase">Conocer el Programa</span>

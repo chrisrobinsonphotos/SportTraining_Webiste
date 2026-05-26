@@ -5,10 +5,12 @@ import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 
+// Nutrition detail pages don't exist yet — all three pillar cards route to
+// /contacto. Restore per-pillar routes when those pages ship.
 const pillars = [
-  { num: '01', label: 'ALIMENTACIÓN', href: '/nutricion/alimentacion', image: '/nutrition-food.jpg', desc: 'La base real de cualquier progreso. Hábitos sólidos sobre los que construir resultados duraderos.' },
-  { num: '02', label: 'SUPLEMENTACIÓN', href: '/nutricion/suplementacion', image: '/nutrition-supplements.jpg', desc: 'Solo cuando aporta valor. Pocos productos, calidad contrastada, dosis efectivas.' },
-  { num: '03', label: 'ROPA', href: '/nutricion/ropa', image: '/ropa.png', desc: 'Equipamiento y ropa técnica para rendir al máximo dentro y fuera del gimnasio.' },
+  { num: '01', label: 'ALIMENTACIÓN', href: '/contacto', image: '/nutrition-food.jpg', desc: 'La base real de cualquier progreso. Hábitos sólidos sobre los que construir resultados duraderos.' },
+  { num: '02', label: 'SUPLEMENTACIÓN', href: '/contacto', image: '/nutrition-supplements.jpg', desc: 'Solo cuando aporta valor. Pocos productos, calidad contrastada, dosis efectivas.' },
+  { num: '03', label: 'ROPA', href: '/contacto', image: '/ropa.png', desc: 'Equipamiento y ropa técnica para rendir al máximo dentro y fuera del gimnasio.' },
 ]
 
 type Pillar = typeof pillars[number]
@@ -28,7 +30,7 @@ function PillarCard({ item, index }: { item: Pillar; index: number }) {
     >
       <Link href={item.href} className="block h-full">
         <div className="absolute inset-0">
-          <Image src={item.image} alt={item.label} fill sizes="33vw"
+          <Image src={item.image} alt={`${item.label} — Nutrición deportiva Sport Training Murcia`} fill sizes="33vw"
             className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
             quality={80} />
           <div className="absolute inset-0 bg-gradient-to-t from-[#191919] via-[#191919]/65 to-[#191919]/20" />
@@ -37,7 +39,7 @@ function PillarCard({ item, index }: { item: Pillar; index: number }) {
         <div className="relative z-10 flex flex-col justify-end h-full p-6 md:p-8" style={{ minHeight: '40vh' }}>
           <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
             className="text-[#F1B91E] text-[12px] tracking-[0.3em] block mb-3">{item.num}</span>
-          <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+          <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
             className="text-white text-[32px] md:text-[38px] uppercase leading-none mb-4">{item.label}</h4>
           <div className="w-8 h-[2px] bg-[#F1B91E]/60 mb-4 group-hover:w-full transition-all duration-500" />
           <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
@@ -74,10 +76,10 @@ export default function Nutrition() {
               initial={{ y: 80, opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.1 }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-white"
             >
-              LOS HÁBITOS <span className="text-[#F1B91E]">TRANSFORMAN.</span>
+              LOS HÁBITOS <span style={{ fontStyle: 'italic', textTransform: 'none' }} className="text-[#F1B91E]">transforman.</span>
             </motion.h2>
           </div>
 
@@ -87,7 +89,7 @@ export default function Nutrition() {
             transition={{ duration: 0.7, delay: 0.4 }}
             className="flex-shrink-0"
           >
-            <Link href="/nutricion"
+            <Link href="/contacto"
               className="inline-flex items-center gap-3 border border-[#F1B91E]/40 text-[#F1B91E] px-6 py-3.5 hover:bg-[#F1B91E] hover:text-[#191919] transition-all duration-300 group">
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
                 className="text-[11px] tracking-[0.2em] uppercase">Asesoramiento Nutricional</span>

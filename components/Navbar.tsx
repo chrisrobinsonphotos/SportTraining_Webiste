@@ -92,7 +92,7 @@ export default function Navbar() {
               <div className="relative w-16 h-16">
                 <Image
                   src="/st-logo-new.png"
-                  alt="Sport Training"
+                  alt="Sport Training Murcia — Logo"
                   fill
                   className="object-contain"
                   priority
@@ -100,8 +100,8 @@ export default function Navbar() {
               </div>
               <div className="hidden sm:block">
                 <span
-                  className="font-display text-[17px] font-700 tracking-[0.25em] text-white uppercase leading-none block"
-                  style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
+                  className="font-display text-[17px] tracking-[0.25em] text-white uppercase leading-none block"
+                  style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
                 >
                   Sport Training
                 </span>

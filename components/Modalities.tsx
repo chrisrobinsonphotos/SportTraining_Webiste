@@ -90,7 +90,7 @@ function PricingBack({ tier }: { tier: Tier }) {
           className="text-[12px] tracking-[0.35em] uppercase opacity-60">
           {tier.tier}
         </span>
-        <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900, color: textDark }}
+        <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, color: textDark }}
           className="text-[32px] md:text-[36px] uppercase leading-tight mt-1">
           {tier.name}
         </h3>
@@ -112,12 +112,12 @@ function PricingBack({ tier }: { tier: Tier }) {
                 + popular
               </span>
             )}
-            <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900, color: textDark }}
+            <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, color: textDark }}
               className="text-[32px] md:text-[36px] tracking-[0.06em] uppercase leading-none text-center">
               {plan.label}
             </span>
             <div className="flex items-baseline gap-1">
-              <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900, color: textDark }}
+              <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, color: textDark }}
                 className="text-[56px] md:text-[64px] leading-none">
                 {plan.price}
               </span>
@@ -155,6 +155,7 @@ function PricingBack({ tier }: { tier: Tier }) {
         </ul>
 
         <a href="/contacto"
+          aria-label={`Contratar plan ${tier.tier} — ${tier.name} en Sport Training Murcia`}
           className="flex items-center justify-center gap-2 py-4 px-5 transition-opacity duration-200 hover:opacity-80"
           style={{ backgroundColor: textDark, fontFamily: 'var(--font-inter)', fontWeight: 700, color: bg }}>
           <span className="text-[13px] tracking-[0.25em] uppercase">Contratar</span>
@@ -203,18 +204,18 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
             {tier.splitImage ? (
               <>
                 <div className="absolute inset-y-0 left-0 w-1/2 overflow-hidden">
-                  <Image src={tier.image} alt={tier.name} fill sizes="17vw"
+                  <Image src={tier.image} alt={`${tier.name} — Sport Training Murcia`} fill sizes="17vw"
                     className="object-cover object-center"
                     quality={85} />
                 </div>
                 <div className="absolute inset-y-0 right-0 w-1/2 overflow-hidden">
-                  <Image src={tier.splitImage} alt="Máquinas" fill sizes="17vw"
+                  <Image src={tier.splitImage} alt="Sala de máquinas — Sport Training Murcia" fill sizes="17vw"
                     className="object-cover object-left"
                     quality={85} />
                 </div>
               </>
             ) : (
-              <Image src={tier.image} alt={tier.name} fill sizes="33vw"
+              <Image src={tier.image} alt={`${tier.name} — Sport Training Murcia`} fill sizes="33vw"
                 className="object-cover object-center"
                 quality={80} />
             )}
@@ -239,7 +240,7 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
               )}
             </div>
 
-            <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+            <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-white text-[36px] md:text-[40px] lg:text-[44px] uppercase leading-none mb-2">
               {tier.name}
             </h3>
@@ -297,10 +298,10 @@ export default function Modalities() {
             initial={{ y: 80, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.1 }}
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
             className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-white"
           >
-            ENTRENA A TU <span className="text-[#F1B91E]">MANERA</span>
+            ENTRENA A TU <span style={{ fontStyle: 'italic', textTransform: 'none' }} className="text-[#F1B91E]">manera</span>
           </motion.h2>
         </div>
       </div>

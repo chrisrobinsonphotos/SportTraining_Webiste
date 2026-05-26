@@ -16,7 +16,7 @@ export default function CTASection() {
       <div className="absolute inset-0">
         <Image
           src="/cta-group.jpg"
-          alt="Sport Training Community"
+          alt="Comunidad Sport Training Murcia — entrenamiento en grupo HYROX, CrossTraining y funcional"
           fill
           className="object-cover object-center"
           quality={90}
@@ -47,7 +47,7 @@ export default function CTASection() {
             initial={{ y: 100, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
             className="text-[15vw] md:text-[12vw] lg:text-[10vw] leading-[0.85] uppercase text-white"
           >
             ÚNETE A LA
@@ -59,10 +59,11 @@ export default function CTASection() {
             initial={{ y: 100, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
             className="text-[15vw] md:text-[12vw] lg:text-[10vw] leading-[0.85] uppercase text-[#F1B91E]"
+            style={{ fontStyle: 'italic', textTransform: 'none' }}
           >
-            COMUNIDAD ST.
+            Comunidad ST.
           </motion.h2>
         </div>
 
@@ -73,6 +74,7 @@ export default function CTASection() {
           className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
         >
           <Link href="/contacto"
+            aria-label="Contactar con Sport Training Murcia — WhatsApp, teléfono o visita"
             className="group flex items-center gap-3 bg-[#F1B91E] text-[#191919] px-8 py-4 hover:bg-[#C99200] transition-colors duration-300">
             <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
               className="text-[12px] tracking-[0.25em] uppercase">Contactar Ahora</span>
@@ -80,7 +82,8 @@ export default function CTASection() {
               <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
-          <Link href="/modalidades"
+          <Link href="/#modalidades"
+            aria-label="Ver modalidades y precios de Sport Training Murcia"
             className="flex items-center gap-3 border border-white/20 text-white px-8 py-4 hover:border-[#F1B91E] hover:text-[#F1B91E] transition-all duration-300">
             <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
               className="text-[12px] tracking-[0.25em] uppercase">Ver Modalidades</span>

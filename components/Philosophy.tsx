@@ -38,7 +38,7 @@ export default function Philosophy() {
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="text-[15vw] lg:text-[8vw] leading-[0.85] uppercase text-white"
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
           >
             ENTRENA
           </motion.h2>
@@ -49,9 +49,9 @@ export default function Philosophy() {
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.17, ease: [0.16, 1, 0.3, 1] }}
             className="text-[15vw] lg:text-[8vw] leading-[0.85] uppercase text-[#F1B91E]"
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none' }}
           >
-            PARA LA
+            Para la
           </motion.h2>
         </div>
         <div className="overflow-hidden mb-0">
@@ -60,7 +60,7 @@ export default function Philosophy() {
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
             className="text-[15vw] lg:text-[8vw] leading-[0.85] uppercase text-white"
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
           >
             VIDA.
           </motion.h2>
@@ -106,7 +106,7 @@ export default function Philosophy() {
         >
           <Image
             src="/portrait-miguel.jpg"
-            alt="Miguel Ángel — Fundador Sport Training"
+            alt="Miguel Ángel — Fundador y entrenador de Sport Training Murcia desde 2007"
             fill
             className="object-cover object-top"
             quality={90}
@@ -124,7 +124,7 @@ export default function Philosophy() {
           className="absolute bottom-10 left-10 z-20 flex items-center gap-4"
         >
           <div className="w-11 h-11 flex-shrink-0 overflow-hidden relative rounded-sm border border-[#F1B91E]/40">
-            <Image src="/portrait-miguel.jpg" alt="Miguel Ángel" fill className="object-cover object-top" sizes="44px" />
+            <Image src="/portrait-miguel.jpg" alt="Miguel Ángel — Fundador Sport Training Murcia" fill className="object-cover object-top" sizes="44px" />
           </div>
           <div>
             <p style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}

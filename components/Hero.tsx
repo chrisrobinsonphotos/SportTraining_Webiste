@@ -33,7 +33,7 @@ export default function Hero() {
       <motion.div className="absolute inset-0" style={{ scale: imageScale }}>
         <Image
           src="/gym-rig.jpg"
-          alt="Sport Training gym"
+          alt="Sport Training Murcia — gimnasio de HYROX, CrossTraining y entrenamiento funcional"
           fill
           sizes="100vw"
           className="object-cover object-center"
@@ -84,46 +84,56 @@ export default function Hero() {
           <span className="section-label">Centro de Entrenamiento · Est. 2007 · Región de Murcia</span>
         </motion.div>
 
-        {/* Giant headline — left-aligned, bleeds off right */}
-        <div className="overflow-hidden mb-[-8px]">
-          <motion.h1
+        {/*
+          One semantic, keyword-rich H1 for SEO + screen readers.
+          Visually hidden but indexed by Google. The decorative animated stack
+          below preserves the visual brand design 1:1 (now aria-hidden so it
+          isn't double-read by screen readers).
+        */}
+        <h1 className="sr-only">
+          Sport Training Murcia — Gimnasio HYROX, CrossTraining, Funcional y Entrenamiento Adaptado
+        </h1>
+
+        {/* Giant headline — left-aligned, bleeds off right (decorative) */}
+        <div className="overflow-hidden mb-[-8px]" aria-hidden="true">
+          <motion.span
             initial={{ y: 120, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 1, delay: 0.2 }}
-            className="text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] text-white uppercase sm:whitespace-nowrap"
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+            className="block text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] text-white uppercase sm:whitespace-nowrap"
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
           >
             CUERPOS
-          </motion.h1>
+          </motion.span>
         </div>
 
-        <div className="overflow-hidden mb-[-8px]">
-          <motion.h1
+        <div className="overflow-hidden mb-[-8px]" aria-hidden="true">
+          <motion.span
             initial={{ y: 120, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 1, delay: 0.32 }}
-            className="text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] uppercase sm:whitespace-nowrap"
+            className="block text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] text-[#F1B91E] uppercase sm:whitespace-nowrap"
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none' }}
+          >
+            Cuerpos capaces.
+          </motion.span>
+        </div>
+
+        <div className="overflow-hidden mb-10" aria-hidden="true">
+          <motion.span
+            initial={{ y: 120, opacity: 0 }}
+            animate={inView ? { y: 0, opacity: 1 } : {}}
+            transition={{ duration: 1, delay: 0.44 }}
+            className="block text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] uppercase sm:whitespace-nowrap"
             style={{
               fontFamily: 'var(--font-barlow)',
-              fontWeight: 900,
+              fontWeight: 800,
               WebkitTextStroke: '2px rgba(255,255,255,0.2)',
               color: 'transparent',
             }}
           >
             FUERTES.
-          </motion.h1>
-        </div>
-
-        <div className="overflow-hidden mb-10">
-          <motion.h1
-            initial={{ y: 120, opacity: 0 }}
-            animate={inView ? { y: 0, opacity: 1 } : {}}
-            transition={{ duration: 1, delay: 0.44 }}
-            className="text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] text-[#F1B91E] uppercase sm:whitespace-nowrap"
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
-          >
-            CUERPOS CAPACES.
-          </motion.h1>
+          </motion.span>
         </div>
 
         {/* Bottom row: tagline + CTAs */}
@@ -143,6 +153,7 @@ export default function Hero() {
           <div className="flex items-center gap-4 flex-shrink-0">
             <Link
               href="/contacto"
+              aria-label="Únete a Sport Training Murcia — contacto y reserva"
               className="group flex items-center gap-3 bg-[#F1B91E] text-[#191919] px-7 py-4 hover:bg-[#C99200] transition-colors duration-300"
             >
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
@@ -155,6 +166,7 @@ export default function Hero() {
             </Link>
             <Link
               href="/#filosofia"
+              aria-label="Conoce el método de entrenamiento de Sport Training Murcia"
               className="group flex items-center gap-3 border border-white/20 text-white px-7 py-4 hover:border-[#F1B91E] transition-all duration-300"
             >
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}

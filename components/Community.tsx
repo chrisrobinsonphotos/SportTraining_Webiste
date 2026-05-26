@@ -195,7 +195,7 @@ export default function Community() {
               initial={{ y: 80, opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-[12vw] md:text-[7vw] leading-[0.88] uppercase text-white"
             >
               MÁS QUE
@@ -206,10 +206,11 @@ export default function Community() {
               initial={{ y: 80, opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-[12vw] md:text-[7vw] leading-[0.88] uppercase text-[#F1B91E]"
+              style={{ fontStyle: 'italic', textTransform: 'none' }}
             >
-              UN GIMNASIO.
+              Un gimnasio.
             </motion.h2>
           </div>
 
@@ -219,7 +220,7 @@ export default function Community() {
             transition={{ duration: 0.7, delay: 0.4 }}
             className="flex flex-wrap gap-3 mt-8 mb-8"
           >
-            {['⚡ CORAJE', '◈ COMUNIDAD', '◉ EVENTOS'].map(p => (
+            {['▪ CORAJE', '▪ COMUNIDAD', '▪ EVENTOS'].map(p => (
               <div key={p} className="border border-white/10 px-4 py-2.5">
                 <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
                   className="text-white text-[12px] tracking-[0.2em] uppercase">{p}</span>
@@ -232,7 +233,8 @@ export default function Community() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.5 }}
           >
-            <Link href="/comunidad"
+            <Link href="/contacto"
+              aria-label="Ver la comunidad de Sport Training Murcia — eventos y galería"
               className="inline-flex items-center gap-3 bg-[#F1B91E] text-[#191919] px-7 py-4 hover:bg-[#C99200] transition-colors duration-300 group">
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
                 className="text-[11px] tracking-[0.25em] uppercase">Ver Comunidad</span>

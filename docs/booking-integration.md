@@ -17,7 +17,7 @@ FitNova is Sport Training's all-in-one gym management platform. It covers:
 - Check-in / attendance tracking
 - Reporting and analytics
 
-The `marketing/_clients_Internal_FitNova/` folder in the workstation contains CRM reference material for working with FitNova data.
+The `marketing/fitnova/` folder in the workstation contains CRM reference material for working with FitNova data.
 
 ---
 

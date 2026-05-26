@@ -49,9 +49,11 @@ export const metadata: Metadata = {
   creator: SITE_NAME,
   publisher: SITE_NAME,
   applicationName: SITE_NAME,
-  alternates: {
-    canonical: "/",
-  },
+  // NOTE: do NOT set `alternates.canonical` here. Next.js inherits metadata from
+  // the root layout, so a canonical defined at this level is applied to every
+  // page that doesn't override it — pointing /privacidad, /legal and /cookies
+  // back at "/", which Google flags as "Duplicate without user-selected
+  // canonical". Each page sets its own canonical instead.
   openGraph: {
     type: "website",
     locale: "es_ES",
@@ -135,7 +137,7 @@ export default function RootLayout({
                   image: `${SITE_URL}/og-image.jpg`,
                   description: SITE_DESCRIPTION,
                   telephone: "+34647797693",
-                  email: "[email pendiente]", // PLACEHOLDER — swap once client provides
+                  email: "info@sporttraining.es",
                   foundingDate: "2007",
                   priceRange: "€25–€450",
                   currenciesAccepted: "EUR",

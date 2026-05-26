@@ -5,13 +5,16 @@ import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 
+// Discipline detail pages don't exist yet — cards link to /contacto so users
+// can request a trial session. Swap to per-discipline routes once those pages
+// ship.
 const disciplines = [
   {
     num: '01',
     name: 'HYROX',
     tagline: 'Fuerza + Resistencia',
     description: '8km de carrera intercalados con 8 estaciones de trabajo funcional. El estándar global del fitness.',
-    href: '/entrenamientos/hyrox',
+    href: '/contacto',
     image: '/hyrox-medball.jpg',
     accent: true,
   },
@@ -20,7 +23,7 @@ const disciplines = [
     name: 'FUNCIONAL',
     tagline: 'Base del Movimiento',
     description: 'Patrones naturales: empujar, traccionar, agacharse, rotar. El fundamento de cualquier cuerpo capaz.',
-    href: '/entrenamientos/funcional',
+    href: '/contacto',
     image: '/gym-functional.jpg',
     accent: false,
   },
@@ -29,7 +32,7 @@ const disciplines = [
     name: 'CROSSTRAINING',
     tagline: 'Alta Intensidad',
     description: 'Halterofilia, gimnasia y trabajo metabólico combinados. Sesiones dinámicas, resultados integrales.',
-    href: '/entrenamientos/crosstraining',
+    href: '/contacto',
     image: '/hyrox-coaching.jpg',
     accent: true,
   },
@@ -38,7 +41,7 @@ const disciplines = [
     name: 'PERSONAL',
     tagline: 'Atención Individual',
     description: 'Entrenamiento diseñado exclusivamente para ti. Tu entrenador, tu programa, tus resultados.',
-    href: '/entrenamientos/personal',
+    href: '/contacto',
     image: '/gym-crossfit.jpg',
     accent: false,
   },
@@ -62,7 +65,7 @@ function DisciplineCard({ item, index }: { item: typeof disciplines[0]; index: n
         <div className="absolute inset-0">
           <Image
             src={item.image}
-            alt={item.name}
+            alt={`${item.name} en Sport Training Murcia`}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
@@ -84,7 +87,7 @@ function DisciplineCard({ item, index }: { item: typeof disciplines[0]; index: n
 
           {/* Name */}
           <h3
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
             className={`text-[48px] md:text-[56px] lg:text-[64px] leading-none tracking-tight uppercase mb-3 ${item.accent ? 'text-[#F1B91E]' : 'text-white'}`}
           >
             {item.name}
@@ -161,10 +164,10 @@ export default function Training() {
               initial={{ y: 80, opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-white"
             >
-              NUESTROS <span className="text-[#F1B91E]">ENTRENAMIENTOS</span>
+              NUESTROS <span style={{ fontStyle: 'italic', textTransform: 'none' }} className="text-[#F1B91E]">entrenamientos</span>
             </motion.h2>
           </div>
         </div>

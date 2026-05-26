@@ -57,7 +57,7 @@ function TrainerCard({ trainer, index }: { trainer: typeof trainers[0]; index: n
       <div className="absolute inset-0">
         <Image
           src={trainer.image}
-          alt={trainer.name}
+          alt={`${trainer.name} — Entrenador Sport Training Murcia`}
           fill
           className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
           sizes="25vw"
@@ -106,7 +106,7 @@ function TrainerCard({ trainer, index }: { trainer: typeof trainers[0]; index: n
 
         {/* Name */}
         <h3
-          style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+          style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
           className="text-white text-[28px] md:text-[32px] lg:text-[36px] uppercase leading-none mb-2"
         >
           {trainer.name}
@@ -151,27 +151,34 @@ export default function Trainers() {
 
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <div>
-            <div className="overflow-hidden mb-1">
-              <motion.h2
+            {/* Single semantic H2 for SEO — invisible to sighted users */}
+            <h2 className="sr-only">
+              Entrenadores Sport Training Murcia — Equipo de HYROX, CrossTraining y entrenamiento funcional
+            </h2>
+
+            {/* Decorative animated stack (sighted users) */}
+            <div className="overflow-hidden mb-1" aria-hidden="true">
+              <motion.span
                 initial={{ y: 80, opacity: 0 }}
                 animate={inView ? { y: 0, opacity: 1 } : {}}
                 transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
-                className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-white"
+                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+                className="block text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-white"
               >
                 LOS QUE TE
-              </motion.h2>
+              </motion.span>
             </div>
-            <div className="overflow-hidden">
-              <motion.h2
+            <div className="overflow-hidden" aria-hidden="true">
+              <motion.span
                 initial={{ y: 80, opacity: 0 }}
                 animate={inView ? { y: 0, opacity: 1 } : {}}
                 transition={{ duration: 0.9, delay: 0.17, ease: [0.16, 1, 0.3, 1] }}
-                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
-                className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-[#F1B91E]"
+                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+                className="block text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-[#F1B91E]"
+                style={{ fontStyle: 'italic', textTransform: 'none' }}
               >
-                LLEVAN AL LÍMITE.
-              </motion.h2>
+                Llevan al límite.
+              </motion.span>
             </div>
           </div>
 
@@ -182,7 +189,7 @@ export default function Trainers() {
             className="flex-shrink-0"
           >
             <Link
-              href="/gym/equipo"
+              href="/contacto"
               className="inline-flex items-center gap-3 border border-[#F1B91E]/40 text-[#F1B91E] px-6 py-4 hover:bg-[#F1B91E] hover:text-[#191919] transition-all duration-300 group"
             >
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}

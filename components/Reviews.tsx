@@ -208,7 +208,7 @@ export default function Reviews() {
                 initial={{ y: 80, opacity: 0 }}
                 animate={inView ? { y: 0, opacity: 1 } : {}}
                 transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
                 className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-white"
               >
                 OPINIONES
@@ -219,10 +219,11 @@ export default function Reviews() {
                 initial={{ y: 80, opacity: 0 }}
                 animate={inView ? { y: 0, opacity: 1 } : {}}
                 transition={{ duration: 0.9, delay: 0.17, ease: [0.16, 1, 0.3, 1] }}
-                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
                 className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-[#F1B91E]"
+                style={{ fontStyle: 'italic', textTransform: 'none' }}
               >
-                REALES.
+                Reales.
               </motion.h2>
             </div>
           </div>
