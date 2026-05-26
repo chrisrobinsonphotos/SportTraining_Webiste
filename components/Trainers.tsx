@@ -157,7 +157,7 @@ export default function Trainers() {
             </h2>
 
             {/* Decorative animated stack (sighted users) */}
-            <div className="overflow-hidden mb-1" aria-hidden="true">
+            <div className="overflow-hidden" aria-hidden="true">
               <motion.span
                 initial={{ y: 80, opacity: 0 }}
                 animate={inView ? { y: 0, opacity: 1 } : {}}
@@ -165,19 +165,7 @@ export default function Trainers() {
                 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
                 className="block text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-white"
               >
-                LOS QUE TE
-              </motion.span>
-            </div>
-            <div className="overflow-hidden" aria-hidden="true">
-              <motion.span
-                initial={{ y: 80, opacity: 0 }}
-                animate={inView ? { y: 0, opacity: 1 } : {}}
-                transition={{ duration: 0.9, delay: 0.17, ease: [0.16, 1, 0.3, 1] }}
-                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                className="block text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-[#F1B91E]"
-                
-              >
-                Llevan al límite.
+                COACHES
               </motion.span>
             </div>
           </div>
