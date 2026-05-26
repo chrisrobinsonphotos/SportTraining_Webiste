@@ -31,7 +31,7 @@ const GA_MEASUREMENT_ID = "G-V1SPWK5DVB";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    default: "Sport Training Murcia — HYROX Training Club Oficial",
     template: `%s — ${SITE_NAME} Murcia`,
   },
   description: SITE_DESCRIPTION,
