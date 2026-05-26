@@ -103,7 +103,7 @@ export default function Hero() {
             className="block text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] text-white uppercase sm:whitespace-nowrap"
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
           >
-            CUERPOS
+            HYROX
           </motion.span>
         </div>
 
@@ -115,7 +115,7 @@ export default function Hero() {
             className="block text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] text-[#F1B91E] uppercase sm:whitespace-nowrap"
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic' }}
           >
-            Cuerpos capaces.
+            MURCIA.
           </motion.span>
         </div>
 
@@ -132,7 +132,7 @@ export default function Hero() {
               color: 'transparent',
             }}
           >
-            FUERTES.
+            CLUB OFICIAL.
           </motion.span>
         </div>
 
