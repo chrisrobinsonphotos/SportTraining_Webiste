@@ -113,7 +113,7 @@ export default function Hero() {
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 1, delay: 0.32 }}
             className="block text-[18vw] md:text-[16vw] lg:text-[13vw] xl:text-[11vw] leading-[0.85] tracking-[-0.03em] text-[#F1B91E] uppercase sm:whitespace-nowrap"
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none' }}
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic' }}
           >
             Cuerpos capaces.
           </motion.span>

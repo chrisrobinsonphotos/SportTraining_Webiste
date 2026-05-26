@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     locale: "es_ES",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    title: "Sport Training Murcia — HYROX Training Club Oficial",
     description: SITE_DESCRIPTION,
     images: [
       {
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    title: "Sport Training Murcia — HYROX Training Club Oficial",
     description: SITE_DESCRIPTION,
     images: ["/og-image.jpg"],
   },
