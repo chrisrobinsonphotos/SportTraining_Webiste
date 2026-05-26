@@ -11,7 +11,7 @@ import Link from 'next/link'
 const disciplines = [
   {
     num: '01',
-    name: 'HYROX',
+    name: 'HYROX OPEN',
     tagline: 'Fuerza + Resistencia',
     description: '8km de carrera intercalados con 8 estaciones de trabajo funcional. El estándar global del fitness.',
     href: '/contacto',
@@ -20,21 +20,21 @@ const disciplines = [
   },
   {
     num: '02',
+    name: 'HYROX ELITE TRAINING',
+    tagline: 'Alto Rendimiento',
+    description: 'Protocolo de competición para atletas que buscan el podio. Métricas reales, carga progresiva y preparación específica para la temporada HYROX.',
+    href: '/contacto',
+    image: '/hyrox-coaching.jpg',
+    accent: true,
+  },
+  {
+    num: '03',
     name: 'FUNCIONAL',
     tagline: 'Base del Movimiento',
     description: 'Patrones naturales: empujar, traccionar, agacharse, rotar. El fundamento de cualquier cuerpo capaz.',
     href: '/contacto',
     image: '/gym-functional.jpg',
     accent: false,
-  },
-  {
-    num: '03',
-    name: 'CROSSTRAINING',
-    tagline: 'Alta Intensidad',
-    description: 'Halterofilia, gimnasia y trabajo metabólico combinados. Sesiones dinámicas, resultados integrales.',
-    href: '/contacto',
-    image: '/hyrox-coaching.jpg',
-    accent: true,
   },
   {
     num: '04',
