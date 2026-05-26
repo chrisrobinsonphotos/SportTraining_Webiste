@@ -80,7 +80,7 @@ function DisciplineCard({ item, index }: { item: typeof disciplines[0]; index: n
         {/* Content — absolutely anchored to bottom */}
         <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col p-6 md:p-8">
           {/* Number */}
-          <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+          <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, fontStyle: 'italic', textTransform: 'none' }}
             className="text-[#F1B91E] text-[13px] tracking-[0.3em] block mb-4">
             {item.num}
           </span>
@@ -167,7 +167,7 @@ export default function Training() {
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-white"
             >
-              NUESTROS <span style={{ fontStyle: 'italic', textTransform: 'none' }} className="text-[#F1B91E]">entrenamientos</span>
+              NUESTROS <span  className="text-[#F1B91E]">entrenamientos</span>
             </motion.h2>
           </div>
         </div>

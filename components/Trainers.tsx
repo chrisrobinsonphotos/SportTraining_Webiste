@@ -77,7 +77,7 @@ function TrainerCard({ trainer, index }: { trainer: typeof trainers[0]; index: n
         {/* Number — top left */}
         <div className="absolute top-6 left-6 md:top-8 md:left-8">
           <span
-            style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+            style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, fontStyle: 'italic', textTransform: 'none' }}
             className="text-[#F1B91E]/50 text-[12px] tracking-[0.3em]"
           >
             {trainer.num}
@@ -175,7 +175,7 @@ export default function Trainers() {
                 transition={{ duration: 0.9, delay: 0.17, ease: [0.16, 1, 0.3, 1] }}
                 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
                 className="block text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-[#F1B91E]"
-                style={{ fontStyle: 'italic', textTransform: 'none' }}
+                
               >
                 Llevan al límite.
               </motion.span>

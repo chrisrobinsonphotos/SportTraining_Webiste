@@ -68,7 +68,7 @@ function ReviewCard({
 
       {/* Review text */}
       <p
-        style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
+        style={{ fontFamily: 'var(--font-inter)', fontWeight: 400, fontStyle: 'italic', textTransform: 'none' }}
         className="text-white/65 text-[15px] leading-relaxed flex-1 mb-6
                    group-hover:text-white/80 transition-colors duration-400"
       >
@@ -221,7 +221,7 @@ export default function Reviews() {
                 transition={{ duration: 0.9, delay: 0.17, ease: [0.16, 1, 0.3, 1] }}
                 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
                 className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-[#F1B91E]"
-                style={{ fontStyle: 'italic', textTransform: 'none' }}
+                
               >
                 Reales.
               </motion.h2>

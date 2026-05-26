@@ -115,7 +115,7 @@ function SpotsGrid({ taken, max, color }: { taken: number; max: number; color: s
       {/* Status label */}
       <div className="text-right">
         {isFull ? (
-          <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+          <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none' }}
             className="text-red-400 text-[18px] tracking-[0.05em] uppercase">
             COMPLETO
           </span>
@@ -207,7 +207,7 @@ export default function Schedule() {
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-[11vw] md:text-[7vw] lg:text-[5.5vw] leading-[0.88] uppercase text-white"
             >
-              ELIGE TU <span style={{ fontStyle: 'italic', textTransform: 'none' }} className="text-[#F1B91E]">sesión.</span>
+              ELIGE TU <span  className="text-[#F1B91E]">sesión.</span>
             </motion.h2>
           </div>
           <motion.p

@@ -37,7 +37,7 @@ function PillarCard({ item, index }: { item: Pillar; index: number }) {
         </div>
 
         <div className="relative z-10 flex flex-col justify-end h-full p-6 md:p-8" style={{ minHeight: '40vh' }}>
-          <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+          <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, fontStyle: 'italic', textTransform: 'none' }}
             className="text-[#F1B91E] text-[12px] tracking-[0.3em] block mb-3">{item.num}</span>
           <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
             className="text-white text-[32px] md:text-[38px] uppercase leading-none mb-4">{item.label}</h4>
@@ -79,7 +79,7 @@ export default function Nutrition() {
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-white"
             >
-              LOS HÁBITOS <span style={{ fontStyle: 'italic', textTransform: 'none' }} className="text-[#F1B91E]">transforman.</span>
+              LOS HÁBITOS <span  className="text-[#F1B91E]">transforman.</span>
             </motion.h2>
           </div>
 

@@ -105,7 +105,7 @@ export default function Community() {
             key={activeSlide}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+            style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, fontStyle: 'italic', textTransform: 'none' }}
             className="text-white/70 text-[13px] tracking-[0.2em] uppercase"
           >
             {carouselImages[activeSlide].caption}
@@ -208,7 +208,7 @@ export default function Community() {
               transition={{ duration: 0.9, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-[12vw] md:text-[7vw] leading-[0.88] uppercase text-[#F1B91E]"
-              style={{ fontStyle: 'italic', textTransform: 'none' }}
+              
             >
               Un gimnasio.
             </motion.h2>

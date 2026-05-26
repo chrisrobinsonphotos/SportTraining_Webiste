@@ -86,7 +86,7 @@ function PricingBack({ tier }: { tier: Tier }) {
     >
       {/* Top: Tier label */}
       <div>
-        <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color: textDark }}
+        <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color: textDark, fontStyle: 'italic', textTransform: 'none' }}
           className="text-[12px] tracking-[0.35em] uppercase opacity-60">
           {tier.tier}
         </span>
@@ -301,7 +301,7 @@ export default function Modalities() {
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
             className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-white"
           >
-            ENTRENA A TU <span style={{ fontStyle: 'italic', textTransform: 'none' }} className="text-[#F1B91E]">manera</span>
+            ENTRENA A TU <span  className="text-[#F1B91E]">manera</span>
           </motion.h2>
         </div>
       </div>

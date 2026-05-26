@@ -47,7 +47,7 @@ export default function CTASection() {
             initial={{ y: 100, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none' }}
             className="text-[15vw] md:text-[12vw] lg:text-[10vw] leading-[0.85] uppercase text-white"
           >
             ÚNETE A LA
@@ -61,7 +61,7 @@ export default function CTASection() {
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
             className="text-[15vw] md:text-[12vw] lg:text-[10vw] leading-[0.85] uppercase text-[#F1B91E]"
-            style={{ fontStyle: 'italic', textTransform: 'none' }}
+            
           >
             Comunidad ST.
           </motion.h2>
