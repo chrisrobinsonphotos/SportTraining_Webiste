@@ -110,7 +110,7 @@ export default function Philosophy() {
             className="relative flex-1 overflow-hidden"
           >
             <Image
-              src="/portrait-miguel.jpg"
+              src="/trainer-miguel.jpg"
               alt="Miguel Ángel — Fundador y entrenador de Sport Training Murcia desde 2007"
               fill
               className="object-cover object-top"
@@ -149,7 +149,7 @@ export default function Philosophy() {
           {/* Sr. */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 flex-shrink-0 overflow-hidden relative rounded-sm border border-[#F1B91E]/40">
-              <Image src="/portrait-miguel.jpg" alt="Miguel Ángel — Fundador Sport Training Murcia" fill className="object-cover object-top" sizes="40px" />
+              <Image src="/trainer-miguel.jpg" alt="Miguel Ángel — Fundador Sport Training Murcia" fill className="object-cover object-top" sizes="40px" />
             </div>
             <div>
               <p style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
