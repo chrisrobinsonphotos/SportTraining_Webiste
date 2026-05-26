@@ -34,11 +34,12 @@ export default function Adaptado() {
         </motion.div>
       </div>
 
-      {/* RIGHT: two independent content blocks */}
-      <div className="relative z-10 ml-auto w-full lg:w-[58%] flex flex-col px-6 md:px-12 lg:px-16 py-24 min-h-screen">
+      {/* RIGHT: two-column layout on desktop */}
+      <div className="relative z-10 ml-auto w-full lg:w-[58%] flex flex-col lg:flex-row lg:items-stretch min-h-screen">
 
-        {/* ── BLOCK 1: Title — positioned in middle (below man's head) ── */}
-        <div className="flex flex-col justify-center lg:mt-[580px]">
+        {/* ── Col 1: Headline ── */}
+        <div className="flex flex-col justify-center px-6 md:px-12 lg:pl-16 lg:pr-10 py-24 w-full lg:w-[58%]">
+
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -54,9 +55,9 @@ export default function Adaptado() {
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-              className="text-[13vw] lg:text-[7vw] leading-[0.85] uppercase text-white"
+              className="text-[13vw] lg:text-[5.5vw] leading-[0.85] uppercase text-white"
             >
-              EL ENTRENA-
+              EL
             </motion.h2>
           </div>
           <div className="overflow-hidden mb-1">
@@ -64,10 +65,10 @@ export default function Adaptado() {
               initial={{ y: 80, opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none' }}
-              className="text-[13vw] lg:text-[7vw] leading-[0.85] uppercase text-[#F1B91E]"
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic' }}
+              className="text-[13vw] lg:text-[5.5vw] leading-[0.85] text-[#F1B91E]"
             >
-              miento
+              ENTRENAMIENTO
             </motion.h2>
           </div>
           <div className="overflow-hidden">
@@ -76,16 +77,15 @@ export default function Adaptado() {
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.26, ease: [0.16, 1, 0.3, 1] }}
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-              className="text-[13vw] lg:text-[7vw] leading-[0.85] uppercase text-white"
+              className="text-[13vw] lg:text-[5.5vw] leading-[0.85] uppercase text-white"
             >
               ES PARA TODOS.
             </motion.h2>
           </div>
         </div>
 
-
-        {/* ── BLOCK 2: Features — below where man is laying ── */}
-        <div className="flex-shrink-0 pb-16 lg:mt-[460px]">
+        {/* ── Col 2: Features ── */}
+        <div className="flex flex-col justify-center px-6 md:px-12 lg:pl-10 lg:pr-16 py-24 w-full lg:w-[42%] lg:border-l lg:border-white/8">
 
           <div className="space-y-10 mb-12">
             {[
@@ -98,12 +98,16 @@ export default function Adaptado() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.35 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="border-l-2 border-[#F1B91E]/20 pl-5 hover:border-[#F1B91E] transition-colors duration-400"
+                className="border-l-2 border-[#F1B91E]/30 pl-6 hover:border-[#F1B91E] transition-colors duration-400"
               >
                 <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
-                  className="text-white text-[22px] md:text-[26px] tracking-[0.06em] uppercase mb-3 leading-tight">{item.title}</h4>
+                  className="text-white text-[28px] md:text-[32px] tracking-[0.04em] uppercase mb-3 leading-tight">
+                  {item.title}
+                </h4>
                 <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                  className="text-white/65 text-[17px] leading-relaxed">{item.body}</p>
+                  className="text-white/65 text-[19px] leading-relaxed">
+                  {item.body}
+                </p>
               </motion.div>
             ))}
           </div>
