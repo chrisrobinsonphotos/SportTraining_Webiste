@@ -12,9 +12,9 @@ export default function Adaptado() {
   return (
     <section id="adaptado" ref={ref} className="relative bg-[#191919] min-h-screen flex overflow-hidden" style={{ scrollMarginTop: '90px' }}>
 
-      {/* LEFT: image panel — bleeds from the left edge */}
-      <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[62%]">
-        <div className="absolute right-0 top-0 bottom-0 w-64 z-10 bg-gradient-to-l from-[#191919] to-transparent" />
+      {/* Image — left 55%, gradient bleeds right, darker overlay for text legibility */}
+      <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[55%]">
+        <div className="absolute right-0 top-0 bottom-0 w-72 z-10 bg-gradient-to-l from-[#191919] to-transparent" />
         <div className="absolute inset-x-0 top-0 h-24 z-10 bg-gradient-to-b from-[#191919] to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-24 z-10 bg-gradient-to-t from-[#191919] to-transparent" />
         <motion.div
@@ -30,15 +30,15 @@ export default function Adaptado() {
             className="object-cover object-center"
             quality={85}
           />
-          <div className="absolute inset-0 bg-[#191919]/25" />
+          <div className="absolute inset-0 bg-[#191919]/40" />
         </motion.div>
       </div>
 
-      {/* RIGHT: two-column layout on desktop */}
-      <div className="relative z-10 ml-auto w-full lg:w-[58%] flex flex-col lg:flex-row lg:items-stretch min-h-screen">
+      {/* Content: full-width flex row — headline left (50%), features right (50%) */}
+      <div className="relative z-10 w-full flex flex-col lg:flex-row lg:items-stretch min-h-screen">
 
-        {/* ── Col 1: Headline ── */}
-        <div className="flex flex-col justify-center px-6 md:px-12 lg:pl-16 lg:pr-8 py-24 w-full lg:w-[40%]">
+        {/* ── Left col: Headline — 50% of page, sits over image zone ── */}
+        <div className="flex flex-col justify-center px-6 md:px-12 lg:pl-16 lg:pr-8 py-24 w-full lg:w-1/2">
 
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -84,10 +84,10 @@ export default function Adaptado() {
           </div>
         </div>
 
-        {/* ── Col 2: Features ── */}
-        <div className="flex flex-col justify-center px-6 md:px-12 lg:pl-14 lg:pr-20 py-24 w-full lg:w-[60%] lg:border-l lg:border-white/8">
+        {/* ── Right col: Features — 50% of page, always on pure dark bg ── */}
+        <div className="flex flex-col justify-center px-6 md:px-12 lg:pl-14 lg:pr-20 py-24 w-full lg:w-1/2 lg:border-l lg:border-white/8">
 
-          <div className="space-y-12 mb-14">
+          <div className="space-y-14 mb-16">
             {[
               { title: 'Entrenamiento Real', body: 'No hablamos de rehabilitación clínica, sino de entrenamiento real, adaptado y guiado por profesionales.' },
               { title: 'Metodología Adaptada', body: 'Cada ejercicio, cada carga y cada progresión se ajusta a las necesidades de cada persona.' },
@@ -101,11 +101,11 @@ export default function Adaptado() {
                 className="border-l-2 border-[#F1B91E]/30 pl-7 hover:border-[#F1B91E] transition-colors duration-400"
               >
                 <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
-                  className="text-white text-[32px] md:text-[36px] tracking-[0.04em] uppercase mb-4 leading-tight">
+                  className="text-white text-[38px] md:text-[44px] tracking-[0.04em] uppercase mb-4 leading-tight">
                   {item.title}
                 </h4>
                 <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                  className="text-white/65 text-[20px] leading-relaxed">
+                  className="text-white/65 text-[22px] leading-relaxed">
                   {item.body}
                 </p>
               </motion.div>
