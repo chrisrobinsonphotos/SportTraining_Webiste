@@ -6,8 +6,8 @@ import Link from 'next/link'
 import Navbar from './Navbar'
 import ContactForm from './ContactForm'
 
-const PHONE = '647797693'
-const PHONE_DISPLAY = '647 797 693'
+const PHONE = '622443495'
+const PHONE_DISPLAY = '622 443 495'
 const WHATSAPP_URL = `https://wa.me/34${PHONE}`
 const CALL_URL = `tel:+34${PHONE}`
 const ADDRESS = 'C. Cisne, 3, 30009 Murcia'

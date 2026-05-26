@@ -347,7 +347,7 @@ export default function RootLayout({
                       name: "¿Puedo probar una clase antes de apuntarme?",
                       acceptedAnswer: {
                         "@type": "Answer",
-                        text: "Sí. Contacta por WhatsApp al +34 647 797 693 o desde la página de contacto y te organizamos una sesión de prueba en Sport Training Murcia.",
+                        text: "Sí. Contacta por WhatsApp al +34 622 443 495 o desde la página de contacto y te organizamos una sesión de prueba en Sport Training Murcia.",
                       },
                     },
                     {

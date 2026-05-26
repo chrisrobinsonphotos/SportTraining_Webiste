@@ -38,7 +38,7 @@ export default function PrivacidadPage() {
         </li>
         <li>
           <strong>Teléfono:</strong>{" "}
-          <a href="tel:+34647797693">+34 647 797 693</a>
+          <a href="tel:+34622443495">+34 622 443 495</a>
         </li>
         <li>
           <strong>Sitio web:</strong>{" "}

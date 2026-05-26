@@ -4,7 +4,7 @@ import ContactPage from '@/components/ContactPage'
 export const metadata: Metadata = {
   title: 'Contacto — Gimnasio Sport Training Murcia',
   description:
-    'Contacta con Sport Training Murcia. WhatsApp +34 647 797 693. Visítanos en C. Cisne, 3, 30009 Murcia. Reserva tu sesión de prueba de HYROX, CrossTraining o entrenamiento personal.',
+    'Contacta con Sport Training Murcia. WhatsApp +34 622 443 495. Visítanos en C. Cisne, 3, 30009 Murcia. Reserva tu sesión de prueba de HYROX, CrossTraining o entrenamiento personal.',
   keywords: [
     'contacto Sport Training Murcia',
     'gimnasio Murcia teléfono',
