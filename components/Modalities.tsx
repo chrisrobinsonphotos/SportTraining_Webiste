@@ -180,8 +180,6 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
       animate={cardInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.9, delay: index * 0.12 }}
       style={{ height: '100%', minHeight: '60vh', perspective: '1200px' }}
-      onMouseEnter={() => setFlipped(true)}
-      onMouseLeave={() => setFlipped(false)}
       onClick={() => setFlipped(f => !f)}
     >
       {/* Flip container */}
@@ -191,7 +189,7 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
         height: '100%',
         minHeight: '60vh',
         transformStyle: 'preserve-3d',
-        transition: 'transform 0.91s cubic-bezier(0.16, 1, 0.3, 1)',
+        transition: 'transform 1.37s cubic-bezier(0.16, 1, 0.3, 1)',
         transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
       }}>
 
@@ -252,14 +250,13 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
 
             <div className={`h-[1px] mb-5 ${tier.highlight ? 'bg-[#F1B91E]/40' : 'bg-white/10'}`} />
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 cursor-pointer">
+              <svg className="w-4 h-4 text-[#F1B91E] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="square" d="M4 4h6v6H4zM14 4h6v6h-6zM14 14h6v6h-6zM4 14h6v6H4z" />
+              </svg>
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                className={`hidden lg:inline text-[11px] tracking-[0.2em] uppercase ${tier.highlight ? 'text-[#F1B91E]' : 'text-white/50'} transition-colors`}>
-                Más Información
-              </span>
-              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                className={`lg:hidden text-[11px] tracking-[0.2em] uppercase ${tier.highlight ? 'text-[#F1B91E]' : 'text-white/50'}`}>
-                Toca para ver precios
+                className={`text-[11px] tracking-[0.2em] uppercase ${tier.highlight ? 'text-[#F1B91E]' : 'text-white/50'}`}>
+                Ver Precios
               </span>
               <svg className="w-3.5 h-3.5 text-[#F1B91E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
