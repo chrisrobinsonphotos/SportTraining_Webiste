@@ -13,8 +13,8 @@ export default function Adaptado() {
     <section id="adaptado" ref={ref} className="relative bg-[#191919] min-h-screen flex overflow-hidden" style={{ scrollMarginTop: '90px' }}>
 
       {/* LEFT: image panel — bleeds from the left edge */}
-      <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[42%]">
-        <div className="absolute right-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-l from-[#191919] to-transparent" />
+      <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[62%]">
+        <div className="absolute right-0 top-0 bottom-0 w-64 z-10 bg-gradient-to-l from-[#191919] to-transparent" />
         <div className="absolute inset-x-0 top-0 h-24 z-10 bg-gradient-to-b from-[#191919] to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-24 z-10 bg-gradient-to-t from-[#191919] to-transparent" />
         <motion.div
@@ -38,7 +38,7 @@ export default function Adaptado() {
       <div className="relative z-10 ml-auto w-full lg:w-[58%] flex flex-col lg:flex-row lg:items-stretch min-h-screen">
 
         {/* ── Col 1: Headline ── */}
-        <div className="flex flex-col justify-center px-6 md:px-12 lg:pl-16 lg:pr-10 py-24 w-full lg:w-[58%]">
+        <div className="flex flex-col justify-center px-6 md:px-12 lg:pl-16 lg:pr-8 py-24 w-full lg:w-[40%]">
 
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -55,7 +55,7 @@ export default function Adaptado() {
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-              className="text-[13vw] lg:text-[5.5vw] leading-[0.85] uppercase text-white"
+              className="text-[13vw] lg:text-[4.5vw] leading-[0.85] uppercase text-white"
             >
               EL
             </motion.h2>
@@ -66,7 +66,7 @@ export default function Adaptado() {
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic' }}
-              className="text-[13vw] lg:text-[5.5vw] leading-[0.85] text-[#F1B91E]"
+              className="text-[13vw] lg:text-[4.5vw] leading-[0.85] text-[#F1B91E]"
             >
               ENTRENAMIENTO
             </motion.h2>
@@ -77,7 +77,7 @@ export default function Adaptado() {
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.26, ease: [0.16, 1, 0.3, 1] }}
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-              className="text-[13vw] lg:text-[5.5vw] leading-[0.85] uppercase text-white"
+              className="text-[13vw] lg:text-[4.5vw] leading-[0.85] uppercase text-white"
             >
               ES PARA TODOS.
             </motion.h2>
@@ -85,9 +85,9 @@ export default function Adaptado() {
         </div>
 
         {/* ── Col 2: Features ── */}
-        <div className="flex flex-col justify-center px-6 md:px-12 lg:pl-10 lg:pr-16 py-24 w-full lg:w-[42%] lg:border-l lg:border-white/8">
+        <div className="flex flex-col justify-center px-6 md:px-12 lg:pl-14 lg:pr-20 py-24 w-full lg:w-[60%] lg:border-l lg:border-white/8">
 
-          <div className="space-y-10 mb-12">
+          <div className="space-y-12 mb-14">
             {[
               { title: 'Entrenamiento Real', body: 'No hablamos de rehabilitación clínica, sino de entrenamiento real, adaptado y guiado por profesionales.' },
               { title: 'Metodología Adaptada', body: 'Cada ejercicio, cada carga y cada progresión se ajusta a las necesidades de cada persona.' },
@@ -98,14 +98,14 @@ export default function Adaptado() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.35 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="border-l-2 border-[#F1B91E]/30 pl-6 hover:border-[#F1B91E] transition-colors duration-400"
+                className="border-l-2 border-[#F1B91E]/30 pl-7 hover:border-[#F1B91E] transition-colors duration-400"
               >
                 <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
-                  className="text-white text-[28px] md:text-[32px] tracking-[0.04em] uppercase mb-3 leading-tight">
+                  className="text-white text-[32px] md:text-[36px] tracking-[0.04em] uppercase mb-4 leading-tight">
                   {item.title}
                 </h4>
                 <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                  className="text-white/65 text-[19px] leading-relaxed">
+                  className="text-white/65 text-[20px] leading-relaxed">
                   {item.body}
                 </p>
               </motion.div>
