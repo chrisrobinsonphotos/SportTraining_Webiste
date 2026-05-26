@@ -91,46 +91,85 @@ export default function Philosophy() {
         </div>
       </div>
 
-      {/* RIGHT: full-bleed portrait image — no padding, bleeds to edge */}
+      {/* RIGHT: two portrait panels side-by-side — Sr. left, Jr. right */}
       <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[45%]">
-        {/* Gradient mask on the left edge of the image */}
+        {/* Gradient mask on the far left edge */}
         <div className="absolute left-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-r from-[#1E1E1E] to-transparent" />
-        {/* Gradient on top and bottom */}
+        {/* Gradient on top and bottom — span full width */}
         <div className="absolute inset-x-0 top-0 h-32 z-10 bg-gradient-to-b from-[#1E1E1E] to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-48 z-10 bg-gradient-to-t from-[#1E1E1E] via-[#1E1E1E]/60 to-transparent" />
-        <motion.div
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={inView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="h-full w-full relative"
-        >
-          <Image
-            src="/portrait-miguel.jpg"
-            alt="Miguel Ángel — Fundador y entrenador de Sport Training Murcia desde 2007"
-            fill
-            className="object-cover object-top"
-            quality={90}
-            sizes="45vw"
-          />
-          {/* Subtle dark tint */}
-          <div className="absolute inset-0 bg-[#1E1E1E]/20" />
-        </motion.div>
 
-        {/* Founder byline — bottom-left of image, above gradient */}
+        {/* Two portrait panels */}
+        <div className="h-full w-full flex gap-[2px]">
+
+          {/* Sr. */}
+          <motion.div
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="relative flex-1 overflow-hidden"
+          >
+            <Image
+              src="/portrait-miguel.jpg"
+              alt="Miguel Ángel — Fundador y entrenador de Sport Training Murcia desde 2007"
+              fill
+              className="object-cover object-top"
+              quality={90}
+              sizes="22vw"
+            />
+            <div className="absolute inset-0 bg-[#1E1E1E]/20" />
+          </motion.div>
+
+          {/* Jr. */}
+          <motion.div
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="relative flex-1 overflow-hidden"
+          >
+            <Image
+              src="/portrait-jr.jpg"
+              alt="Miguel Ángel Jr. — Entrenador Personal Sport Training Murcia"
+              fill
+              className="object-cover object-top"
+              quality={90}
+              sizes="22vw"
+            />
+            <div className="absolute inset-0 bg-[#1E1E1E]/20" />
+          </motion.div>
+        </div>
+
+        {/* Byline — both names, bottom of image block */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.6 }}
-          className="absolute bottom-10 left-10 z-20 flex items-center gap-4"
+          className="absolute bottom-10 left-10 right-10 z-20 flex items-end justify-between gap-6"
         >
-          <div className="w-11 h-11 flex-shrink-0 overflow-hidden relative rounded-sm border border-[#F1B91E]/40">
-            <Image src="/portrait-miguel.jpg" alt="Miguel Ángel — Fundador Sport Training Murcia" fill className="object-cover object-top" sizes="44px" />
+          {/* Sr. */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 flex-shrink-0 overflow-hidden relative rounded-sm border border-[#F1B91E]/40">
+              <Image src="/portrait-miguel.jpg" alt="Miguel Ángel — Fundador Sport Training Murcia" fill className="object-cover object-top" sizes="40px" />
+            </div>
+            <div>
+              <p style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
+                className="text-white text-[14px] tracking-[0.1em] uppercase leading-tight">Miguel Ángel</p>
+              <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 500 }}
+                className="text-white/55 text-[10px] tracking-[0.15em] uppercase">Fundador · 2007</p>
+            </div>
           </div>
-          <div>
-            <p style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
-              className="text-white text-[15px] tracking-[0.1em] uppercase leading-tight">Miguel Ángel</p>
-            <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 500 }}
-              className="text-white/55 text-[11px] tracking-[0.15em] uppercase">Fundador · Sport Training · 2007</p>
+
+          {/* Jr. */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 flex-shrink-0 overflow-hidden relative rounded-sm border border-[#F1B91E]/40">
+              <Image src="/portrait-jr.jpg" alt="Miguel Ángel Jr. — Entrenador Sport Training Murcia" fill className="object-cover object-top" sizes="40px" />
+            </div>
+            <div>
+              <p style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
+                className="text-white text-[14px] tracking-[0.1em] uppercase leading-tight">Miguel Ángel Jr.</p>
+              <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 500 }}
+                className="text-white/55 text-[10px] tracking-[0.15em] uppercase">Entrenador Personal</p>
+            </div>
           </div>
         </motion.div>
       </div>
