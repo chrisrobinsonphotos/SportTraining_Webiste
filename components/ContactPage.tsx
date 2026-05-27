@@ -11,9 +11,7 @@ const PHONE_DISPLAY = '622 443 495'
 const WHATSAPP_URL = `https://wa.me/34${PHONE}`
 const CALL_URL = `tel:+34${PHONE}`
 const ADDRESS = 'C. Cisne, 3, 30009 Murcia'
-// OpenStreetMap embed — C. Cisne 3, 30009 Murcia (coords: 37.9928, -1.1282)
-const MAPS_EMBED = `https://www.openstreetmap.org/export/embed.html?bbox=-1.1340%2C37.9890%2C-1.1220%2C37.9960&layer=mapnik&marker=37.9928%2C-1.1282`
-const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=C.+Cisne+3,+30009+Murcia`
+const MAPS_LINK = `https://maps.google.com/?q=Sport+Training+Murcia,+C.+Cisne+3,+30009+Murcia`
 
 const contactItems = [
   {
@@ -192,28 +190,6 @@ export default function ContactPage() {
         </motion.div>
       </section>
 
-      {/* ── MAP — full width, tall ── */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.4 }}
-        className="relative w-full border-b border-white/8"
-        style={{ height: '520px' }}
-      >
-        <div className="absolute inset-y-0 left-0 w-16 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to right, #191919, transparent)' }} />
-        <div className="absolute inset-y-0 right-0 w-16 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to left, #191919, transparent)' }} />
-        <iframe
-          src={MAPS_EMBED}
-          className="absolute inset-0 w-full h-full border-0"
-          style={{ filter: 'grayscale(1) contrast(1.1) brightness(0.85)' }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          title="Sport Training Murcia — Ubicación"
-        />
-      </motion.section>
 
       {/* ── BOTTOM BAR ── */}
       <div className="border-t-4 border-[#F1B91E] px-6 md:px-12 lg:px-16 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
