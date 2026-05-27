@@ -158,15 +158,19 @@ export default function ContactPage() {
           </div>
 
           {/* Heading */}
-          <div className="mb-10">
-            <h2 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
-              className="text-6xl md:text-7xl lg:text-8xl uppercase leading-[0.88] text-white">
-              Envía un
-            </h2>
-            <h2 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900, fontStyle: 'italic' }}
-              className="text-6xl md:text-7xl lg:text-8xl uppercase leading-[0.88] text-[#F1B91E]">
-              Mensaje.
-            </h2>
+          <div className="mb-16">
+            <div className="overflow-hidden">
+              <h2 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
+                className="text-6xl md:text-7xl lg:text-8xl uppercase leading-[0.95] text-white pb-1">
+                Envía un
+              </h2>
+            </div>
+            <div className="overflow-hidden">
+              <h2 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900, fontStyle: 'italic' }}
+                className="text-6xl md:text-7xl lg:text-8xl uppercase leading-[0.95] text-[#F1B91E] pb-2">
+                Mensaje.
+              </h2>
+            </div>
           </div>
 
           <ContactForm />
