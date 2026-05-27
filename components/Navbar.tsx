@@ -19,10 +19,10 @@ const navItems = [
     label: 'Entrenamientos',
     href: '/#entrenamientos',
     children: [
-      { label: 'HYROX', href: '/#entrenamientos' },
+      { label: 'HYROX Open', href: '/#entrenamientos' },
+      { label: 'HYROX Elite', href: '/#entrenamientos' },
       { label: 'Funcional', href: '/#entrenamientos' },
-      { label: 'CrossTraining', href: '/#entrenamientos' },
-      { label: 'Entrenamiento Adaptado', href: '/#adaptado' },
+      { label: 'Personal', href: '/#adaptado' },
     ],
   },
   {
