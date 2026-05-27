@@ -55,11 +55,6 @@ const carouselImages = [
   { src: '/_MG_5450.jpg', caption: 'Sport Training · Murcia' },
 ]
 
-const events = [
-  { type: 'Competición', title: 'HYROX Murcia', date: 'Próximamente', desc: 'Compite junto a la comunidad ST en el mayor evento de fitness funcional.' },
-  { type: 'Reto', title: 'Challenge Mensual', date: 'Cada mes', desc: 'Retos grupales que fortalecen el equipo y miden tu progreso.' },
-  { type: 'Formación', title: 'Talleres Técnicos', date: 'Periódicos', desc: 'Sesiones especiales de técnica, nutrición y rendimiento.' },
-]
 
 export default function Community() {
   const ref = useRef<HTMLDivElement>(null)
@@ -204,33 +199,70 @@ export default function Community() {
           </motion.div>
         </div>
 
-        {/* Right: Event cards */}
-        <div className="space-y-3 self-center">
-          {events.map((event, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: 30 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.3 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="border border-white/8 p-6 hover:border-[#F1B91E]/30 transition-colors duration-400 group"
-            >
-              <div className="flex items-start justify-between gap-4 mb-3">
+        {/* Right: Single event card */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="border border-white/10 p-8 md:p-10 hover:border-[#F1B91E]/40 transition-colors duration-400 self-center"
+        >
+          <div className="flex items-start justify-between gap-4 mb-6">
+            <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+              className="text-[11px] tracking-[0.2em] uppercase text-[#F1B91E] border border-[#F1B91E]/40 px-3 py-1.5">
+              Competición
+            </span>
+            <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+              className="text-[11px] tracking-[0.15em] uppercase text-white/30">28 Mayo 2026</span>
+          </div>
+
+          <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+            className="text-white text-[36px] md:text-[44px] uppercase leading-tight mb-4">
+            HYROX Relay Race
+          </h4>
+
+          <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
+            className="text-white/65 text-[17px] leading-relaxed mb-3">
+            Compite en equipo en nuestro primer evento HYROX Relay. Parejas. Estaciones. Máxima intensidad.
+          </p>
+
+          <div className="flex flex-wrap gap-x-6 gap-y-1 mb-8">
+            {[
+              { label: 'Hora', value: '10:00 – 14:00' },
+              { label: 'Formato', value: 'Relay por parejas' },
+              { label: 'Lugar', value: 'Sport Training · Murcia' },
+            ].map(({ label, value }) => (
+              <div key={label}>
                 <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                  className="text-[10px] tracking-[0.2em] uppercase text-[#F1B91E] border border-[#F1B91E]/30 px-2.5 py-1">
-                  {event.type}
-                </span>
-                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                  className="text-[10px] tracking-[0.15em] uppercase text-white/25">{event.date}</span>
+                  className="text-[10px] tracking-[0.15em] uppercase text-white/30 block mb-0.5">{label}</span>
+                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 500 }}
+                  className="text-white/80 text-[14px]">{value}</span>
               </div>
-              <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                className="text-white text-[24px] md:text-[28px] uppercase leading-tight mb-2">
-                {event.title}
-              </h4>
+            ))}
+          </div>
+
+          {/* QR Code */}
+          <div className="flex items-center gap-6 pt-6 border-t border-white/8">
+            <div className="bg-white p-2 flex-shrink-0">
+              <Image
+                src="/qr-hyrox-grupo.png"
+                alt="QR — Grupo HYROX Sport Training"
+                width={80}
+                height={80}
+                className="block"
+              />
+            </div>
+            <div>
+              <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                className="text-white text-[13px] tracking-[0.1em] uppercase mb-1">
+                Únete al grupo HYROX
+              </p>
               <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
-                className="text-white/55 text-[15px] leading-relaxed">{event.desc}</p>
-            </motion.div>
-          ))}
-        </div>
+                className="text-white/40 text-[12px] leading-relaxed">
+                Escanea para acceder al grupo oficial<br />de la comunidad HYROX Sport Training.
+              </p>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )
