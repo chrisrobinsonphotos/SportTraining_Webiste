@@ -67,7 +67,7 @@ export default function Philosophy() {
         </div>
 
         {/* Values list */}
-        <div className="flex flex-col gap-[10px] mt-12 lg:mt-[148px]">
+        <div className="flex flex-col gap-[10px] mt-20 lg:mt-[180px]">
           {values.map((item, i) => (
             <motion.div
               key={item.num}
