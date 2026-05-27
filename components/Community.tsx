@@ -76,7 +76,7 @@ export default function Community() {
     <section ref={ref} className="relative bg-[#0D0D0D] min-h-screen flex flex-col overflow-hidden border-b-4 border-[#F1B91E]">
 
       {/* TOP HALF: Carousel — full width, no padding */}
-      <div className="relative flex-1 min-h-[50vh] overflow-hidden">
+      <div className="relative flex-1 min-h-[65vh] overflow-hidden">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={activeSlide}
@@ -142,46 +142,6 @@ export default function Community() {
             <div className="w-2 h-2 bg-[#F1B91E]" />
             <span className="section-label">Eventos & Comunidad</span>
           </motion.div>
-        </div>
-      </div>
-
-      {/* FLASH STRIP: Horizontally scrollable flash photos */}
-      <div className="w-full overflow-x-auto no-scrollbar flex-shrink-0 border-t border-white/5">
-        <div className="flex gap-0.5" style={{ width: 'max-content' }}>
-          {[
-            { src: '/flash-1.jpg', caption: 'Equipo ST · HYROX' },
-            { src: '/flash-2.jpg', caption: 'Comunidad' },
-            { src: '/flash-3.jpg', caption: 'Wall Ball' },
-            { src: '/_MG_4351.jpg', caption: 'Sport Training' },
-            { src: '/flash-4.jpg', caption: 'Esfuerzo' },
-            { src: '/_MG_4374.jpg', caption: 'Entrenamiento' },
-            { src: '/flash-5.jpg', caption: 'Intensidad' },
-            { src: '/_MG_4513.jpg', caption: 'Fuerza' },
-            { src: '/flash-6.jpg', caption: 'El Trabajo' },
-            { src: '/_MG_4670.jpg', caption: 'Rendimiento' },
-            { src: '/flash-7.jpg', caption: 'Pasión' },
-            { src: '/_MG_4795.jpg', caption: 'Superación' },
-            { src: '/_MG_4918.jpg', caption: 'HYROX' },
-            { src: '/_MG_5058.jpg', caption: 'Técnica' },
-            { src: '/_MG_5185.jpg', caption: 'Constancia' },
-            { src: '/_MG_5312.jpg', caption: 'Comunidad ST' },
-            { src: '/_MG_5401.jpg', caption: 'Competición' },
-            { src: '/_MG_5438.jpg', caption: 'Sport Training' },
-          ].map((img, i) => (
-            <div key={i} className="relative flex-shrink-0 overflow-hidden group"
-              style={{ width: '28vw', height: '22vw', maxWidth: 400, maxHeight: 320 }}>
-              <Image src={img.src} alt={img.caption} fill
-                className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                quality={80} />
-              <div className="absolute inset-0 bg-[#0D0D0D]/40 group-hover:bg-[#0D0D0D]/20 transition-colors duration-500" />
-              <div className="absolute bottom-0 left-0 right-0 p-3">
-                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                  className="text-white/50 text-[10px] tracking-[0.2em] uppercase">
-                  {img.caption}
-                </span>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
 
