@@ -115,7 +115,7 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-1" ref={dropdownRef}>
+            <nav className="hidden lg:flex items-center gap-4" ref={dropdownRef}>
               {navItems.map((item) => (
                 <div
                   key={item.label}
@@ -128,7 +128,7 @@ export default function Navbar() {
                     className="relative flex items-center gap-1 px-3 py-2 group"
                   >
                     <span
-                      className="text-[13px] tracking-[0.16em] uppercase text-white/70 group-hover:text-white transition-colors duration-200"
+                      className="text-[15px] tracking-[0.14em] uppercase text-white/70 group-hover:text-white transition-colors duration-200"
                       style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
                     >
                       {item.label}
