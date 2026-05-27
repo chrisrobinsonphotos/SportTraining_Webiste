@@ -54,7 +54,7 @@ export default function Philosophy() {
             Para la
           </motion.h2>
         </div>
-        <div className="overflow-hidden mb-0">
+        <div className="overflow-hidden mb-16 lg:mb-24">
           <motion.h2
             initial={{ y: 100, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
@@ -67,7 +67,7 @@ export default function Philosophy() {
         </div>
 
         {/* Values list */}
-        <div className="flex flex-col gap-[10px] mt-20 lg:mt-[180px]">
+        <div className="flex flex-col gap-[10px]">
           {values.map((item, i) => (
             <motion.div
               key={item.num}
