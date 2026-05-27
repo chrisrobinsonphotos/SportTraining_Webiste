@@ -76,26 +76,15 @@ export default function ContactPage() {
         <div className="absolute inset-0 geo-grid opacity-10 pointer-events-none" />
 
         <div className="relative z-10 max-w-[900px]">
-          <div className="overflow-hidden mb-2">
+          <div className="overflow-hidden mb-8">
             <motion.h1
               initial={{ y: 100, opacity: 0 }}
               animate={heroInView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-              className="text-[18vw] md:text-[13vw] lg:text-[10vw] leading-[0.85] uppercase text-white"
+              className="text-[18vw] md:text-[13vw] lg:text-[10vw] leading-[0.85] uppercase"
             >
-              HABLE-
-            </motion.h1>
-          </div>
-          <div className="overflow-hidden mb-8">
-            <motion.h1
-              initial={{ y: 100, opacity: 0 }}
-              animate={heroInView ? { y: 0, opacity: 1 } : {}}
-              transition={{ duration: 0.9, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none' }}
-              className="text-[18vw] md:text-[13vw] lg:text-[10vw] leading-[0.85] uppercase text-[#F1B91E]"
-            >
-              mos.
+              <span className="text-white">HABLE</span><span style={{ fontStyle: 'italic' }} className="text-[#F1B91E]">MOS.</span>
             </motion.h1>
           </div>
 
@@ -121,8 +110,8 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* ── MAIN CONTENT ── */}
-      <section ref={contentRef} className="grid lg:grid-cols-[1fr_1fr] min-h-[70vh]">
+      {/* ── MAIN CONTENT: contact info left, form right ── */}
+      <section ref={contentRef} className="grid lg:grid-cols-[1fr_1fr] border-b border-white/8">
 
         {/* Left: Contact cards */}
         <div className="px-6 md:px-12 lg:px-16 py-16 flex flex-col justify-center gap-6 border-r border-white/8">
@@ -137,13 +126,10 @@ export default function ContactPage() {
               transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
               className="group flex items-start gap-5 border border-white/8 p-6 hover:border-white/20 transition-all duration-300"
             >
-              {/* Icon */}
               <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center border border-white/10 group-hover:border-white/25 transition-colors duration-300"
                 style={{ color: item.color }}>
                 {item.icon}
               </div>
-
-              {/* Text */}
               <div className="flex-1 min-w-0">
                 <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
                   className="text-[11px] tracking-[0.25em] uppercase text-white/35 mb-1">
@@ -158,8 +144,6 @@ export default function ContactPage() {
                   {item.sub}
                 </p>
               </div>
-
-              {/* Arrow CTA */}
               <div className="flex-shrink-0 flex items-center gap-2 self-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color: item.color }}
                   className="text-[11px] tracking-[0.2em] uppercase whitespace-nowrap">
@@ -172,7 +156,6 @@ export default function ContactPage() {
             </motion.a>
           ))}
 
-          {/* Bottom note */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={contentInView ? { opacity: 1 } : {}}
@@ -184,57 +167,53 @@ export default function ContactPage() {
           </motion.p>
         </div>
 
-        {/* Right: Google Maps */}
+        {/* Right: Form */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={contentInView ? { opacity: 1 } : {}}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="relative min-h-[50vh]"
-          style={{ minHeight: '500px' }}
+          initial={{ opacity: 0, x: 30 }}
+          animate={contentInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="px-6 md:px-12 lg:px-14 py-16 flex flex-col justify-center"
         >
-          {/* Left-edge fade into page */}
-          <div className="absolute inset-y-0 left-0 w-12 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to right, #191919, transparent)' }} />
-          <iframe
-            src={MAPS_EMBED}
-            className="absolute inset-0 w-full h-full border-0"
-            style={{ filter: 'grayscale(1) contrast(1.1) brightness(0.85)' }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Sport Training Murcia — Ubicación"
-          />
-        </motion.div>
-      </section>
-
-      {/* ── CONTACT FORM ── */}
-      <section className="border-t border-white/8 px-6 md:px-12 lg:px-16 py-20">
-        <div className="max-w-[760px]">
-
-          {/* Heading */}
-          <div className="mb-12">
+          <div className="mb-10">
             <div className="flex items-center gap-4 mb-4">
               <div className="w-2 h-2 bg-[#F1B91E]" />
-              <span
-                style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                className="text-[11px] tracking-[0.25em] uppercase text-white/35"
-              >
+              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                className="text-[11px] tracking-[0.25em] uppercase text-white/35">
                 Formulario de contacto
               </span>
             </div>
-            <h2
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-              className="text-[42px] md:text-[56px] uppercase leading-[0.9] text-white"
-            >
+            <h2 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+              className="text-[42px] md:text-[52px] uppercase leading-[0.9] text-white">
               Envía un<br />
               <span style={{ fontStyle: 'italic', color: '#F1B91E' }}>mensaje.</span>
             </h2>
           </div>
-
           <ContactForm />
-
-        </div>
+        </motion.div>
       </section>
+
+      {/* ── MAP — full width, tall ── */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.4 }}
+        className="relative w-full border-b border-white/8"
+        style={{ height: '520px' }}
+      >
+        <div className="absolute inset-y-0 left-0 w-16 z-10 pointer-events-none"
+          style={{ background: 'linear-gradient(to right, #191919, transparent)' }} />
+        <div className="absolute inset-y-0 right-0 w-16 z-10 pointer-events-none"
+          style={{ background: 'linear-gradient(to left, #191919, transparent)' }} />
+        <iframe
+          src={MAPS_EMBED}
+          className="absolute inset-0 w-full h-full border-0"
+          style={{ filter: 'grayscale(1) contrast(1.1) brightness(0.85)' }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          title="Sport Training Murcia — Ubicación"
+        />
+      </motion.section>
 
       {/* ── BOTTOM BAR ── */}
       <div className="border-t-4 border-[#F1B91E] px-6 md:px-12 lg:px-16 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
