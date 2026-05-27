@@ -158,7 +158,7 @@ export default function Community() {
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-[12vw] md:text-[7vw] leading-[0.88] uppercase text-white"
             >
-              MÁS QUE
+              PRÓXIMOS
             </motion.h2>
           </div>
           <div className="overflow-hidden mb-1">
@@ -168,9 +168,8 @@ export default function Community() {
               transition={{ duration: 0.9, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
               className="text-[12vw] md:text-[7vw] leading-[0.88] uppercase text-[#F1B91E]"
-              
             >
-              Un gimnasio.
+              EVENTOS.
             </motion.h2>
           </div>
 
