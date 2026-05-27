@@ -109,57 +109,49 @@ export default function ContactPage() {
       </section>
 
       {/* ── MAIN CONTENT: contact info left, form right ── */}
-      <section ref={contentRef} className="grid lg:grid-cols-[1fr_1fr] border-b border-white/8">
+      <section ref={contentRef} className="grid lg:grid-cols-[1fr_1fr] lg:min-h-screen border-b border-white/8">
 
-        {/* Left: Contact cards */}
-        <div className="px-6 md:px-12 lg:px-16 py-16 flex flex-col justify-center gap-6 border-r border-white/8">
-          {contactItems.map((item, i) => (
-            <motion.a
-              key={item.label}
-              href={item.href}
-              target={item.label !== 'Teléfono' ? '_blank' : undefined}
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, x: -30 }}
-              animate={contentInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-              className="group flex items-start gap-5 border border-white/8 p-6 hover:border-white/20 transition-all duration-300"
-            >
-              <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center border border-white/10 group-hover:border-white/25 transition-colors duration-300"
-                style={{ color: item.color }}>
-                {item.icon}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                  className="text-[11px] tracking-[0.25em] uppercase text-white/35 mb-1">
+        {/* Left: Contact items — large statement typography */}
+        <div className="px-6 md:px-12 lg:px-16 py-16 lg:py-24 flex flex-col justify-between border-r border-white/8">
+          <div>
+            {contactItems.map((item, i) => (
+              <motion.a
+                key={item.label}
+                href={item.href}
+                target={item.label !== 'Teléfono' ? '_blank' : undefined}
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 24 }}
+                animate={contentInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.7, delay: i * 0.13, ease: [0.16, 1, 0.3, 1] }}
+                className={`group block py-10 lg:py-12 transition-all duration-300 ${i < contactItems.length - 1 ? 'border-b border-white/8' : ''}`}
+              >
+                <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, color: item.color }}
+                  className="text-[11px] tracking-[0.3em] uppercase mb-4">
                   {item.label}
                 </p>
                 <p style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                  className="text-white text-[22px] md:text-[26px] uppercase leading-tight truncate">
+                  className="text-white text-[36px] md:text-[44px] lg:text-[52px] uppercase leading-none mb-3 group-hover:text-[#F1B91E] transition-colors duration-300">
                   {item.value}
                 </p>
-                <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                  className="text-white/40 text-[13px] mt-1">
-                  {item.sub}
-                </p>
-              </div>
-              <div className="flex-shrink-0 flex items-center gap-2 self-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color: item.color }}
-                  className="text-[11px] tracking-[0.2em] uppercase whitespace-nowrap">
-                  {item.cta}
-                </span>
-                <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke={item.color} strokeWidth={2.5}>
-                  <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </div>
-            </motion.a>
-          ))}
+                <div className="flex items-center gap-3">
+                  <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
+                    className="text-white/40 text-[14px]">
+                    {item.sub}
+                  </p>
+                  <svg className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke={item.color} strokeWidth={2.5}>
+                    <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </motion.a>
+            ))}
+          </div>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={contentInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
             style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-            className="text-white/25 text-[13px] mt-2"
+            className="text-white/20 text-[12px] pt-10"
           >
             Sport Training · Est. 2007 · Región de Murcia
           </motion.p>
@@ -170,10 +162,10 @@ export default function ContactPage() {
           initial={{ opacity: 0, x: 30 }}
           animate={contentInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="px-6 md:px-12 lg:px-14 py-16 flex flex-col justify-center"
+          className="px-6 md:px-12 lg:px-14 py-16 lg:py-24 flex flex-col justify-center"
         >
-          <div className="mb-10">
-            <div className="flex items-center gap-4 mb-4">
+          <div className="mb-12">
+            <div className="flex items-center gap-4 mb-6">
               <div className="w-2 h-2 bg-[#F1B91E]" />
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
                 className="text-[11px] tracking-[0.25em] uppercase text-white/35">
@@ -181,7 +173,7 @@ export default function ContactPage() {
               </span>
             </div>
             <h2 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-              className="text-[42px] md:text-[52px] uppercase leading-[0.9] text-white">
+              className="text-[52px] md:text-[64px] lg:text-[72px] uppercase leading-[0.88] text-white">
               Envía un<br />
               <span style={{ fontStyle: 'italic', color: '#F1B91E' }}>mensaje.</span>
             </h2>

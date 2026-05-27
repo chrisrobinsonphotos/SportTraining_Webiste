@@ -26,7 +26,7 @@ const navItems = [
     ],
   },
   {
-    label: 'Modalidades',
+    label: 'Membresías',
     href: '/#modalidades',
     children: [
       { label: 'Personal Training · Oro', href: '/#modalidades' },
