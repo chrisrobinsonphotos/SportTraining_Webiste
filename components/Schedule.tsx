@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import Link from 'next/link'
 
-type ClassType = 'grupo' | 'hyrox' | 'crossfit' | 'personal'
+type ClassType = 'funcional' | 'hyrox' | 'crossfit' | 'personal'
 
 interface ClassSlot {
   time: string
@@ -16,72 +16,69 @@ interface ClassSlot {
 }
 
 const typeConfig: Record<ClassType, { label: string; color: string; border: string; glow: string }> = {
-  hyrox:    { label: 'HYROX',               color: '#F1B91E', border: 'border-[#F1B91E]/25', glow: 'shadow-[0_0_30px_rgba(241,185,30,0.08)]' },
-  crossfit: { label: 'CrossFit',            color: '#E84393', border: 'border-[#E84393]/25', glow: 'shadow-[0_0_30px_rgba(232,67,147,0.08)]' },
-  grupo:    { label: 'Entrenamiento Grupo', color: '#4CA3FF', border: 'border-[#4CA3FF]/20', glow: 'shadow-[0_0_30px_rgba(76,163,255,0.06)]' },
-  personal: { label: 'Personal Training',  color: '#CCCCCC', border: 'border-white/15',      glow: '' },
+  hyrox:    { label: 'HYROX',    color: '#F1B91E', border: 'border-[#F1B91E]/25', glow: 'shadow-[0_0_30px_rgba(241,185,30,0.08)]' },
+  funcional: { label: 'Funcional', color: '#4CA3FF', border: 'border-[#4CA3FF]/20', glow: 'shadow-[0_0_30px_rgba(76,163,255,0.06)]' },
+  crossfit: { label: 'CrossFit', color: '#E84393', border: 'border-[#E84393]/25', glow: 'shadow-[0_0_30px_rgba(232,67,147,0.08)]' },
+  personal: { label: 'Personal Training', color: '#CCCCCC', border: 'border-white/15', glow: '' },
 }
+
+// Trainers
+const MIGUEL = 'Miguel Ángel Barrionuevo Oliveira'
+const PABLO  = 'Pablo Spagnuolo Glerean'
+const MARIA  = 'María Ruiz Martínez'
 
 const schedule: Record<string, ClassSlot[]> = {
   LUN: [
-    { time: '06:00', name: 'Entrenamiento Personal', taken: 1,  max: 2,  trainer: 'Jose Maria Sandoval', type: 'personal' },
-    { time: '07:00', name: 'Entrenamiento en Grupo', taken: 10, max: 15, trainer: 'Laura López · Marisa García', type: 'grupo' },
-    { time: '09:15', name: 'Entrenamiento en Grupo', taken: 9,  max: 15, trainer: 'Pepa Yepes · Isabel Valcárcel', type: 'grupo' },
-    { time: '14:00', name: 'Entrenamiento en Grupo', taken: 0,  max: 15, trainer: 'Maria Ángeles', type: 'grupo' },
-    { time: '16:00', name: 'CrossFit',               taken: 2,  max: 15, trainer: 'Cristina Villa · Borja Roth', type: 'crossfit' },
-    { time: '17:00', name: 'Entrenamiento en Grupo', taken: 6,  max: 15, trainer: 'Nuria García · Noe Gil', type: 'grupo' },
-    { time: '18:00', name: 'HYROX',                  taken: 7,  max: 15, trainer: 'Maria Ángeles', type: 'hyrox' },
-    { time: '19:00', name: 'HYROX',                  taken: 8,  max: 15, trainer: 'Maria Ángeles · Pedro Nicolás', type: 'hyrox' },
-    { time: '20:00', name: 'Entrenamiento en Grupo', taken: 8,  max: 15, trainer: 'Dani Montesinos · Laura Guillén', type: 'grupo' },
+    { time: '07:00', name: 'HYROX',    taken: 0, max: 20, trainer: MIGUEL, type: 'hyrox' },
+    { time: '09:15', name: 'Funcional', taken: 0, max: 20, trainer: PABLO,  type: 'funcional' },
+    { time: '14:00', name: 'Funcional', taken: 0, max: 20, trainer: MIGUEL, type: 'funcional' },
+    { time: '16:00', name: 'HYROX',    taken: 0, max: 20, trainer: MARIA,  type: 'hyrox' },
+    { time: '17:00', name: 'Funcional', taken: 0, max: 20, trainer: MARIA,  type: 'funcional' },
+    { time: '18:00', name: 'HYROX',    taken: 0, max: 20, trainer: MARIA,  type: 'hyrox' },
+    { time: '19:00', name: 'HYROX',    taken: 0, max: 20, trainer: MARIA,  type: 'hyrox' },
+    { time: '20:00', name: 'Funcional', taken: 0, max: 20, trainer: MARIA,  type: 'funcional' },
   ],
   MAR: [
-    { time: '07:00', name: 'Entrenamiento en Grupo', taken: 7,  max: 15, trainer: 'Laura López · Marisa García', type: 'grupo' },
-    { time: '09:00', name: 'Entrenamiento Personal', taken: 1,  max: 2,  trainer: 'Elena García Puerma', type: 'personal' },
-    { time: '09:15', name: 'HYROX',                  taken: 6,  max: 15, trainer: 'Pepa Yepes', type: 'hyrox' },
-    { time: '14:00', name: 'Entrenamiento en Grupo', taken: 0,  max: 15, trainer: 'Maria Ángeles', type: 'grupo' },
-    { time: '17:00', name: 'CrossFit',               taken: 3,  max: 15, trainer: 'Beatriz García · José I. Andújar', type: 'crossfit' },
-    { time: '18:00', name: 'Entrenamiento Personal', taken: 1,  max: 2,  trainer: 'Javier Cáscales', type: 'personal' },
-    { time: '18:00', name: 'HYROX',                  taken: 6,  max: 15, trainer: 'Mª Ángeles Martínez · Mario Jover', type: 'hyrox' },
-    { time: '19:00', name: 'Entrenamiento en Grupo', taken: 5,  max: 15, trainer: 'Nuria García', type: 'grupo' },
-    { time: '20:00', name: 'Entrenamiento en Grupo', taken: 5,  max: 15, trainer: 'Laura Guillén · Jesús Bayano', type: 'grupo' },
+    { time: '07:00', name: 'Funcional', taken: 0, max: 20, trainer: MIGUEL, type: 'funcional' },
+    { time: '09:15', name: 'HYROX',    taken: 0, max: 20, trainer: MIGUEL, type: 'hyrox' },
+    { time: '14:00', name: 'Funcional', taken: 0, max: 20, trainer: MIGUEL, type: 'funcional' },
+    { time: '16:00', name: 'Funcional', taken: 0, max: 20, trainer: MARIA,  type: 'funcional' },
+    { time: '17:00', name: 'Funcional', taken: 0, max: 20, trainer: MARIA,  type: 'funcional' },
+    { time: '18:00', name: 'HYROX',    taken: 0, max: 20, trainer: MARIA,  type: 'hyrox' },
+    { time: '19:00', name: 'Funcional', taken: 0, max: 20, trainer: MARIA,  type: 'funcional' },
+    { time: '20:00', name: 'HYROX',    taken: 0, max: 20, trainer: MARIA,  type: 'hyrox' },
   ],
   MIÉ: [
-    { time: '06:00', name: 'Entrenamiento Personal', taken: 1,  max: 2,  trainer: 'Jose Maria Sandoval', type: 'personal' },
-    { time: '07:00', name: 'Entrenamiento en Grupo', taken: 6,  max: 15, trainer: 'Marisa García · Mª José Moreno', type: 'grupo' },
-    { time: '09:15', name: 'Entrenamiento en Grupo', taken: 7,  max: 15, trainer: 'Pepa Yepes · Isabel Valcárcel', type: 'grupo' },
-    { time: '14:00', name: 'Entrenamiento en Grupo', taken: 0,  max: 15, trainer: 'Maria Ángeles', type: 'grupo' },
-    { time: '16:00', name: 'HYROX',                  taken: 3,  max: 15, trainer: 'Cristina Villa · Isabel Olivares', type: 'hyrox' },
-    { time: '17:00', name: 'Entrenamiento en Grupo', taken: 5,  max: 15, trainer: 'Nuria García · Pedro Nicolás', type: 'grupo' },
-    { time: '18:00', name: 'Entrenamiento en Grupo', taken: 4,  max: 15, trainer: 'Maria Ángeles', type: 'grupo' },
-    { time: '19:00', name: 'CrossFit',               taken: 0,  max: 15, trainer: 'Cristina Villa', type: 'crossfit' },
-    { time: '20:00', name: 'Entrenamiento en Grupo', taken: 7,  max: 15, trainer: 'Laura Guillén · Raquel Villaescusa', type: 'grupo' },
+    { time: '07:00', name: 'HYROX',    taken: 0, max: 20, trainer: MIGUEL, type: 'hyrox' },
+    { time: '09:15', name: 'Funcional', taken: 0, max: 20, trainer: MIGUEL, type: 'funcional' },
+    { time: '14:00', name: 'Funcional', taken: 0, max: 20, trainer: PABLO,  type: 'funcional' },
+    { time: '16:00', name: 'HYROX',    taken: 0, max: 20, trainer: MARIA,  type: 'hyrox' },
+    { time: '17:00', name: 'Funcional', taken: 0, max: 20, trainer: PABLO,  type: 'funcional' },
+    { time: '18:00', name: 'Funcional', taken: 0, max: 20, trainer: PABLO,  type: 'funcional' },
+    { time: '19:00', name: 'HYROX',    taken: 0, max: 20, trainer: MARIA,  type: 'hyrox' },
+    { time: '20:00', name: 'Funcional', taken: 0, max: 20, trainer: MARIA,  type: 'funcional' },
   ],
   JUE: [
-    { time: '06:00', name: 'Entrenamiento Personal', taken: 1,  max: 2,  trainer: 'PAYPA 2012 · SL Molina', type: 'personal' },
-    { time: '07:00', name: 'Entrenamiento en Grupo', taken: 6,  max: 15, trainer: 'Marisa García · José A. López', type: 'grupo' },
-    { time: '09:00', name: 'Entrenamiento Personal', taken: 1,  max: 2,  trainer: 'Elena García Puerma', type: 'personal' },
-    { time: '09:15', name: 'HYROX',                  taken: 4,  max: 15, trainer: 'Pepa Yepes', type: 'hyrox' },
-    { time: '14:00', name: 'Entrenamiento en Grupo', taken: 0,  max: 15, trainer: 'Maria Ángeles', type: 'grupo' },
-    { time: '16:00', name: 'CrossFit',               taken: 0,  max: 15, trainer: 'Cristina Villa', type: 'crossfit' },
-    { time: '17:00', name: 'Entrenamiento en Grupo', taken: 3,  max: 15, trainer: 'Dani Montesinos', type: 'grupo' },
-    { time: '18:00', name: 'HYROX',                  taken: 5,  max: 15, trainer: 'Maria Ángeles', type: 'hyrox' },
-    { time: '18:00', name: 'Entrenamiento Personal', taken: 1,  max: 2,  trainer: 'Javier Cáscales', type: 'personal' },
-    { time: '19:00', name: 'HYROX',                  taken: 5,  max: 15, trainer: 'Cristina Nicolás · Juan Belchi', type: 'hyrox' },
-    { time: '20:00', name: 'Entrenamiento en Grupo', taken: 3,  max: 15, trainer: 'Bianca Escámez · Raquel Villaescusa', type: 'grupo' },
+    { time: '07:00', name: 'Funcional', taken: 0, max: 20, trainer: MIGUEL, type: 'funcional' },
+    { time: '09:15', name: 'HYROX',    taken: 0, max: 20, trainer: MIGUEL, type: 'hyrox' },
+    { time: '14:00', name: 'Funcional', taken: 0, max: 20, trainer: MIGUEL, type: 'funcional' },
+    { time: '16:00', name: 'Funcional', taken: 0, max: 20, trainer: MARIA,  type: 'funcional' },
+    { time: '17:00', name: 'Funcional', taken: 0, max: 20, trainer: MARIA,  type: 'funcional' },
+    { time: '18:00', name: 'HYROX',    taken: 0, max: 20, trainer: MARIA,  type: 'hyrox' },
+    { time: '19:00', name: 'Funcional', taken: 0, max: 20, trainer: MARIA,  type: 'funcional' },
+    { time: '20:00', name: 'HYROX',    taken: 0, max: 20, trainer: MARIA,  type: 'hyrox' },
   ],
   VIE: [
-    { time: '06:00', name: 'Entrenamiento Personal', taken: 1,  max: 2,  trainer: 'Jose Maria Sandoval', type: 'personal' },
-    { time: '07:00', name: 'Entrenamiento en Grupo', taken: 0,  max: 15, trainer: 'Maria Ángeles', type: 'grupo' },
-    { time: '09:15', name: 'Entrenamiento en Grupo', taken: 2,  max: 15, trainer: 'Isabel Valcárcel · Silvia López', type: 'grupo' },
-    { time: '16:00', name: 'Entrenamiento en Grupo', taken: 0,  max: 15, trainer: 'Maria Ángeles', type: 'grupo' },
-    { time: '17:00', name: 'Entrenamiento en Grupo', taken: 0,  max: 15, trainer: 'Nuria García', type: 'grupo' },
-    { time: '18:00', name: 'CrossFit',               taken: 0,  max: 15, trainer: 'Cristina Villa', type: 'crossfit' },
-    { time: '18:00', name: 'Entrenamiento Personal', taken: 1,  max: 2,  trainer: 'Javier Cáscales', type: 'personal' },
-    { time: '19:00', name: 'Entrenamiento en Grupo', taken: 0,  max: 15, trainer: 'Laura Guillén', type: 'grupo' },
+    { time: '07:00', name: 'HYROX',    taken: 0, max: 20, trainer: MIGUEL, type: 'hyrox' },
+    { time: '09:15', name: 'Funcional', taken: 0, max: 20, trainer: MIGUEL, type: 'funcional' },
+    { time: '16:00', name: 'HYROX',    taken: 0, max: 20, trainer: MARIA,  type: 'hyrox' },
+    { time: '17:00', name: 'Funcional', taken: 0, max: 20, trainer: MARIA,  type: 'funcional' },
+    { time: '18:00', name: 'HYROX',    taken: 0, max: 20, trainer: MARIA,  type: 'hyrox' },
+    { time: '19:00', name: 'HYROX',    taken: 0, max: 20, trainer: MARIA,  type: 'hyrox' },
   ],
   SÁB: [
-    { time: '10:00', name: 'Entrenamiento en Grupo', taken: 0,  max: 15, trainer: 'Maria Ángeles', type: 'grupo' },
-    { time: '11:00', name: 'HYROX',                  taken: 0,  max: 15, trainer: 'Pepa Yepes', type: 'hyrox' },
+    { time: '10:00', name: 'HYROX', taken: 0, max: 20, trainer: 'Miguel Ángel Barrionuevo', type: 'hyrox' },
+    { time: '11:00', name: 'HYROX', taken: 0, max: 20, trainer: 'Miguel Ángel Barrionuevo', type: 'hyrox' },
   ],
 }
 
@@ -171,23 +168,6 @@ export default function Schedule() {
     <section ref={ref} className="relative bg-[#141414] flex flex-col overflow-hidden">
 
       <div className="absolute inset-0 geo-grid opacity-20 pointer-events-none" />
-
-      {/* Coming Soon overlay */}
-      <div className="absolute inset-0 z-50 bg-[#0F0F0F]/92 flex flex-col items-center justify-center gap-6 pointer-events-none">
-        <div className="flex items-center gap-4 mb-2">
-          <div className="w-2 h-2 bg-[#F1B91E]" />
-          <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-            className="text-[#F1B91E] text-[12px] tracking-[0.35em] uppercase">Reserva de Clases</span>
-        </div>
-        <h2 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-          className="text-[14vw] md:text-[9vw] lg:text-[7vw] leading-none uppercase text-white text-center tracking-tight">
-          PRÓXIMAMENTE
-        </h2>
-        <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-          className="text-white/40 text-[15px] tracking-[0.08em] text-center">
-          Reserva tus clases aquí · En breve disponible
-        </p>
-      </div>
 
       {/* ── HEADER ── */}
       <div className="relative z-10 px-6 md:px-12 lg:px-16 pt-20 pb-0 flex-shrink-0">
