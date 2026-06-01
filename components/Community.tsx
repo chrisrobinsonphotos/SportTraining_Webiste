@@ -600,11 +600,29 @@ export default function Community() {
                       fill
                       sizes="100vw"
                       className="object-contain"
-                      quality={90}
+                      quality={82}
                     />
                   </div>
                 </motion.div>
               </AnimatePresence>
+
+              {/* Hidden preload — fetches prev/next images while user views current */}
+              <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ opacity: 0 }}>
+                {[-1, 1, 2].map(offset => {
+                  const idx = (lbIndex + offset + lightboxImages.length) % lightboxImages.length
+                  return (
+                    <div key={`preload-${lightboxGallery.id}-${idx}`} className="absolute inset-0">
+                      <Image
+                        src={lightboxImages[idx].src}
+                        alt=""
+                        fill
+                        sizes="100vw"
+                        quality={82}
+                      />
+                    </div>
+                  )
+                })}
+              </div>
 
               {/* Prev */}
               <button
