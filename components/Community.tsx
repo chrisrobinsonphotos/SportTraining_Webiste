@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -55,215 +55,383 @@ const carouselImages = [
   { src: '/_MG_5450.jpg', caption: 'Sport Training · Murcia' },
 ]
 
-
 export default function Community() {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
   const [activeSlide, setActiveSlide] = useState(0)
   const [direction, setDirection] = useState(1)
 
+  // Lightbox state
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [lbIndex, setLbIndex] = useState(0)
+  const [lbDirection, setLbDirection] = useState(1)
+  // Ref so keyboard handler always sees the latest index
+  const lbIndexRef = useRef(lbIndex)
+  useEffect(() => { lbIndexRef.current = lbIndex }, [lbIndex])
+
   const paginate = (newIndex: number) => {
     setDirection(newIndex > activeSlide ? 1 : -1)
     setActiveSlide((newIndex + carouselImages.length) % carouselImages.length)
   }
 
+  const openLightbox = () => {
+    setLbIndex(activeSlide)
+    setLbDirection(1)
+    setLightboxOpen(true)
+  }
+
+  const lbGo = (newIndex: number) => {
+    const clamped = (newIndex + carouselImages.length) % carouselImages.length
+    setLbDirection(newIndex > lbIndexRef.current ? 1 : -1)
+    setLbIndex(clamped)
+  }
+
+  // Keyboard navigation in lightbox
+  useEffect(() => {
+    if (!lightboxOpen) return
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightboxOpen(false)
+      if (e.key === 'ArrowRight') lbGo(lbIndexRef.current + 1)
+      if (e.key === 'ArrowLeft') lbGo(lbIndexRef.current - 1)
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [lightboxOpen])
+
+  // Lock body scroll when lightbox is open
+  useEffect(() => {
+    document.body.style.overflow = lightboxOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [lightboxOpen])
+
   return (
-    <section ref={ref} className="relative bg-[#0D0D0D] min-h-screen flex flex-col overflow-hidden border-b-4 border-[#F1B91E]">
+    <>
+      <section ref={ref} className="relative bg-[#0D0D0D] min-h-screen flex flex-col overflow-hidden border-b-4 border-[#F1B91E]">
 
-      {/* TOP HALF: Carousel — full width, no padding */}
-      <div className="relative flex-1 min-h-[65vh] overflow-hidden">
-        <AnimatePresence mode="wait" custom={direction}>
-          <motion.div
-            key={activeSlide}
-            custom={direction}
-            initial={{ opacity: 0, x: direction * 80 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: direction * -80 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={carouselImages[activeSlide].src}
-              alt={carouselImages[activeSlide].caption}
-              fill
-              className="object-cover object-left-top"
-              quality={85}
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0D0D0D]/30 via-transparent to-[#0D0D0D]" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0D0D0D]/60 to-transparent" />
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Caption */}
-        <div className="absolute bottom-6 left-6 md:left-12 lg:left-16 z-20">
-          <motion.p
-            key={activeSlide}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, fontStyle: 'italic', textTransform: 'none' }}
-            className="text-white/70 text-[13px] tracking-[0.2em] uppercase"
-          >
-            {carouselImages[activeSlide].caption}
-          </motion.p>
-        </div>
-
-        {/* Carousel controls — bottom right */}
-        <div className="absolute bottom-6 right-6 md:right-12 z-20 flex items-center gap-3">
-          <button onClick={() => paginate(activeSlide - 1)}
-            className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-[#F1B91E] hover:text-[#F1B91E] text-white/40 transition-all duration-300">
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="square" d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-            className="text-[12px] tracking-[0.15em] text-white/50 tabular-nums w-16 text-center">
-            {String(activeSlide + 1).padStart(2, '0')} / {String(carouselImages.length).padStart(2, '0')}
-          </span>
-          <button onClick={() => paginate(activeSlide + 1)}
-            className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-[#F1B91E] hover:text-[#F1B91E] text-white/40 transition-all duration-300">
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Big label top-left */}
-        <div className="absolute top-8 left-6 md:left-12 lg:left-16 z-20">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            className="flex items-center gap-4"
-          >
-            <div className="w-2 h-2 bg-[#F1B91E]" />
-            <span className="section-label">Eventos & Comunidad</span>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* BOTTOM HALF: Left text + right event list */}
-      <div className="px-6 md:px-12 lg:px-16 py-12 md:py-16 grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-20 flex-shrink-0">
-
-        {/* Left: Headline + pillars + CTA */}
-        <div>
-          <div className="overflow-hidden mb-1">
-            <motion.h2
-              initial={{ y: 80, opacity: 0 }}
-              animate={inView ? { y: 0, opacity: 1 } : {}}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-              className="text-[12vw] md:text-[7vw] leading-[0.88] uppercase text-white"
+        {/* TOP HALF: Carousel — full width, no padding */}
+        <div className="relative flex-1 min-h-[65vh] overflow-hidden">
+          <AnimatePresence custom={direction}>
+            <motion.div
+              key={activeSlide}
+              custom={direction}
+              initial={{ opacity: 0, x: direction * 80 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: direction * -80 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute inset-0"
             >
-              PRÓXIMOS
-            </motion.h2>
-          </div>
-          <div className="overflow-hidden mb-1">
-            <motion.h2
-              initial={{ y: 80, opacity: 0 }}
-              animate={inView ? { y: 0, opacity: 1 } : {}}
-              transition={{ duration: 0.9, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-              className="text-[12vw] md:text-[7vw] leading-[0.88] uppercase text-[#F1B91E]"
+              <Image
+                src={carouselImages[activeSlide].src}
+                alt={carouselImages[activeSlide].caption}
+                fill
+                sizes="100vw"
+                priority={activeSlide === 0}
+                className="object-cover object-left-top"
+                quality={85}
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#0D0D0D]/30 via-transparent to-[#0D0D0D]" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0D0D0D]/60 to-transparent" />
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Clickable overlay — opens lightbox */}
+          <button
+            onClick={openLightbox}
+            aria-label="Ver galería completa"
+            className="absolute inset-0 z-10 w-full h-full cursor-zoom-in group"
+          >
+            {/* Expand hint — top right, appears on hover */}
+            <span className="absolute top-8 right-6 md:right-12 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                className="text-[10px] tracking-[0.2em] uppercase text-white/60">
+                Ver galería
+              </span>
+              <span className="w-8 h-8 border border-white/30 flex items-center justify-center text-white/50">
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="square" d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                </svg>
+              </span>
+            </span>
+          </button>
+
+          {/* Caption */}
+          <div className="absolute bottom-6 left-6 md:left-12 lg:left-16 z-20 pointer-events-none">
+            <motion.p
+              key={activeSlide}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, fontStyle: 'italic', textTransform: 'none' }}
+              className="text-white/70 text-[13px] tracking-[0.2em] uppercase"
             >
-              EVENTOS.
-            </motion.h2>
+              {carouselImages[activeSlide].caption}
+            </motion.p>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="flex flex-wrap gap-3 mt-8 mb-8"
-          >
-            {['▪ CORAJE', '▪ COMUNIDAD', '▪ EVENTOS'].map(p => (
-              <div key={p} className="border border-white/10 px-4 py-2.5">
-                <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
-                  className="text-white text-[12px] tracking-[0.2em] uppercase">{p}</span>
-              </div>
-            ))}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.5 }}
-          >
-            <Link href="/contacto"
-              aria-label="Ver la comunidad de Sport Training Murcia — eventos y galería"
-              className="inline-flex items-center gap-3 bg-[#F1B91E] text-[#191919] px-7 py-4 hover:bg-[#C99200] transition-colors duration-300 group">
-              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                className="text-[11px] tracking-[0.25em] uppercase">Ver Comunidad</span>
-              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          {/* Carousel controls — bottom right */}
+          <div className="absolute bottom-6 right-6 md:right-12 z-20 flex items-center gap-3">
+            <button
+              onClick={(e) => { e.stopPropagation(); paginate(activeSlide - 1) }}
+              className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-[#F1B91E] hover:text-[#F1B91E] text-white/40 transition-all duration-300">
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="square" d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+              className="text-[12px] tracking-[0.15em] text-white/50 tabular-nums w-16 text-center">
+              {String(activeSlide + 1).padStart(2, '0')} / {String(carouselImages.length).padStart(2, '0')}
+            </span>
+            <button
+              onClick={(e) => { e.stopPropagation(); paginate(activeSlide + 1) }}
+              className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-[#F1B91E] hover:text-[#F1B91E] text-white/40 transition-all duration-300">
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
               </svg>
-            </Link>
-          </motion.div>
+            </button>
+          </div>
+
+          {/* Section label — top left */}
+          <div className="absolute top-8 left-6 md:left-12 lg:left-16 z-20 pointer-events-none">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              className="flex items-center gap-4"
+            >
+              <div className="w-2 h-2 bg-[#F1B91E]" />
+              <span className="section-label">Eventos & Comunidad</span>
+            </motion.div>
+          </div>
         </div>
 
-        {/* Right: Single event card */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="border border-white/10 p-8 md:p-10 hover:border-[#F1B91E]/40 transition-colors duration-400 self-center"
-        >
-          <div className="flex items-start justify-between gap-4 mb-6">
-            <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-              className="text-[11px] tracking-[0.2em] uppercase text-[#F1B91E] border border-[#F1B91E]/40 px-3 py-1.5">
-              Competición
-            </span>
-            <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-              className="text-[11px] tracking-[0.15em] uppercase text-white/30">28 Mayo 2026</span>
+        {/* BOTTOM HALF: Left text + right event card */}
+        <div className="px-6 md:px-12 lg:px-16 py-12 md:py-16 grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-20 flex-shrink-0">
+
+          {/* Left: Headline + pillars + CTA */}
+          <div>
+            <div className="overflow-hidden mb-1">
+              <motion.h2
+                initial={{ y: 80, opacity: 0 }}
+                animate={inView ? { y: 0, opacity: 1 } : {}}
+                transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+                className="text-[12vw] md:text-[7vw] leading-[0.88] uppercase text-white"
+              >
+                PRÓXIMOS
+              </motion.h2>
+            </div>
+            <div className="overflow-hidden mb-1">
+              <motion.h2
+                initial={{ y: 80, opacity: 0 }}
+                animate={inView ? { y: 0, opacity: 1 } : {}}
+                transition={{ duration: 0.9, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+                className="text-[12vw] md:text-[7vw] leading-[0.88] uppercase text-[#F1B91E]"
+              >
+                EVENTOS.
+              </motion.h2>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.4 }}
+              className="flex flex-wrap gap-3 mt-8 mb-8"
+            >
+              {['▪ CORAJE', '▪ COMUNIDAD', '▪ EVENTOS'].map(p => (
+                <div key={p} className="border border-white/10 px-4 py-2.5">
+                  <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
+                    className="text-white text-[12px] tracking-[0.2em] uppercase">{p}</span>
+                </div>
+              ))}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.5 }}
+            >
+              <Link href="/contacto"
+                aria-label="Ver la comunidad de Sport Training Murcia — eventos y galería"
+                className="inline-flex items-center gap-3 bg-[#F1B91E] text-[#191919] px-7 py-4 hover:bg-[#C99200] transition-colors duration-300 group">
+                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+                  className="text-[11px] tracking-[0.25em] uppercase">Ver Comunidad</span>
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </motion.div>
           </div>
 
-          <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-            className="text-white text-[36px] md:text-[44px] uppercase leading-tight mb-4">
-            HYROX Relay Race
-          </h4>
+          {/* Right: Single event card */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="border border-white/10 p-8 md:p-10 hover:border-[#F1B91E]/40 transition-colors duration-400 self-center"
+          >
+            <div className="flex items-start justify-between gap-4 mb-6">
+              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                className="text-[11px] tracking-[0.2em] uppercase text-[#F1B91E] border border-[#F1B91E]/40 px-3 py-1.5">
+                Competición
+              </span>
+              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                className="text-[11px] tracking-[0.15em] uppercase text-white/30">28 Mayo 2026</span>
+            </div>
 
-          <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
-            className="text-white/65 text-[17px] leading-relaxed mb-3">
-            Compite en equipo en nuestro primer evento HYROX Relay. Parejas. Estaciones. Máxima intensidad.
-          </p>
+            <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+              className="text-white text-[36px] md:text-[44px] uppercase leading-tight mb-4">
+              HYROX Relay Race
+            </h4>
 
-          <div className="flex flex-wrap gap-x-6 gap-y-1 mb-8">
-            {[
-              { label: 'Hora', value: '10:00 – 14:00' },
-              { label: 'Formato', value: 'Relay por parejas' },
-              { label: 'Lugar', value: 'Sport Training · Murcia' },
-            ].map(({ label, value }) => (
-              <div key={label}>
-                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                  className="text-[10px] tracking-[0.15em] uppercase text-white/30 block mb-0.5">{label}</span>
-                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 500 }}
-                  className="text-white/80 text-[14px]">{value}</span>
+            <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
+              className="text-white/65 text-[17px] leading-relaxed mb-3">
+              Compite en equipo en nuestro primer evento HYROX Relay. Parejas. Estaciones. Máxima intensidad.
+            </p>
+
+            <div className="flex flex-wrap gap-x-6 gap-y-1 mb-8">
+              {[
+                { label: 'Hora', value: '10:00 – 14:00' },
+                { label: 'Formato', value: 'Relay por parejas' },
+                { label: 'Lugar', value: 'Sport Training · Murcia' },
+              ].map(({ label, value }) => (
+                <div key={label}>
+                  <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                    className="text-[10px] tracking-[0.15em] uppercase text-white/30 block mb-0.5">{label}</span>
+                  <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 500 }}
+                    className="text-white/80 text-[14px]">{value}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* QR Code */}
+            <div className="flex items-center gap-6 pt-6 border-t border-white/8">
+              <div className="bg-white p-2 flex-shrink-0">
+                <Image
+                  src="/qr-hyrox-grupo.png"
+                  alt="QR — Grupo HYROX Sport Training"
+                  width={80}
+                  height={80}
+                  className="block"
+                />
               </div>
-            ))}
-          </div>
+              <div>
+                <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                  className="text-white text-[13px] tracking-[0.1em] uppercase mb-1">
+                  Únete al grupo HYROX
+                </p>
+                <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
+                  className="text-white/40 text-[12px] leading-relaxed">
+                  Escanea para acceder al grupo oficial<br />de la comunidad HYROX Sport Training.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
-          {/* QR Code */}
-          <div className="flex items-center gap-6 pt-6 border-t border-white/8">
-            <div className="bg-white p-2 flex-shrink-0">
-              <Image
-                src="/qr-hyrox-grupo.png"
-                alt="QR — Grupo HYROX Sport Training"
-                width={80}
-                height={80}
-                className="block"
-              />
+      {/* ── LIGHTBOX ─────────────────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {lightboxOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[100] bg-black flex flex-col"
+          >
+            {/* Header bar */}
+            <div className="flex items-center justify-between px-6 md:px-10 py-4 flex-shrink-0 border-b border-white/8 z-10">
+              <div className="flex items-center gap-4">
+                <div className="w-2 h-2 bg-[#F1B91E]" />
+                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+                  className="text-[11px] tracking-[0.25em] uppercase text-white/60">
+                  Sport Training · Galería
+                </span>
+              </div>
+              <div className="flex items-center gap-6">
+                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                  className="text-[12px] tracking-[0.15em] text-white/40 tabular-nums">
+                  {String(lbIndex + 1).padStart(2, '0')} / {String(carouselImages.length).padStart(2, '0')}
+                </span>
+                <button
+                  onClick={() => setLightboxOpen(false)}
+                  aria-label="Cerrar galería"
+                  className="w-9 h-9 border border-white/20 flex items-center justify-center text-white/50 hover:border-[#F1B91E] hover:text-[#F1B91E] transition-all duration-200"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="square" d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
             </div>
-            <div>
-              <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                className="text-white text-[13px] tracking-[0.1em] uppercase mb-1">
-                Únete al grupo HYROX
-              </p>
-              <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
-                className="text-white/40 text-[12px] leading-relaxed">
-                Escanea para acceder al grupo oficial<br />de la comunidad HYROX Sport Training.
-              </p>
+
+            {/* Image area — takes remaining height */}
+            <div className="relative flex-1 overflow-hidden">
+              <AnimatePresence custom={lbDirection}>
+                <motion.div
+                  key={lbIndex}
+                  custom={lbDirection}
+                  initial={{ opacity: 0, x: lbDirection * 60 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: lbDirection * -60 }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0 flex items-center justify-center px-16 md:px-24 py-4"
+                >
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={carouselImages[lbIndex].src}
+                      alt={carouselImages[lbIndex].caption}
+                      fill
+                      sizes="100vw"
+                      className="object-contain"
+                      quality={90}
+                    />
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Prev button */}
+              <button
+                onClick={() => lbGo(lbIndex - 1)}
+                aria-label="Imagen anterior"
+                className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 border border-white/20 flex items-center justify-center text-white/40 hover:border-[#F1B91E] hover:text-[#F1B91E] transition-all duration-200"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="square" d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              {/* Next button */}
+              <button
+                onClick={() => lbGo(lbIndex + 1)}
+                aria-label="Imagen siguiente"
+                className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 border border-white/20 flex items-center justify-center text-white/40 hover:border-[#F1B91E] hover:text-[#F1B91E] transition-all duration-200"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
-          </div>
-        </motion.div>
-      </div>
-    </section>
+
+            {/* Footer: caption + keyboard hint */}
+            <div className="flex items-center justify-between px-6 md:px-10 py-4 flex-shrink-0 border-t border-white/8">
+              <motion.p
+                key={lbIndex}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, fontStyle: 'italic' }}
+                className="text-white/50 text-[12px] tracking-[0.18em] uppercase"
+              >
+                {carouselImages[lbIndex].caption}
+              </motion.p>
+              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
+                className="hidden md:block text-[11px] tracking-[0.15em] text-white/20 uppercase">
+                ← → navegar · ESC cerrar
+              </span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   )
 }
