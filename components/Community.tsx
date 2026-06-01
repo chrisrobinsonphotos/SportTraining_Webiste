@@ -33,7 +33,7 @@ const galleries: Gallery[] = [
     title: 'HYROX Relay Race',
     subtitle: 'Primer evento Relay oficial de Sport Training',
     date: '28 Mayo 2026',
-    cover: '/relay-may-26/_MG_5804.jpg',
+    cover: '/relay-may-26/EVENTOS.jpg',
     images: [
       { src: '/relay-may-26/_MG_5804.jpg', caption: 'HYROX Relay Race · Mayo 2026' },
       { src: '/relay-may-26/_MG_5809.jpg', caption: 'HYROX Relay Race · Mayo 2026' },
