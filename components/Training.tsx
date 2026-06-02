@@ -24,7 +24,7 @@ const disciplines = [
     tagline: 'Alto Rendimiento',
     description: 'Protocolo de competición para atletas que buscan el podio. Métricas reales, carga progresiva y preparación específica para la temporada HYROX.',
     href: '/contacto',
-    image: '/hyrox-coaching.jpg',
+    image: '/jr-wallball.jpg',
     accent: true,
   },
   {
