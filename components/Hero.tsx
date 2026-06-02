@@ -32,7 +32,7 @@ export default function Hero() {
       {/* Full-bleed background image */}
       <motion.div className="absolute inset-0" style={{ scale: imageScale }}>
         <Image
-          src="/gym-rig.jpg"
+          src="/mas-que-un-gimnasio.jpg"
           alt="Sport Training Murcia — gimnasio de HYROX, CrossTraining y entrenamiento funcional"
           fill
           sizes="100vw"

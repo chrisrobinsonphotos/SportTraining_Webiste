@@ -38,7 +38,7 @@ const tiers = [
     href: '/modalidades/grupo',
     highlight: false,
     tierColor: '#DDDDDD',
-    image: '/hyrox-women.jpg',
+    image: '/hyrox-medball.jpg',
     splitImage: undefined,
     pricing: {
       subtitle: 'Clases en grupo y acceso libre',
@@ -60,7 +60,7 @@ const tiers = [
     href: '/modalidades/libre',
     highlight: false,
     tierColor: '#C9966B',
-    image: '/gym-rig.jpg',
+    image: '/gym-wide.jpg',
     splitImage: '/gym-machines.jpg',
     pricing: {
       subtitle: 'Acceso libre al gimnasio',
