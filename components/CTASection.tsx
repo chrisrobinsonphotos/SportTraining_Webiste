@@ -15,7 +15,7 @@ export default function CTASection() {
       {/* Full-bleed background: gym logo wall */}
       <div className="absolute inset-0">
         <Image
-          src="/cta-group.jpg"
+          src="/cta-community.jpg"
           alt="Comunidad Sport Training Murcia — entrenamiento en grupo HYROX, CrossTraining y funcional"
           fill
           className="object-cover object-center"
