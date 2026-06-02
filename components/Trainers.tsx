@@ -35,7 +35,7 @@ const trainers = [
     role: 'Entrenador Personal',
     since: 'Sport Training',
     specialities: ['Fuerza', 'Acondicionamiento', 'Nutrición'],
-    image: '/trainer-dani.jpg',
+    image: '/trainer-pablo.jpg',
     num: '04',
   },
 ]
@@ -176,8 +176,8 @@ export default function Trainers() {
             transition={{ duration: 0.7, delay: 0.4 }}
             className="flex-shrink-0"
           >
-            <Link
-              href="/contacto"
+            <button
+              data-contact
               className="inline-flex items-center gap-3 border border-[#F1B91E]/40 text-[#F1B91E] px-6 py-4 hover:bg-[#F1B91E] hover:text-[#191919] transition-all duration-300 group"
             >
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
@@ -187,7 +187,7 @@ export default function Trainers() {
               <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
               </svg>
-            </Link>
+            </button>
           </motion.div>
         </div>
       </div>

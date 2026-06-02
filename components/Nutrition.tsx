@@ -9,7 +9,7 @@ import Link from 'next/link'
 // /contacto. Restore per-pillar routes when those pages ship.
 const pillars = [
   { num: '01', label: 'ALIMENTACIÓN', href: '/contacto', image: '/nutrition-food.jpg', desc: 'La base real de cualquier progreso. Hábitos sólidos sobre los que construir resultados duraderos.' },
-  { num: '02', label: 'EVENTOS', href: '/#comunidad', image: '/relay-may-26/EVENTOS.jpg', desc: 'Competiciones HYROX, retos mensuales y talleres técnicos. Más que un entrenamiento — una experiencia.' },
+  { num: '02', label: 'EVENTOS', href: '/#comunidad', image: '/relay-cover.jpg', desc: 'Competiciones HYROX, retos mensuales y talleres técnicos. Más que un entrenamiento — una experiencia.' },
   { num: '03', label: 'SUPLEMENTACIÓN', href: '/contacto', image: '/nutrition-supplements.jpg', desc: 'Solo cuando aporta valor. Pocos productos, calidad contrastada, dosis efectivas.' },
 ]
 
@@ -89,14 +89,15 @@ export default function Nutrition() {
             transition={{ duration: 0.7, delay: 0.4 }}
             className="flex-shrink-0"
           >
-            <Link href="/contacto"
+            <button
+              data-contact
               className="inline-flex items-center gap-3 border border-[#F1B91E]/40 text-[#F1B91E] px-6 py-3.5 hover:bg-[#F1B91E] hover:text-[#191919] transition-all duration-300 group">
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
                 className="text-[11px] tracking-[0.2em] uppercase">Asesoramiento Nutricional</span>
               <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
               </svg>
-            </Link>
+            </button>
           </motion.div>
         </div>
 

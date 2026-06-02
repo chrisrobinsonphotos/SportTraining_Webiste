@@ -9,11 +9,12 @@ import StatementSection from '@/components/StatementSection'
 import Adaptado from '@/components/Adaptado'
 import Nutrition from '@/components/Nutrition'
 import Community from '@/components/Community'
-import Trainers from '@/components/Trainers'
 import Schedule from '@/components/Schedule'
-import CTASection from '@/components/CTASection'
+import Trainers from '@/components/Trainers'
 import Reviews from '@/components/Reviews'
+import CTASection from '@/components/CTASection'
 import Footer from '@/components/Footer'
+import ContactModal from '@/components/ContactModal'
 
 export const metadata: Metadata = {
   title: "Sport Training Murcia — HYROX Training Club Oficial",
@@ -45,12 +46,13 @@ export default function Home() {
         <Adaptado />
         <Nutrition />
         <Community />
-        <Trainers />
         <Schedule />
-        <CTASection />
+        <Trainers />
         <Reviews />
+        <CTASection />
       </main>
       <Footer />
+      <ContactModal />
     </>
   )
 }

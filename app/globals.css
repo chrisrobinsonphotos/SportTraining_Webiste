@@ -3,14 +3,32 @@
 @theme inline {
   --color-gold: #F1B91E;
   --color-gold-dark: #C99200;
+  --color-gold-deep: #B07F00;
   --color-black-st: #191919;
   --color-carbon: #4A4A4A;
   --color-bg-dark: #1E1E1E;
+  --color-bg-16: #161616;
+  --color-bg-14: #141414;
+  --color-bg-11: #111111;
+  --color-bg-0f: #0F0F0F;
+  --color-bg-0d: #0D0D0D;
+  --color-surface: #1A1A1A;
   --color-gray-light: #F4F4F4;
   --color-gray-mid: #DDDDDD;
+  --color-tier-oro: #F1B91E;
+  --color-tier-plata: #DDDDDD;
+  --color-tier-bronce: #C9966B;
+  --color-type-hyrox: #F1B91E;
+  --color-type-funcional: #4CA3FF;
+  --color-type-crossfit: #E84393;
+  --color-type-personal: #CCCCCC;
+  --color-whatsapp: #25D366;
 
   --font-display: var(--font-barlow), 'Arial Black', sans-serif;
   --font-body: var(--font-inter), 'Arial', sans-serif;
+  --font-mono: var(--font-jetbrains, 'JetBrains Mono'), 'Courier New', monospace;
+
+  --ease-brand: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 *,
@@ -23,6 +41,10 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 90px;
 }
 
 body {

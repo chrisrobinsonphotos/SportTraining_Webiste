@@ -1,33 +1,34 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useRef, useState, useCallback, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
-import type { PlaceReview } from '@/app/api/reviews/route'
 
-// Stock avatar photos for mock reviews (index 0–5)
-const AVATAR_PHOTOS = [
-  '/avatar-1.jpg',
-  '/avatar-2.jpg',
-  '/avatar-3.jpg',
-  '/avatar-4.jpg',
-  '/avatar-5.jpg',
-  '/avatar-6.jpg',
+// ---------------------------------------------------------------------------
+// Static review data
+// ---------------------------------------------------------------------------
+
+// These reviews are representative placeholders —
+// replace with real Google reviews before launch.
+const reviews = [
+  { name: 'Laura Martínez', date: 'Hace 2 semanas', text: 'Llevo tres meses entrenando aquí y el cambio ha sido brutal. Los entrenadores te corrigen, te exigen y te motivan. No es un gimnasio más — es otro nivel.', avatar: '/avatar-1.jpg' },
+  { name: 'Carlos Ruiz', date: 'Hace 1 mes', text: 'Probé la clase de HYROX y me enganchó desde el primer día. El ambiente, la gente, los coaches... todo está pensado para que des el máximo.', avatar: '/avatar-2.jpg' },
+  { name: 'Ana Belén', date: 'Hace 3 semanas', text: 'Buscaba un sitio serio para entrenar después de una lesión. Aquí adaptaron todo a mi situación sin hacerme sentir limitada. Profesionalidad total.', avatar: '/avatar-3.jpg' },
+  { name: 'Marta Gómez', date: 'Hace 2 meses', text: 'El mejor gimnasio de Murcia, sin discusión. Instalaciones impecables, grupos reducidos y una comunidad que te empuja a mejorar cada día.', avatar: null },
+  { name: 'David Hernández', date: 'Hace 1 mes', text: 'El entrenamiento personal con Miguel Jr. me ha cambiado la forma de entrenar. Resultados reales en poco tiempo y sin lesiones.', avatar: null },
+  { name: 'Cristina López', date: 'Hace 3 meses', text: 'Me apunté al plan Plata y no me arrepiento. Las clases de funcional son duras pero sales sintiéndote increíble. Y el precio es muy competitivo.', avatar: null },
+  { name: 'Sergio Navarro', date: 'Hace 2 semanas', text: 'Llevo años entrenando solo y decidí probar las clases. La diferencia es abismal — estructura, técnica y motivación que no consigues por tu cuenta.', avatar: null },
+  { name: 'Elena Sánchez', date: 'Hace 1 mes', text: 'Como madre de dos niños, necesitaba un sitio con horarios flexibles y resultados. Sport Training cumple con creces. Mi hora favorita del día.', avatar: null },
+  { name: 'Javier Moreno', date: 'Hace 2 meses', text: 'Preparé mi primera HYROX aquí y conseguí un tiempo que ni soñaba. El equipo sabe lo que hace y se nota en cada sesión.', avatar: null },
+  { name: 'Raquel Ortega', date: 'Hace 3 semanas', text: 'El programa de nutrición complementa perfectamente el entrenamiento. Por fin alguien que no te vende suplementos innecesarios.', avatar: null },
 ]
 
 // ---------------------------------------------------------------------------
-// Star icon
+// Star icon — filled gold
 // ---------------------------------------------------------------------------
-function StarIcon({ filled }: { filled: boolean }) {
+function StarIcon() {
   return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill={filled ? '#F1B91E' : 'none'}
-      stroke="#F1B91E"
-      strokeWidth={1.5}
-    >
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="#F1B91E" stroke="#F1B91E" strokeWidth={1.5}>
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
     </svg>
   )
@@ -39,11 +40,9 @@ function StarIcon({ filled }: { filled: boolean }) {
 function ReviewCard({
   review,
   index,
-  avatarSrc,
 }: {
-  review: PlaceReview
+  review: (typeof reviews)[number]
   index: number
-  avatarSrc?: string
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-40px' })
@@ -54,51 +53,64 @@ function ReviewCard({
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-      className="flex-shrink-0 w-[340px] md:w-[400px] flex flex-col justify-between
-                 bg-[#1A1A1A] border border-white/[0.06] p-8
-                 hover:border-[#F1B91E]/30 transition-colors duration-400 group"
-      style={{ minHeight: '260px' }}
+      className="flex flex-col bg-[#1A1A1A] border border-white/[0.06] hover:border-[#F1B91E]/30 transition-colors duration-400 group"
+      style={{
+        flex: '0 0 min(440px, 86vw)',
+        scrollSnapAlign: 'start',
+        padding: '2.25rem',
+        minHeight: '280px',
+      }}
     >
       {/* Stars */}
       <div className="flex gap-1 mb-5">
         {[1, 2, 3, 4, 5].map((n) => (
-          <StarIcon key={n} filled={n <= review.rating} />
+          <StarIcon key={n} />
         ))}
       </div>
 
-      {/* Review text */}
+      {/* Quote text */}
       <p
-        style={{ fontFamily: 'var(--font-inter)', fontWeight: 400, fontStyle: 'italic', textTransform: 'none' }}
-        className="text-white/65 text-[15px] leading-relaxed flex-1 mb-6
+        style={{
+          fontFamily: 'var(--font-inter)',
+          fontWeight: 400,
+          fontStyle: 'italic',
+          fontSize: 'clamp(1.25rem, 1.45vw, 1.45rem)',
+        }}
+        className="text-white/65 leading-relaxed flex-1 mb-6
                    group-hover:text-white/80 transition-colors duration-400"
       >
-        "{review.text}"
+        &ldquo;{review.text}&rdquo;
       </p>
 
-      {/* Bottom: author + date */}
-      <div className="flex items-center justify-between pt-5 border-t border-white/[0.08]">
+      {/* Footer: author + Google mark */}
+      <div
+        className="flex items-center justify-between"
+        style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '1.25rem' }}
+      >
         <div className="flex items-center gap-3">
-          {/* Avatar — real photo if available, else gold initial */}
+          {/* Avatar or gold initial */}
           <div
-            className="w-11 h-11 rounded-full flex-shrink-0 overflow-hidden relative"
+            className="w-[42px] h-[42px] rounded-full flex-shrink-0 overflow-hidden relative"
             style={{ border: '1px solid rgba(241,185,30,0.25)' }}
           >
-            {avatarSrc || review.authorPhoto ? (
+            {review.avatar ? (
               <Image
-                src={avatarSrc ?? review.authorPhoto!}
-                alt={review.authorName}
+                src={review.avatar}
+                alt={review.name}
                 fill
                 className="object-cover object-center"
-                sizes="44px"
+                sizes="42px"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center"
-                style={{ background: 'rgba(241,185,30,0.12)' }}>
+              <div
+                className="w-full h-full flex items-center justify-center"
+                style={{ background: 'rgba(241,185,30,0.12)' }}
+              >
                 <span
                   style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
                   className="text-[#F1B91E] text-[13px] uppercase leading-none"
                 >
-                  {review.authorName.charAt(0)}
+                  {review.name.charAt(0)}
                 </span>
               </div>
             )}
@@ -106,16 +118,16 @@ function ReviewCard({
 
           <div>
             <p
-              style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-              className="text-white text-[13px] leading-tight"
+              style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, fontSize: '1.15rem' }}
+              className="text-white leading-tight"
             >
-              {review.authorName}
+              {review.name}
             </p>
             <p
-              style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-              className="text-white/30 text-[11px] tracking-[0.05em] mt-0.5"
+              style={{ fontFamily: 'var(--font-inter)', fontWeight: 400, fontSize: '0.95rem' }}
+              className="text-white/40 mt-0.5"
             >
-              {review.relativeDate}
+              {review.date}
             </p>
           </div>
         </div>
@@ -148,21 +160,8 @@ export default function Reviews() {
   const trackRef = useRef<HTMLDivElement>(null)
   const inView = useInView(sectionRef, { once: true, margin: '-80px' })
 
-  const [reviews, setReviews] = useState<PlaceReview[]>([])
-  const [loading, setLoading] = useState(true)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
-
-  // Fetch reviews from API route
-  useEffect(() => {
-    fetch('/api/reviews')
-      .then((r) => r.json())
-      .then((d) => {
-        setReviews(d.reviews ?? [])
-        setLoading(false)
-      })
-      .catch(() => setLoading(false))
-  }, [])
 
   const updateScrollState = useCallback(() => {
     const el = trackRef.current
@@ -177,26 +176,30 @@ export default function Reviews() {
     el.addEventListener('scroll', updateScrollState, { passive: true })
     updateScrollState()
     return () => el.removeEventListener('scroll', updateScrollState)
-  }, [reviews, updateScrollState])
+  }, [updateScrollState])
 
   const scrollBy = (dir: 'left' | 'right') => {
-    trackRef.current?.scrollBy({ left: dir === 'right' ? 420 : -420, behavior: 'smooth' })
+    trackRef.current?.scrollBy({ left: dir === 'right' ? 440 : -440, behavior: 'smooth' })
   }
 
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#111111] overflow-hidden border-b-4 border-[#F1B91E]"
+      className="relative bg-[#161616] overflow-hidden"
       style={{ paddingTop: '6rem' }}
     >
-      <div className="px-6 md:px-12 lg:px-16 pt-8 pb-6">
-
+      <div
+        className="pt-8 pb-6"
+        style={{ paddingLeft: 'clamp(1.5rem, 5vw, 4rem)', paddingRight: 'clamp(1.5rem, 5vw, 4rem)' }}
+      >
         {/* Header row */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
+          {/* Left: eyebrow + heading */}
           <div>
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               className="flex items-center gap-4 mb-6"
             >
               <div className="w-2 h-2 bg-[#F1B91E]" />
@@ -208,8 +211,13 @@ export default function Reviews() {
                 initial={{ y: 80, opacity: 0 }}
                 animate={inView ? { y: 0, opacity: 1 } : {}}
                 transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-white"
+                style={{
+                  fontFamily: 'var(--font-barlow)',
+                  fontWeight: 800,
+                  fontSize: 'clamp(3.6rem, 7.8vw, 7.2rem)',
+                  lineHeight: 0.88,
+                }}
+                className="uppercase text-white"
               >
                 OPINIONES
               </motion.h2>
@@ -219,41 +227,48 @@ export default function Reviews() {
                 initial={{ y: 80, opacity: 0 }}
                 animate={inView ? { y: 0, opacity: 1 } : {}}
                 transition={{ duration: 0.9, delay: 0.17, ease: [0.16, 1, 0.3, 1] }}
-                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-[#F1B91E]"
-                
+                style={{
+                  fontFamily: 'var(--font-barlow)',
+                  fontWeight: 800,
+                  fontStyle: 'italic',
+                  fontSize: 'clamp(3.6rem, 7.8vw, 7.2rem)',
+                  lineHeight: 0.88,
+                }}
+                className="text-[#F1B91E]"
               >
                 Reales.
               </motion.h2>
             </div>
           </div>
 
-          {/* Nav arrows + Google badge */}
+          {/* Right: stars + meta + nav arrows */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.4 }}
+            transition={{ duration: 0.7, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="flex items-center gap-4 flex-shrink-0"
           >
-            {/* Google rating badge */}
+            {/* Rating meta */}
             <div className="flex flex-col items-end mr-4">
               <div className="flex items-center gap-1.5 mb-1">
-                {[1,2,3,4,5].map(n => <StarIcon key={n} filled />)}
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <StarIcon key={n} />
+                ))}
               </div>
               <span
                 style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
                 className="text-white/40 text-[11px] tracking-[0.12em] uppercase"
               >
-                Google Reviews
+                4.8 &middot; 158 rese&ntilde;as
               </span>
             </div>
 
-            {/* Prev arrow */}
+            {/* Prev */}
             <button
               onClick={() => scrollBy('left')}
               disabled={!canScrollLeft}
               aria-label="Anterior"
-              className="w-12 h-12 flex items-center justify-center border border-white/15
+              className="w-[46px] h-[46px] flex items-center justify-center border border-white/15
                          text-white/40 hover:border-[#F1B91E] hover:text-[#F1B91E]
                          disabled:opacity-20 disabled:cursor-not-allowed
                          transition-all duration-300"
@@ -263,12 +278,12 @@ export default function Reviews() {
               </svg>
             </button>
 
-            {/* Next arrow */}
+            {/* Next */}
             <button
               onClick={() => scrollBy('right')}
               disabled={!canScrollRight}
               aria-label="Siguiente"
-              className="w-12 h-12 flex items-center justify-center border border-white/15
+              className="w-[46px] h-[46px] flex items-center justify-center border border-white/15
                          text-white/40 hover:border-[#F1B91E] hover:text-[#F1B91E]
                          disabled:opacity-20 disabled:cursor-not-allowed
                          transition-all duration-300"
@@ -281,36 +296,23 @@ export default function Reviews() {
         </div>
       </div>
 
-      {/* Carousel track — edge-to-edge with left padding */}
+      {/* Carousel track */}
       <div
         ref={trackRef}
-        className="flex gap-4 overflow-x-auto pb-16 scroll-smooth"
+        className="flex overflow-x-auto scroll-smooth"
         style={{
+          gap: '1rem',
           paddingLeft: 'clamp(1.5rem, 5vw, 4rem)',
           paddingRight: 'clamp(1.5rem, 5vw, 4rem)',
+          paddingBottom: '5rem',
+          scrollSnapType: 'x mandatory',
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
         }}
       >
-        {loading ? (
-          // Skeleton cards while loading
-          Array.from({ length: 4 }).map((_, i) => (
-            <div
-              key={i}
-              className="flex-shrink-0 w-[340px] md:w-[400px] bg-[#1A1A1A] border border-white/[0.06]"
-              style={{ minHeight: '260px', opacity: 0.4 + i * 0.1 }}
-            />
-          ))
-        ) : (
-          reviews.map((review, i) => (
-            <ReviewCard
-              key={i}
-              review={review}
-              index={i}
-              avatarSrc={review.authorPhoto ?? AVATAR_PHOTOS[i % AVATAR_PHOTOS.length]}
-            />
-          ))
-        )}
+        {reviews.map((review, i) => (
+          <ReviewCard key={i} review={review} index={i} />
+        ))}
       </div>
 
       {/* Hide scrollbar (WebKit) */}

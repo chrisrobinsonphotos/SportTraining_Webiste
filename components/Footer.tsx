@@ -145,7 +145,7 @@ export default function Footer() {
               </h5>
               <ul className="space-y-3">
                 {section.links.map((link) => (
-                  <li key={link.href}>
+                  <li key={link.label}>
                     <Link
                       href={link.href}
                       className="text-white/35 hover:text-white text-[12px] tracking-[0.08em] uppercase transition-colors duration-300"

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Barlow_Condensed, Inter } from "next/font/google";
+import { Barlow_Condensed, Inter, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -7,15 +7,23 @@ import "./globals.css";
 
 const barlow = Barlow_Condensed({
   weight: ["400", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
   subsets: ["latin"],
   variable: "--font-barlow",
   display: "swap",
 });
 
 const inter = Inter({
-  weight: ["300", "400", "600"],
+  weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  weight: ["500"],
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
   display: "swap",
 });
 
@@ -105,7 +113,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${barlow.variable} ${inter.variable}`}
+      className={`${barlow.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="bg-black-st text-white antialiased overflow-x-hidden">
         {/*

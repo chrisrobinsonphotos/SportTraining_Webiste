@@ -32,7 +32,7 @@ export default function Hero() {
       {/* Full-bleed background image */}
       <motion.div className="absolute inset-0" style={{ scale: imageScale }}>
         <Image
-          src="/mas-que-un-gimnasio.jpg"
+          src="/hero-gym.jpg"
           alt="Sport Training Murcia — gimnasio de HYROX, CrossTraining y entrenamiento funcional"
           fill
           sizes="100vw"
@@ -151,8 +151,8 @@ export default function Hero() {
           </p>
 
           <div className="flex items-center gap-4 flex-shrink-0">
-            <Link
-              href="/contacto"
+            <button
+              data-contact
               aria-label="Únete a Sport Training Murcia — contacto y reserva"
               className="group flex items-center gap-3 bg-[#F1B91E] text-[#191919] px-7 py-4 hover:bg-[#C99200] transition-colors duration-300"
             >
@@ -163,7 +163,7 @@ export default function Hero() {
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
               </svg>
-            </Link>
+            </button>
             <Link
               href="/#filosofia"
               aria-label="Conoce el método de entrenamiento de Sport Training Murcia"

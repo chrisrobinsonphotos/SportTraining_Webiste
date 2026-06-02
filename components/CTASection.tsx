@@ -10,9 +10,8 @@ export default function CTASection() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section ref={ref} className="relative min-h-screen flex items-end overflow-hidden bg-[#191919]">
+    <section id="comunidad" ref={ref} className="relative min-h-screen flex items-end overflow-hidden bg-[#191919]">
 
-      {/* Full-bleed background: gym logo wall */}
       <div className="absolute inset-0">
         <Image
           src="/cta-community.jpg"
@@ -22,16 +21,12 @@ export default function CTASection() {
           quality={90}
           sizes="100vw"
         />
-        {/* Dark overlay — strong so gold text pops */}
         <div className="absolute inset-0 bg-[#191919]/70" />
-        {/* Gold overlay at bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-[#F1B91E]/20 to-transparent" />
-        {/* Left-side vignette */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#191919]/80 to-transparent" />
       </div>
 
-      {/* Content — bottom-left */}
-      <div className="relative z-10 px-6 md:px-12 lg:px-16 pb-20 md:pb-28 w-full">
+      <div className="relative z-10 px-[clamp(1.5rem,5vw,4rem)] pb-[clamp(5rem,10vw,7rem)] w-full">
 
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -47,21 +42,20 @@ export default function CTASection() {
             initial={{ y: 100, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none' }}
-            className="text-[15vw] md:text-[12vw] lg:text-[10vw] leading-[0.85] uppercase text-white"
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+            className="text-[clamp(4.2rem,9.6vw,8.4rem)] leading-[0.85] uppercase text-white"
           >
             ÚNETE A LA
           </motion.h2>
         </div>
 
-        <div className="overflow-hidden mb-12">
+        <div className="overflow-hidden mb-4">
           <motion.h2
             initial={{ y: 100, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-            className="text-[15vw] md:text-[12vw] lg:text-[10vw] leading-[0.85] uppercase text-[#F1B91E]"
-            
+            className="text-[clamp(4.2rem,9.6vw,8.4rem)] leading-[0.85] text-[#F1B91E]"
           >
             Comunidad ST.
           </motion.h2>
@@ -71,23 +65,91 @@ export default function CTASection() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.5 }}
-          className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
+          className="flex flex-wrap gap-4 mt-4"
         >
-          <Link href="/contacto"
-            aria-label="Contactar con Sport Training Murcia — WhatsApp, teléfono o visita"
-            className="group flex items-center gap-3 bg-[#F1B91E] text-[#191919] px-8 py-4 hover:bg-[#C99200] transition-colors duration-300">
+          <button
+            data-contact
+            className="group flex items-center gap-3 bg-[#F1B91E] text-[#191919] px-8 py-4 hover:bg-[#C99200] transition-colors duration-300"
+          >
             <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-              className="text-[12px] tracking-[0.25em] uppercase">Contactar Ahora</span>
-            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              className="text-[0.7rem] tracking-[0.25em] uppercase">Contactar Ahora</span>
+            <svg className="w-[15px] h-[15px] group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-          </Link>
+          </button>
           <Link href="/#modalidades"
-            aria-label="Ver modalidades y precios de Sport Training Murcia"
-            className="flex items-center gap-3 border border-white/20 text-white px-8 py-4 hover:border-[#F1B91E] hover:text-[#F1B91E] transition-all duration-300">
+            className="flex items-center gap-3 border border-white/20 text-white/65 px-8 py-4 hover:border-[#F1B91E] hover:text-[#F1B91E] transition-all duration-300"
+          >
             <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-              className="text-[12px] tracking-[0.25em] uppercase">Ver Modalidades</span>
+              className="text-[0.7rem] tracking-[0.25em] uppercase">Ver Modalidades</span>
           </Link>
+        </motion.div>
+
+        {/* QR Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.7 }}
+          className="grid grid-cols-1 sm:grid-cols-[repeat(2,minmax(0,1fr))] gap-5 mt-12 max-w-[920px]"
+        >
+          {[
+            {
+              tag: 'WhatsApp · Canal de Noticias',
+              title: 'SPORTTRAINING NOTICIAS',
+              body: 'Novedades, horarios y eventos directamente en tu WhatsApp.',
+              qr: '/qr-hyrox-grupo.png',
+            },
+            {
+              tag: 'WhatsApp · Grupo HYROX',
+              title: 'GRUPO HYROX',
+              body: 'Únete al grupo de la comunidad HYROX de Sport Training.',
+              qr: '/qr-hyrox-grupo.png',
+            },
+          ].map((card) => (
+            <div key={card.title} className="flex items-stretch gap-5 bg-[#111111]/72 backdrop-blur-[10px] border border-white/10 p-5 hover:border-[#F1B91E]/50 transition-colors duration-300">
+              <div className="flex-shrink-0 w-[104px] h-[104px] bg-white p-[7px] self-start">
+                <div className="relative w-full h-full">
+                  <Image src={card.qr} alt={`QR — ${card.title}`} fill className="object-contain" />
+                </div>
+              </div>
+              <div className="min-w-0 flex flex-col flex-1">
+                <div className="flex items-start gap-2 mb-2">
+                  <svg className="w-[15px] h-[15px] text-[#F1B91E] flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="square" d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+                  </svg>
+                  <span
+                    style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+                    className="text-[#F1B91E] text-[0.62rem] tracking-[0.18em] uppercase"
+                  >
+                    {card.tag}
+                  </span>
+                </div>
+                <h4
+                  style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+                  className="text-white text-[clamp(1.7rem,2.2vw,2.1rem)] uppercase leading-tight mb-2"
+                >
+                  {card.title}
+                </h4>
+                <p
+                  style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
+                  className="text-white/65 text-[1.2rem] leading-snug"
+                >
+                  {card.body}
+                </p>
+                <div className="hidden sm:flex items-center gap-2 mt-auto pt-4">
+                  <svg className="w-5 h-5 text-white/40 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="square" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                  <span
+                    style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                    className="text-white/40 text-[0.6rem] tracking-[0.18em] uppercase"
+                  >
+                    ESCANEA con tu cámara
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>

@@ -3,7 +3,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
 
 export default function Adaptado() {
   const ref = useRef<HTMLDivElement>(null)
@@ -117,15 +116,15 @@ export default function Adaptado() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.7 }}
           >
-            <Link href="/contacto"
-              aria-label="Conocer el programa de entrenamiento adaptado en Sport Training Murcia"
+            <button
+              data-contact
               className="inline-flex items-center gap-3 border border-[#F1B91E]/40 text-[#F1B91E] px-7 py-4 hover:bg-[#F1B91E] hover:text-[#191919] transition-all duration-300 group">
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
                 className="text-[11px] tracking-[0.25em] uppercase">Conocer el Programa</span>
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
               </svg>
-            </Link>
+            </button>
           </motion.div>
         </div>
       </div>
