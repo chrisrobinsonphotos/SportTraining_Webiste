@@ -44,3 +44,8 @@ next-env.d.ts
 
 # Large PDF assets — serve from CDN, not git
 public/SportTraining-Brochure*.pdf
+
+# Local event photo dumps with apostrophes in folder names (content already in relay-may-26/)
+public/RelayDay_Mayo_26*/
+"public/RelayDay_Mayo_26'/"
+public/relay-may-26/Miguel*/
