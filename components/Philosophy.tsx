@@ -82,11 +82,11 @@ export default function Philosophy() {
                 className="text-[#F1B91E] text-[15px] tracking-[0.2em] flex-shrink-0 w-10">{item.num}</span>
               <div>
                 <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
-                  className="text-white text-[36px] md:text-[46px] tracking-[0.03em] mb-3 uppercase leading-tight">
+                  className="text-white text-[44px] md:text-[56px] tracking-[0.02em] mb-6 uppercase leading-tight">
                   {item.title}
                 </h3>
                 <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                  className="text-white/65 text-[19px] md:text-[21px] leading-relaxed">{item.body}</p>
+                  className="text-white/65 text-[20px] md:text-[23px] leading-relaxed">{item.body}</p>
               </div>
             </motion.div>
           ))}
