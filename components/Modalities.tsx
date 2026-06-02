@@ -15,7 +15,7 @@ const tiers = [
     href: '/modalidades/personal',
     highlight: true,
     tierColor: '#F1B91E',
-    image: '/jr-skierg.jpg',
+    image: '/coaching-personal.jpg',
     splitImage: undefined,
     pricing: {
       subtitle: 'Coaching personal incluido',
@@ -62,6 +62,7 @@ const tiers = [
     tierColor: '#C9966B',
     image: '/gym-wide.jpg',
     splitImage: '/gym-machines.jpg',
+    imageFilter: 'grayscale(100%) contrast(1.15) brightness(0.9)',
     pricing: {
       subtitle: 'Acceso libre al gimnasio',
       plans: [
@@ -204,17 +205,20 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
                 <div className="absolute inset-y-0 left-0 w-1/2 overflow-hidden">
                   <Image src={tier.image} alt={`${tier.name} — Sport Training Murcia`} fill sizes="17vw"
                     className="object-cover object-center"
+                    style={tier.imageFilter ? { filter: tier.imageFilter } : undefined}
                     quality={85} />
                 </div>
                 <div className="absolute inset-y-0 right-0 w-1/2 overflow-hidden">
                   <Image src={tier.splitImage} alt="Sala de máquinas — Sport Training Murcia" fill sizes="17vw"
                     className="object-cover object-left"
+                    style={tier.imageFilter ? { filter: tier.imageFilter } : undefined}
                     quality={85} />
                 </div>
               </>
             ) : (
               <Image src={tier.image} alt={`${tier.name} — Sport Training Murcia`} fill sizes="33vw"
                 className="object-cover object-center"
+                style={tier.imageFilter ? { filter: tier.imageFilter } : undefined}
                 quality={80} />
             )}
             <div className={`absolute inset-0 bg-gradient-to-t ${tier.splitImage ? 'from-[#161616]/85 via-[#161616]/35 to-transparent' : 'from-[#161616] via-[#161616]/75 to-[#161616]/30'}`} />

@@ -15,7 +15,7 @@ const disciplines = [
     tagline: 'Fuerza + Resistencia',
     description: '8km de carrera intercalados con 8 estaciones de trabajo funcional. Desde el primer entreno hasta la competición — aquí se construye el rendimiento.',
     href: '/contacto',
-    image: '/hyrox-medball.jpg',
+    image: '/hyrox-sled-race.jpg',
     accent: true,
   },
   {
@@ -24,7 +24,7 @@ const disciplines = [
     tagline: 'Base del Movimiento',
     description: 'Patrones naturales: empujar, traccionar, agacharse, rotar. El fundamento de cualquier cuerpo capaz.',
     href: '/contacto',
-    image: '/gym-functional.jpg',
+    image: '/funcional-wallball.jpg',
     accent: false,
   },
 ]
