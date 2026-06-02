@@ -15,7 +15,7 @@ const tiers = [
     href: '/modalidades/personal',
     highlight: true,
     tierColor: '#F1B91E',
-    image: '/hyrox-bw.jpg',
+    image: '/jr-sled.jpg',
     splitImage: undefined,
     pricing: {
       subtitle: 'Entrenamiento Personal incluido',

@@ -5,6 +5,7 @@ import Marquee from '@/components/Marquee'
 import Philosophy from '@/components/Philosophy'
 import Training from '@/components/Training'
 import Modalities from '@/components/Modalities'
+import StatementSection from '@/components/StatementSection'
 import Adaptado from '@/components/Adaptado'
 import Nutrition from '@/components/Nutrition'
 import Community from '@/components/Community'
@@ -40,6 +41,7 @@ export default function Home() {
         <Philosophy />
         <Training />
         <Modalities />
+        <StatementSection />
         <Adaptado />
         <Nutrition />
         <Community />

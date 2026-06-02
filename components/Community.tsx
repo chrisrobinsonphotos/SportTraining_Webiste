@@ -219,6 +219,7 @@ const carouselSlides: CarouselSlide[] = [
   { src: '/relay-may-26/_MG_6061.jpg', caption: 'HYROX Relay Race · Mayo 2026', galleryId: 'relay-may-26' },
   { src: '/relay-may-26/_MG_6096.jpg', caption: 'HYROX Relay Race · Mayo 2026', galleryId: 'relay-may-26' },
   { src: '/relay-may-26/_MG_6127.jpg', caption: 'HYROX Relay Race · Mayo 2026', galleryId: 'relay-may-26' },
+  { src: '/jr-hyrox-win.jpg',           caption: 'Miguel Ángel Jr. · HYROX Club Oficial · Mayo 2026', galleryId: 'archivo' },
   { src: '/mas-que-un-gimnasio.jpg',    caption: 'HYROX Murcia — Equipo Sport Training', galleryId: 'archivo' },
   { src: '/hyrox-women.jpg',            caption: 'Entrenamiento en Grupo · Comunidad ST', galleryId: 'archivo' },
   { src: '/_MG_4374.jpg',              caption: 'Sport Training · Murcia', galleryId: 'archivo' },
