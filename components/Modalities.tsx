@@ -8,7 +8,7 @@ import Link from 'next/link'
 const tiers = [
   {
     tier: 'ORO',
-    name: 'Entrenamiento Personal',
+    name: 'Coaching Personal',
     tagline: 'La experiencia definitiva',
     description: 'Entrenamiento completamente personalizado, diseñado en función de tus objetivos, condición física y necesidades. En instalaciones o a domicilio.',
     features: ['Programa 100% personalizado', 'Seguimiento continuo de progreso', 'Flexibilidad de horario', 'A domicilio disponible'],
@@ -18,14 +18,14 @@ const tiers = [
     image: '/jr-sled.jpg',
     splitImage: undefined,
     pricing: {
-      subtitle: 'Entrenamiento Personal incluido',
+      subtitle: 'Coaching personal incluido',
       plans: [
         { label: 'ORO 4',  price: '€150', period: '/mes', detail: '4 PT / mes' },
         { label: 'ORO 8',  price: '€250', period: '/mes', detail: '8 PT / mes' },
         { label: 'ORO 12', price: '€350', period: '/mes', detail: '12 PT / mes' },
         { label: 'ORO 16', price: '€450', period: '/mes', detail: '16 PT / mes' },
       ],
-      included: ['Grupos ilimitados', 'HYROX · CrossTraining · Funcional', 'Gimnasio libre ilimitado'],
+      included: ['Grupos ilimitados', 'HYROX · Funcional', 'Gimnasio libre ilimitado'],
       note: 'Todos los planes Oro incluyen grupos ilimitados y gimnasio libre.',
     },
   },
@@ -47,7 +47,7 @@ const tiers = [
         { label: 'PLATA 12',  price: '€60', period: '/mes', detail: '12 sesiones' },
         { label: 'ILIMITADA', price: '€70', period: '/mes', detail: 'Sin límite', popular: true },
       ],
-      included: ['HYROX · CrossTraining · Funcional', 'Gimnasio libre ilimitado'],
+      included: ['HYROX · Funcional', 'Gimnasio libre ilimitado'],
       note: 'No incluye Entrenamiento Personal.',
     },
   },
@@ -293,7 +293,7 @@ export default function Modalities() {
           className="flex items-center gap-4 mb-5"
         >
           <div className="w-2 h-2 bg-[#F1B91E]" />
-          <span className="section-label">Elige Tu Modalidad</span>
+          <span className="section-label">Membresías</span>
         </motion.div>
 
         <div className="overflow-hidden">
@@ -304,7 +304,7 @@ export default function Modalities() {
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
             className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-white"
           >
-            ENTRENA A TU <span  className="text-[#F1B91E]">manera</span>
+            ELIGE TU <span className="text-[#F1B91E]">membresía</span>
           </motion.h2>
         </div>
       </div>

@@ -11,38 +11,20 @@ import Link from 'next/link'
 const disciplines = [
   {
     num: '01',
-    name: 'HYROX OPEN',
+    name: 'HYROX',
     tagline: 'Fuerza + Resistencia',
-    description: '8km de carrera intercalados con 8 estaciones de trabajo funcional. El estándar global del fitness.',
+    description: '8km de carrera intercalados con 8 estaciones de trabajo funcional. Desde el primer entreno hasta la competición — aquí se construye el rendimiento.',
     href: '/contacto',
     image: '/hyrox-medball.jpg',
     accent: true,
   },
   {
     num: '02',
-    name: 'HYROX ELITE TRAINING',
-    tagline: 'Alto Rendimiento',
-    description: 'Protocolo de competición para atletas que buscan el podio. Métricas reales, carga progresiva y preparación específica para la temporada HYROX.',
-    href: '/contacto',
-    image: '/jr-wallball.jpg',
-    accent: true,
-  },
-  {
-    num: '03',
     name: 'FUNCIONAL',
     tagline: 'Base del Movimiento',
     description: 'Patrones naturales: empujar, traccionar, agacharse, rotar. El fundamento de cualquier cuerpo capaz.',
     href: '/contacto',
-    image: '/gym-functional.jpg',
-    accent: false,
-  },
-  {
-    num: '04',
-    name: 'PERSONAL',
-    tagline: 'Atención Individual',
-    description: 'Entrenamiento diseñado exclusivamente para ti. Tu entrenador, tu programa, tus resultados.',
-    href: '/contacto',
-    image: '/gym-crossfit.jpg',
+    image: '/jr-wallball.jpg',
     accent: false,
   },
 ]
@@ -179,12 +161,12 @@ export default function Training() {
           style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
           className="text-white/60 text-[16px] leading-relaxed max-w-[340px] md:text-right flex-shrink-0"
         >
-          Cuatro disciplinas. Una metodología. Un objetivo: construir un cuerpo que te permita vivir la vida que quieres.
+          Dos disciplinas. Una metodología. Un objetivo: construir un cuerpo que te permita vivir la vida que quieres.
         </motion.p>
       </div>
 
       {/* Image card grid — fills all remaining space */}
-      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0.5 min-h-0 items-stretch auto-rows-fr">
+      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-0.5 min-h-0 items-stretch auto-rows-fr">
         {disciplines.map((item, i) => (
           <DisciplineCard key={item.num} item={item} index={i} />
         ))}
