@@ -19,10 +19,10 @@ export default function Philosophy() {
     <section id="filosofia" ref={ref} className="relative bg-[#1E1E1E] min-h-screen flex overflow-hidden" style={{ scrollMarginTop: '90px' }}>
 
       {/* LEFT: text column — full left side */}
-      <div className="relative z-10 w-full lg:w-[55%] flex flex-col justify-between px-6 md:px-12 lg:px-16 py-16">
+      <div className="relative z-10 w-full lg:w-[55%] flex flex-col px-6 md:px-12 lg:px-16 py-16">
 
-        {/* Top group: label + headline */}
-        <div>
+        {/* Top: label + headline — sits at natural height */}
+        <div className="flex-shrink-0">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -33,7 +33,6 @@ export default function Philosophy() {
             <span className="section-label">Nuestra Filosofía</span>
           </motion.div>
 
-          {/* Giant left-edge headline */}
           <div className="overflow-hidden mb-1">
             <motion.h2
               initial={{ y: 100, opacity: 0 }}
@@ -69,25 +68,25 @@ export default function Philosophy() {
           </div>
         </div>
 
-        {/* Bottom group: values list */}
-        <div className="flex flex-col">
+        {/* Values — flex-1 claims all remaining height; each row shares it equally */}
+        <div className="flex flex-col flex-1 mt-8">
           {values.map((item, i) => (
             <motion.div
               key={item.num}
               initial={{ opacity: 0, x: -30 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.35 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="border-b border-white/8 py-7 group hover:border-[#F1B91E]/30 transition-colors duration-400 flex items-start gap-6"
+              className="flex-1 border-b border-white/8 flex items-center gap-6 group hover:border-[#F1B91E]/30 transition-colors duration-400"
             >
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                className="text-[#F1B91E] text-[14px] tracking-[0.2em] mt-1 flex-shrink-0 w-8">{item.num}</span>
+                className="text-[#F1B91E] text-[14px] tracking-[0.2em] flex-shrink-0 w-8">{item.num}</span>
               <div>
                 <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
-                  className="text-white text-[28px] md:text-[34px] tracking-[0.04em] mb-2 uppercase leading-tight">
+                  className="text-white text-[26px] md:text-[30px] tracking-[0.04em] mb-2 uppercase leading-tight">
                   {item.title}
                 </h3>
                 <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                  className="text-white/65 text-[18px] leading-relaxed">{item.body}</p>
+                  className="text-white/65 text-[17px] leading-relaxed">{item.body}</p>
               </div>
             </motion.div>
           ))}
