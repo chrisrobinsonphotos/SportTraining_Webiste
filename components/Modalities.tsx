@@ -222,8 +222,10 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
           </div>
 
           {/* Front content */}
-          <div className="relative z-10 flex flex-col justify-end h-full p-6 md:p-8 lg:p-10">
-            <div className="flex items-center gap-3 mb-5">
+          <div className="relative z-10 flex flex-col justify-between h-full p-6 md:p-8 lg:p-10">
+
+            {/* Top: tier badge */}
+            <div className="flex items-center gap-3 pt-1">
               <span
                 style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, backgroundColor: tier.tierColor }}
                 className="text-[10px] tracking-[0.3em] uppercase text-[#191919] px-3 py-1.5"
@@ -238,29 +240,33 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
               )}
             </div>
 
-            <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-              className="text-white text-[36px] md:text-[40px] lg:text-[44px] uppercase leading-none mb-2">
-              {tier.name}
-            </h3>
+            {/* Middle: Ver Precios CTA */}
+            <div className="flex justify-center">
+              <div className="flex items-center gap-3 cursor-pointer px-7 py-4 border border-white/25 bg-[#191919]/60 hover:border-[#F1B91E]/70 hover:bg-[#191919]/80 transition-all duration-200">
+                <svg className="w-4 h-4 text-[#F1B91E] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="square" d="M4 4h6v6H4zM14 4h6v6h-6zM14 14h6v6h-6zM4 14h6v6H4z" />
+                </svg>
+                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+                  className="text-[12px] tracking-[0.25em] uppercase text-white">
+                  Ver Precios
+                </span>
+                <svg className="w-3.5 h-3.5 text-[#F1B91E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
 
-            <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-              className="text-[#F1B91E]/60 text-[10px] tracking-[0.2em] uppercase mb-5">
-              {tier.tagline}
-            </p>
-
-            <div className={`h-[1px] mb-5 ${tier.highlight ? 'bg-[#F1B91E]/40' : 'bg-white/10'}`} />
-
-            <div className="flex items-center gap-2 cursor-pointer">
-              <svg className="w-4 h-4 text-[#F1B91E] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="square" d="M4 4h6v6H4zM14 4h6v6h-6zM14 14h6v6h-6zM4 14h6v6H4z" />
-              </svg>
-              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                className={`text-[11px] tracking-[0.2em] uppercase ${tier.highlight ? 'text-[#F1B91E]' : 'text-white/50'}`}>
-                Ver Precios
-              </span>
-              <svg className="w-3.5 h-3.5 text-[#F1B91E]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+            {/* Bottom: name + tagline */}
+            <div>
+              <div className={`h-[1px] mb-5 ${tier.highlight ? 'bg-[#F1B91E]/40' : 'bg-white/10'}`} />
+              <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+                className="text-white text-[36px] md:text-[40px] lg:text-[44px] uppercase leading-none mb-2">
+                {tier.name}
+              </h3>
+              <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                className="text-[#F1B91E]/60 text-[10px] tracking-[0.2em] uppercase">
+                {tier.tagline}
+              </p>
             </div>
           </div>
         </div>
