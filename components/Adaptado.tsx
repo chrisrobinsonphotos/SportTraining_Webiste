@@ -98,7 +98,7 @@ export default function Adaptado() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.35 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className={`pl-7 pb-12 ${i > 0 ? 'border-t border-t-white/8 pt-12 mt-0' : ''}`}
+                className={`pl-7 pb-20 ${i > 0 ? 'border-t border-t-white/8 pt-20 mt-0' : ''}`}
               >
                 <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
                   className="text-white text-[42px] md:text-[50px] tracking-[0.03em] uppercase mb-6 leading-tight">
