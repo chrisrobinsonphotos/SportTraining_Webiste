@@ -79,14 +79,14 @@ export default function Philosophy() {
               className="flex-1 border-b border-white/8 flex items-center gap-6 group hover:border-[#F1B91E]/30 transition-colors duration-400"
             >
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                className="text-[#F1B91E] text-[14px] tracking-[0.2em] flex-shrink-0 w-8">{item.num}</span>
+                className="text-[#F1B91E] text-[15px] tracking-[0.2em] flex-shrink-0 w-10">{item.num}</span>
               <div>
                 <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
-                  className="text-white text-[26px] md:text-[30px] tracking-[0.04em] mb-2 uppercase leading-tight">
+                  className="text-white text-[36px] md:text-[46px] tracking-[0.03em] mb-3 uppercase leading-tight">
                   {item.title}
                 </h3>
                 <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                  className="text-white/65 text-[17px] leading-relaxed">{item.body}</p>
+                  className="text-white/65 text-[19px] md:text-[21px] leading-relaxed">{item.body}</p>
               </div>
             </motion.div>
           ))}
