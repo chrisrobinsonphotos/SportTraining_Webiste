@@ -85,9 +85,10 @@ export default function Adaptado() {
         </div>
 
         {/* ── Right col: Features — 50% of page, always on pure dark bg ── */}
-        <div className="flex flex-col justify-center px-6 md:px-12 lg:pl-14 lg:pr-20 py-24 w-full lg:w-1/2 lg:border-l lg:border-white/8">
+        <div className="flex flex-col px-6 md:px-12 lg:pl-14 lg:pr-20 py-16 w-full lg:w-1/2 lg:border-l lg:border-white/8">
 
-          <div className="mb-16">
+          {/* Items — flex-1 fills remaining height; each item shares equally */}
+          <div className="flex flex-col flex-1">
             {[
               { title: 'Entrenamiento Real', body: 'No hablamos de rehabilitación clínica, sino de entrenamiento real, adaptado y guiado por profesionales.' },
               { title: 'Metodología Adaptada', body: 'Cada ejercicio, cada carga y cada progresión se ajusta a las necesidades de cada persona.' },
@@ -98,24 +99,26 @@ export default function Adaptado() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.35 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className={`pl-7 pb-14 ${i > 0 ? 'border-t border-t-white/8 pt-14 mt-0' : ''}`}
+                className={`flex-1 flex flex-col justify-center pl-7 ${i > 0 ? 'border-t border-white/8' : ''}`}
               >
                 <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
-                  className="text-white text-[38px] md:text-[44px] tracking-[0.04em] uppercase mb-4 leading-tight">
+                  className="text-white text-[44px] md:text-[56px] tracking-[0.02em] uppercase mb-6 leading-tight">
                   {item.title}
                 </h4>
                 <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                  className="text-white/65 text-[18px] leading-relaxed">
+                  className="text-white/65 text-[20px] md:text-[23px] leading-relaxed">
                   {item.body}
                 </p>
               </motion.div>
             ))}
           </div>
 
+          {/* CTA — pinned to bottom */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.7 }}
+            className="flex-shrink-0 pt-10 pl-7"
           >
             <Link href="/contacto"
               aria-label="Conocer el programa de entrenamiento adaptado en Sport Training Murcia"
