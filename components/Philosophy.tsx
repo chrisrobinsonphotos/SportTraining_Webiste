@@ -19,72 +19,75 @@ export default function Philosophy() {
     <section id="filosofia" ref={ref} className="relative bg-[#1E1E1E] min-h-screen flex overflow-hidden" style={{ scrollMarginTop: '90px' }}>
 
       {/* LEFT: text column — full left side */}
-      <div className="relative z-10 w-full lg:w-[55%] flex flex-col justify-center px-6 md:px-12 lg:px-16 py-24">
+      <div className="relative z-10 w-full lg:w-[55%] flex flex-col justify-between px-6 md:px-12 lg:px-16 py-16">
 
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="flex items-center gap-4 mb-10"
-        >
-          <div className="w-2 h-2 bg-[#F1B91E]" />
-          <span className="section-label">Nuestra Filosofía</span>
-        </motion.div>
+        {/* Top group: label + headline */}
+        <div>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="flex items-center gap-4 mb-8"
+          >
+            <div className="w-2 h-2 bg-[#F1B91E]" />
+            <span className="section-label">Nuestra Filosofía</span>
+          </motion.div>
 
-        {/* Giant left-edge headline */}
-        <div className="overflow-hidden mb-1">
-          <motion.h2
-            initial={{ y: 100, opacity: 0 }}
-            animate={inView ? { y: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[15vw] lg:text-[8vw] leading-[0.85] uppercase text-white"
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-          >
-            ENTRENA
-          </motion.h2>
-        </div>
-        <div className="overflow-hidden mb-1">
-          <motion.h2
-            initial={{ y: 100, opacity: 0 }}
-            animate={inView ? { y: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.9, delay: 0.17, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[15vw] lg:text-[8vw] leading-[0.85] uppercase text-[#F1B91E]"
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none' }}
-          >
-            Para la
-          </motion.h2>
-        </div>
-        <div className="overflow-hidden mb-16 lg:mb-24">
-          <motion.h2
-            initial={{ y: 100, opacity: 0 }}
-            animate={inView ? { y: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.9, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[15vw] lg:text-[8vw] leading-[0.85] uppercase text-white"
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-          >
-            VIDA.
-          </motion.h2>
+          {/* Giant left-edge headline */}
+          <div className="overflow-hidden mb-1">
+            <motion.h2
+              initial={{ y: 100, opacity: 0 }}
+              animate={inView ? { y: 0, opacity: 1 } : {}}
+              transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-[15vw] lg:text-[8vw] leading-[0.85] uppercase text-white"
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+            >
+              ENTRENA
+            </motion.h2>
+          </div>
+          <div className="overflow-hidden mb-1">
+            <motion.h2
+              initial={{ y: 100, opacity: 0 }}
+              animate={inView ? { y: 0, opacity: 1 } : {}}
+              transition={{ duration: 0.9, delay: 0.17, ease: [0.16, 1, 0.3, 1] }}
+              className="text-[15vw] lg:text-[8vw] leading-[0.85] uppercase text-[#F1B91E]"
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none' }}
+            >
+              Para la
+            </motion.h2>
+          </div>
+          <div className="overflow-hidden">
+            <motion.h2
+              initial={{ y: 100, opacity: 0 }}
+              animate={inView ? { y: 0, opacity: 1 } : {}}
+              transition={{ duration: 0.9, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
+              className="text-[15vw] lg:text-[8vw] leading-[0.85] uppercase text-white"
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+            >
+              VIDA.
+            </motion.h2>
+          </div>
         </div>
 
-        {/* Values list */}
-        <div className="flex flex-col gap-[10px]">
+        {/* Bottom group: values list */}
+        <div className="flex flex-col">
           {values.map((item, i) => (
             <motion.div
               key={item.num}
               initial={{ opacity: 0, x: -30 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.35 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="border-b border-white/8 py-11 group hover:border-[#F1B91E]/30 transition-colors duration-400 flex items-start gap-6"
+              className="border-b border-white/8 py-7 group hover:border-[#F1B91E]/30 transition-colors duration-400 flex items-start gap-6"
             >
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
                 className="text-[#F1B91E] text-[14px] tracking-[0.2em] mt-1 flex-shrink-0 w-8">{item.num}</span>
               <div>
                 <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
-                  className="text-white text-[22px] md:text-[26px] tracking-[0.06em] mb-3 uppercase leading-tight">
+                  className="text-white text-[28px] md:text-[34px] tracking-[0.04em] mb-2 uppercase leading-tight">
                   {item.title}
                 </h3>
                 <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                  className="text-white/65 text-[17px] leading-relaxed">{item.body}</p>
+                  className="text-white/65 text-[18px] leading-relaxed">{item.body}</p>
               </div>
             </motion.div>
           ))}
