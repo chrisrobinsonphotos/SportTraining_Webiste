@@ -24,7 +24,7 @@ const disciplines = [
     tagline: 'Base del Movimiento',
     description: 'Patrones naturales: empujar, traccionar, agacharse, rotar. El fundamento de cualquier cuerpo capaz.',
     href: '/contacto',
-    image: '/jr-wallball.jpg',
+    image: '/gym-functional.jpg',
     accent: false,
   },
 ]

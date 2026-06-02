@@ -15,7 +15,7 @@ const tiers = [
     href: '/modalidades/personal',
     highlight: true,
     tierColor: '#F1B91E',
-    image: '/jr-sled.jpg',
+    image: '/jr-skierg.jpg',
     splitImage: undefined,
     pricing: {
       subtitle: 'Coaching personal incluido',
