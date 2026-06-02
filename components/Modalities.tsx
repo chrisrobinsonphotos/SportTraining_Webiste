@@ -38,7 +38,7 @@ const tiers = [
     href: '/modalidades/grupo',
     highlight: false,
     tierColor: '#DDDDDD',
-    image: '/hyrox-medball.jpg',
+    image: '/group-training.jpg',
     splitImage: undefined,
     pricing: {
       subtitle: 'Clases en grupo y acceso libre',
