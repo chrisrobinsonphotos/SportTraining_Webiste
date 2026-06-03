@@ -8,6 +8,7 @@ import Modalities from '@/components/Modalities'
 import StatementSection from '@/components/StatementSection'
 import Adaptado from '@/components/Adaptado'
 import Nutrition from '@/components/Nutrition'
+import CommunityStatement from '@/components/CommunityStatement'
 import Community from '@/components/Community'
 import Schedule from '@/components/Schedule'
 import Trainers from '@/components/Trainers'
@@ -45,6 +46,7 @@ export default function Home() {
         <StatementSection />
         <Adaptado />
         <Nutrition />
+        <CommunityStatement />
         <Community />
         <Schedule />
         <Trainers />
