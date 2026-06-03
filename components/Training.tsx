@@ -32,7 +32,7 @@ function DisciplineCard({
   item: (typeof disciplines)[0]
   index: number
 }) {
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLButtonElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
   const [hovered, setHovered] = useState(false)
 
