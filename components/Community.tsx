@@ -483,12 +483,12 @@ export default function Community() {
               margin: '0 auto',
             }}
           >
-            {/* Responsive grid via media query — 1fr 1fr at >=1000px */}
+            {/* Responsive grid — 2fr 3fr at >=1000px so galleries get more space */}
             <style jsx>{`
               @media (min-width: 1000px) {
                 .comm-grid {
-                  grid-template-columns: 1fr 1fr !important;
-                  gap: 5rem !important;
+                  grid-template-columns: 2fr 3fr !important;
+                  gap: 3rem !important;
                 }
               }
             `}</style>
@@ -496,8 +496,8 @@ export default function Community() {
               className="comm-grid grid gap-12 items-center"
               style={{ gridTemplateColumns: '1fr' }}
             >
-              {/* Left: Headline + tags + CTA */}
-              <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+              {/* Left: Headline + tags + CTA — centered vertically via items-center on parent */}
+              <div className="flex flex-col items-center text-center lg:items-center lg:text-center">
                 <div className="overflow-hidden mb-1">
                   <motion.h2
                     initial={{ y: 80, opacity: 0 }}
