@@ -10,8 +10,9 @@ export default function CTASection() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section id="comunidad" ref={ref} className="relative min-h-screen flex items-end overflow-hidden bg-[#191919]">
+    <section id="comunidad" ref={ref} className="relative overflow-hidden bg-[#191919]">
 
+      {/* Background image — full bleed */}
       <div className="absolute inset-0">
         <Image
           src="/cta-community.jpg"
@@ -26,8 +27,11 @@ export default function CTASection() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#191919]/80 to-transparent" />
       </div>
 
-      <div className="relative z-10 px-[clamp(1.5rem,5vw,4rem)] pb-[clamp(5rem,10vw,7rem)] w-full">
-
+      {/* ── TOP: Headline + buttons — vertically centered in the hero zone ── */}
+      <div
+        className="relative z-10 flex flex-col justify-center"
+        style={{ minHeight: '100vh', padding: '8rem clamp(1.5rem,5vw,4rem)' }}
+      >
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -42,19 +46,19 @@ export default function CTASection() {
             initial={{ y: 100, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, letterSpacing: '-0.02em' }}
             className="text-[clamp(4.2rem,9.6vw,8.4rem)] leading-[0.85] uppercase text-white"
           >
             ÚNETE A LA
           </motion.h2>
         </div>
 
-        <div className="overflow-hidden mb-4">
+        <div className="overflow-hidden mb-6">
           <motion.h2
             initial={{ y: 100, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, letterSpacing: '-0.02em' }}
             className="text-[clamp(4.2rem,9.6vw,8.4rem)] leading-[0.85] text-[#F1B91E]"
           >
             Comunidad ST.
@@ -65,11 +69,12 @@ export default function CTASection() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.5 }}
-          className="flex flex-wrap gap-4 mt-4"
+          className="flex flex-wrap gap-4 mt-2"
         >
           <button
             data-contact
-            className="group flex items-center gap-3 bg-[#F1B91E] text-[#191919] px-8 py-4 hover:bg-[#C99200] transition-colors duration-300"
+            className="group flex items-center gap-3 bg-[#F1B91E] text-[#191919] hover:bg-[#C99200] transition-colors duration-300"
+            style={{ padding: '1rem 1.75rem' }}
           >
             <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
               className="text-[0.7rem] tracking-[0.25em] uppercase">Contactar Ahora</span>
@@ -78,19 +83,29 @@ export default function CTASection() {
             </svg>
           </button>
           <Link href="/#modalidades"
-            className="flex items-center gap-3 border border-white/20 text-white/65 px-8 py-4 hover:border-[#F1B91E] hover:text-[#F1B91E] transition-all duration-300"
+            className="flex items-center gap-3 border border-white/20 text-white/65 hover:border-[#F1B91E] hover:text-[#F1B91E] transition-all duration-300"
+            style={{ padding: '1rem 1.75rem' }}
           >
             <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
               className="text-[0.7rem] tracking-[0.25em] uppercase">Ver Modalidades</span>
           </Link>
         </motion.div>
+      </div>
 
-        {/* QR Cards */}
+      {/* ── BOTTOM: QR Cards — separate section with its own background ── */}
+      <div
+        className="relative z-10"
+        style={{
+          padding: 'clamp(3rem,6vw,5rem) clamp(1.5rem,5vw,4rem)',
+          background: 'linear-gradient(0deg, rgba(17,17,17,0.95), rgba(17,17,17,0.8))',
+          borderTop: '1px solid rgba(255,255,255,0.06)',
+        }}
+      >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.7 }}
-          className="grid grid-cols-1 sm:grid-cols-[repeat(2,minmax(0,1fr))] gap-5 mt-12 max-w-[920px]"
+          className="grid grid-cols-1 sm:grid-cols-[repeat(2,minmax(0,1fr))] gap-5 max-w-[920px]"
         >
           {[
             {
