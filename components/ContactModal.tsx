@@ -13,7 +13,7 @@ function buildWhatsAppUrl(name: string, phone: string, goal: string) {
   return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`
 }
 
-/* ── SVG icons (inline to avoid extra deps) ─────────────────────── */
+/* ── SVG icons ─────────────────────────────────────────────────── */
 
 function XIcon({ className }: { className?: string }) {
   return (
@@ -25,15 +25,15 @@ function XIcon({ className }: { className?: string }) {
 
 function ArrowRightIcon() {
   return (
-    <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
-      <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.19l-3.22-3.22a.75.75 0 011.06-1.06l4.5 4.5a.75.75 0 010 1.06l-4.5 4.5a.75.75 0 01-1.06-1.06l3.22-3.22H3.75A.75.75 0 013 10z" clipRule="evenodd" />
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-[15px] h-[15px]">
+      <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
     </svg>
   )
 }
 
 function CheckIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-[#191919]">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" className="w-9 h-9 text-[#191919]">
       <path d="M5 13l4 4L19 7" />
     </svg>
   )
@@ -41,7 +41,7 @@ function CheckIcon() {
 
 function MapPinIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-[#F1B91E]">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" className="w-[15px] h-[15px] text-[#F1B91E]">
       <path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z" />
       <circle cx="12" cy="10" r="3" />
     </svg>
@@ -50,7 +50,7 @@ function MapPinIcon() {
 
 function PhoneIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-[#F1B91E]">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" className="w-[15px] h-[15px] text-[#F1B91E]">
       <path d="M22 16.92v3a2 2 0 01-2.18 2 19.86 19.86 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.86 19.86 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
     </svg>
   )
@@ -77,7 +77,6 @@ export default function ContactModal() {
   const nameRef = useRef<HTMLInputElement>(null)
   const phoneRef = useRef<HTMLInputElement>(null)
 
-  // Listen for clicks on any [data-contact] element
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       const trigger = (e.target as HTMLElement).closest('[data-contact]')
@@ -90,7 +89,6 @@ export default function ContactModal() {
     return () => document.removeEventListener('click', handleClick)
   }, [])
 
-  // Lock body scroll while open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden'
@@ -100,7 +98,6 @@ export default function ContactModal() {
     return () => { document.body.style.overflow = '' }
   }, [open])
 
-  // ESC to close
   useEffect(() => {
     if (!open) return
     function handleKey(e: KeyboardEvent) {
@@ -112,7 +109,6 @@ export default function ContactModal() {
 
   const close = useCallback(() => {
     setOpen(false)
-    // Reset after exit animation
     setTimeout(() => {
       setSubmitted(false)
       setName('')
@@ -166,9 +162,10 @@ export default function ContactModal() {
             onClick={close}
           />
 
-          {/* Modal box */}
+          {/* Modal box — wider, more padding */}
           <motion.div
-            className="relative w-full max-w-[480px] mx-4 bg-[#161616] border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.7)] overflow-y-auto max-h-[90vh]"
+            className="relative w-full mx-4 bg-[#161616] border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.7)] overflow-y-auto"
+            style={{ maxWidth: '720px', maxHeight: '90vh' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
@@ -181,77 +178,95 @@ export default function ContactModal() {
             {/* Close button */}
             <button
               onClick={close}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-white/50 hover:text-[#F1B91E] transition-colors cursor-pointer"
+              className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-white/50 hover:text-[#F1B91E] transition-colors cursor-pointer"
               aria-label="Cerrar"
             >
-              <XIcon className="w-5 h-5" />
+              <XIcon className="w-6 h-6" />
             </button>
 
-            {/* Inner content */}
-            <div className="px-10 pb-10 pt-0">
+            {/* Inner content — generous padding */}
+            <div style={{ padding: 'clamp(2rem, 5vw, 3.5rem)' }}>
               {!submitted ? (
                 <>
                   {/* Heading */}
-                  <h2 className="font-barlow font-extrabold text-[2.5rem] leading-[1.05] uppercase text-white mt-6 mb-2">
+                  <h2
+                    style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+                    className="text-[3rem] leading-[0.95] uppercase text-white mt-2 mb-2"
+                  >
                     RESERVA TU<br />
-                    <em className="text-[#F1B91E] italic">Sesión.</em>
+                    <em className="text-[#F1B91E] not-italic" style={{ fontStyle: 'italic', textTransform: 'none' }}>Sesión.</em>
                   </h2>
 
                   {/* Lead text */}
-                  <p className="font-inter font-light text-white/65 text-[0.9rem] leading-relaxed mb-8">
+                  <p
+                    style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
+                    className="text-white/60 text-[1rem] leading-relaxed mb-10 max-w-[480px]"
+                  >
                     Completa el formulario y te contactaremos por WhatsApp para confirmar tu primera sesión.
                   </p>
 
                   {/* Form */}
                   <form onSubmit={handleSubmit} noValidate>
-                    {/* Nombre */}
-                    <div className="mb-5">
-                      <label className="block font-inter font-semibold text-[0.6rem] tracking-[.18em] uppercase text-white/40 mb-2">
-                        Nombre
-                      </label>
-                      <input
-                        ref={nameRef}
-                        type="text"
-                        value={name}
-                        onChange={e => setName(e.target.value)}
-                        className="w-full bg-transparent border text-white font-inter text-[0.9rem] py-[.85rem] px-4 outline-none transition-colors duration-200"
-                        style={{
-                          borderColor: shakeFields.name
-                            ? '#b8920f'
-                            : 'rgba(255,255,255,0.15)',
-                        }}
-                        onFocus={e => e.currentTarget.style.borderColor = '#F1B91E'}
-                        onBlur={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'}
-                      />
+                    {/* Two-column name + phone on desktop */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                      {/* Nombre */}
+                      <div>
+                        <label
+                          style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                          className="block text-[0.65rem] tracking-[.18em] uppercase text-white/40 mb-3"
+                        >
+                          Nombre
+                        </label>
+                        <input
+                          ref={nameRef}
+                          type="text"
+                          value={name}
+                          onChange={e => setName(e.target.value)}
+                          className="w-full bg-transparent border text-white text-[1rem] outline-none transition-colors duration-200"
+                          style={{
+                            fontFamily: 'var(--font-inter)',
+                            padding: '1rem 1.25rem',
+                            borderColor: shakeFields.name ? '#b8920f' : 'rgba(255,255,255,0.12)',
+                          }}
+                          onFocus={e => e.currentTarget.style.borderColor = '#F1B91E'}
+                          onBlur={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'}
+                        />
+                      </div>
+
+                      {/* Teléfono */}
+                      <div>
+                        <label
+                          style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                          className="block text-[0.65rem] tracking-[.18em] uppercase text-white/40 mb-3"
+                        >
+                          Teléfono / WhatsApp
+                        </label>
+                        <input
+                          ref={phoneRef}
+                          type="text"
+                          value={phone}
+                          onChange={e => setPhone(e.target.value)}
+                          className="w-full bg-transparent border text-white text-[1rem] outline-none transition-colors duration-200"
+                          style={{
+                            fontFamily: 'var(--font-inter)',
+                            padding: '1rem 1.25rem',
+                            borderColor: shakeFields.phone ? '#b8920f' : 'rgba(255,255,255,0.12)',
+                          }}
+                          onFocus={e => e.currentTarget.style.borderColor = '#F1B91E'}
+                          onBlur={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'}
+                        />
+                      </div>
                     </div>
 
-                    {/* Teléfono */}
-                    <div className="mb-5">
-                      <label className="block font-inter font-semibold text-[0.6rem] tracking-[.18em] uppercase text-white/40 mb-2">
-                        Teléfono / WhatsApp
-                      </label>
-                      <input
-                        ref={phoneRef}
-                        type="text"
-                        value={phone}
-                        onChange={e => setPhone(e.target.value)}
-                        className="w-full bg-transparent border text-white font-inter text-[0.9rem] py-[.85rem] px-4 outline-none transition-colors duration-200"
-                        style={{
-                          borderColor: shakeFields.phone
-                            ? '#b8920f'
-                            : 'rgba(255,255,255,0.15)',
-                        }}
-                        onFocus={e => e.currentTarget.style.borderColor = '#F1B91E'}
-                        onBlur={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'}
-                      />
-                    </div>
-
-                    {/* Me interesa — chip group */}
-                    <div className="mb-8">
-                      <label className="block font-inter font-semibold text-[0.6rem] tracking-[.18em] uppercase text-white/40 mb-3">
+                    {/* Me interesa — chips with more spacing */}
+                    <div className="mb-10">
+                      <label
+                        style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                        className="block text-[0.65rem] tracking-[.18em] uppercase text-white/40 mb-4"
+                      >
                         Me interesa
                       </label>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-3">
                         {GOALS.map(g => {
                           const active = goal === g
                           return (
@@ -259,14 +274,20 @@ export default function ContactModal() {
                               key={g}
                               type="button"
                               onClick={() => setGoal(g)}
-                              className={`
-                                px-4 py-2 font-inter font-semibold text-[0.7rem] tracking-[.12em] uppercase
-                                border transition-all duration-150 cursor-pointer
-                                ${active
-                                  ? 'bg-[#F1B91E] border-[#F1B91E] text-[#191919]'
-                                  : 'bg-transparent border-white/15 text-white/65 hover:border-white/30'
-                                }
-                              `}
+                              className="transition-all duration-150 cursor-pointer"
+                              style={{
+                                fontFamily: 'var(--font-inter)',
+                                fontWeight: 600,
+                                fontSize: '0.75rem',
+                                letterSpacing: '0.14em',
+                                textTransform: 'uppercase',
+                                padding: '0.85rem 1.5rem',
+                                border: active ? '1px solid #F1B91E' : '1px solid rgba(255,255,255,0.12)',
+                                background: active ? '#F1B91E' : 'transparent',
+                                color: active ? '#191919' : 'rgba(255,255,255,0.6)',
+                              }}
+                              onMouseEnter={(e) => { if (!active) e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)' }}
+                              onMouseLeave={(e) => { if (!active) e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)' }}
                             >
                               {g}
                             </button>
@@ -278,49 +299,91 @@ export default function ContactModal() {
                     {/* Submit */}
                     <button
                       type="submit"
-                      className="w-full bg-[#F1B91E] text-black font-inter font-bold text-[0.7rem] tracking-[.25em] uppercase py-4 flex items-center justify-center gap-3 hover:brightness-110 transition-all duration-150 cursor-pointer"
+                      className="w-full bg-[#F1B91E] text-[#191919] flex items-center justify-center gap-3 hover:bg-[#C99200] transition-all duration-200 cursor-pointer"
+                      style={{
+                        fontFamily: 'var(--font-inter)',
+                        fontWeight: 700,
+                        fontSize: '0.75rem',
+                        letterSpacing: '0.25em',
+                        textTransform: 'uppercase',
+                        padding: '1.25rem 2rem',
+                      }}
                     >
                       Solicitar Sesión
                       <ArrowRightIcon />
                     </button>
                   </form>
 
-                  {/* Contact info block */}
-                  <div className="border-t border-white/10 mt-7 pt-6">
-                    {/* Dirección */}
-                    <a
-                      href="https://maps.google.com/?q=C.+Cisne+3,+30009+Murcia"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-[.85rem] py-[.7rem] group"
-                    >
-                      <span className="w-[30px] h-[30px] flex items-center justify-center border border-[rgba(241,185,30,0.3)] shrink-0">
-                        <MapPinIcon />
-                      </span>
-                      <span className="font-inter text-[0.85rem] text-white/60 group-hover:text-white/90 transition-colors">
-                        C. Cisne 3, 30009 Murcia
-                      </span>
-                    </a>
+                  {/* ── Contact info — separated clearly ── */}
+                  <div
+                    className="mt-10 pt-8"
+                    style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}
+                  >
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                      {/* Dirección */}
+                      <a
+                        href="https://maps.google.com/?q=C.+Cisne+3,+30009+Murcia"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-4 py-3 group"
+                      >
+                        <span className="w-[36px] h-[36px] flex items-center justify-center border border-[rgba(241,185,30,0.3)] shrink-0">
+                          <MapPinIcon />
+                        </span>
+                        <div>
+                          <span
+                            style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                            className="block text-[0.6rem] tracking-[.18em] uppercase text-white/35 mb-1"
+                          >
+                            Dirección
+                          </span>
+                          <span
+                            style={{ fontFamily: 'var(--font-inter)', fontWeight: 500 }}
+                            className="text-[0.95rem] text-white/60 group-hover:text-white/90 transition-colors"
+                          >
+                            C. Cisne 3, 30009 Murcia
+                          </span>
+                        </div>
+                      </a>
 
-                    {/* Teléfono */}
-                    <a
-                      href="tel:+34622443495"
-                      className="flex items-center gap-[.85rem] py-[.7rem] group"
-                    >
-                      <span className="w-[30px] h-[30px] flex items-center justify-center border border-[rgba(241,185,30,0.3)] shrink-0">
-                        <PhoneIcon />
-                      </span>
-                      <span className="font-inter text-[0.85rem] text-white/60 group-hover:text-white/90 transition-colors">
-                        +34 622 443 495
-                      </span>
-                    </a>
+                      {/* Teléfono */}
+                      <a
+                        href="tel:+34622443495"
+                        className="flex items-center gap-4 py-3 group"
+                      >
+                        <span className="w-[36px] h-[36px] flex items-center justify-center border border-[rgba(241,185,30,0.3)] shrink-0">
+                          <PhoneIcon />
+                        </span>
+                        <div>
+                          <span
+                            style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                            className="block text-[0.6rem] tracking-[.18em] uppercase text-white/35 mb-1"
+                          >
+                            Teléfono
+                          </span>
+                          <span
+                            style={{ fontFamily: 'var(--font-inter)', fontWeight: 500 }}
+                            className="text-[0.95rem] text-white/60 group-hover:text-white/90 transition-colors"
+                          >
+                            +34 622 443 495
+                          </span>
+                        </div>
+                      </a>
+                    </div>
 
                     {/* WhatsApp button */}
                     <a
                       href={`https://wa.me/${WA_NUMBER}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-3 w-full bg-[#25D366] text-white font-inter font-semibold text-[0.75rem] tracking-[.08em] py-3 flex items-center justify-center gap-2.5 hover:brightness-110 transition-all duration-150"
+                      className="w-full bg-[#25D366] text-white flex items-center justify-center gap-3 hover:brightness-110 transition-all duration-150"
+                      style={{
+                        fontFamily: 'var(--font-inter)',
+                        fontWeight: 600,
+                        fontSize: '0.8rem',
+                        letterSpacing: '0.08em',
+                        padding: '1rem 2rem',
+                      }}
                     >
                       <WhatsAppIcon />
                       Escríbenos por WhatsApp
@@ -329,24 +392,37 @@ export default function ContactModal() {
                 </>
               ) : (
                 /* ── Success state ───────────────────────────────── */
-                <div className="flex flex-col items-center text-center pt-10 pb-4">
-                  {/* Gold square with check */}
-                  <div className="w-[72px] h-[72px] bg-[#F1B91E] flex items-center justify-center mb-6">
+                <div className="flex flex-col items-center text-center py-16">
+                  <div className="w-20 h-20 bg-[#F1B91E] flex items-center justify-center mb-8">
                     <CheckIcon />
                   </div>
 
-                  <h2 className="font-barlow font-extrabold text-[2.25rem] leading-tight uppercase text-white mb-3">
+                  <h2
+                    style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+                    className="text-[2.5rem] leading-tight uppercase text-white mb-4"
+                  >
                     ¡Hecho, {firstName}!
                   </h2>
 
-                  <p className="font-inter font-light text-white/65 text-[0.95rem] leading-relaxed max-w-[320px] mb-8">
+                  <p
+                    style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
+                    className="text-white/60 text-[1rem] leading-relaxed max-w-[400px] mb-10"
+                  >
                     Se ha abierto WhatsApp con tu mensaje. Si no se ha abierto, puedes contactarnos directamente al{' '}
                     <a href="tel:+34622443495" className="text-white/80 underline">+34 622 443 495</a>.
                   </p>
 
                   <button
                     onClick={reset}
-                    className="border border-[#F1B91E] text-[#F1B91E] font-inter font-semibold text-[0.7rem] tracking-[.2em] uppercase px-8 py-3 hover:bg-[#F1B91E] hover:text-[#191919] transition-all duration-200 cursor-pointer"
+                    className="border border-[#F1B91E] text-[#F1B91E] hover:bg-[#F1B91E] hover:text-[#191919] transition-all duration-200 cursor-pointer"
+                    style={{
+                      fontFamily: 'var(--font-inter)',
+                      fontWeight: 600,
+                      fontSize: '0.75rem',
+                      letterSpacing: '0.2em',
+                      textTransform: 'uppercase',
+                      padding: '1rem 2.5rem',
+                    }}
                   >
                     Volver
                   </button>
