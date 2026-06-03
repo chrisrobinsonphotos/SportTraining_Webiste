@@ -2,7 +2,6 @@
 
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
-import Link from 'next/link'
 
 type ClassType = 'funcional' | 'hyrox' | 'crossfit' | 'personal'
 
@@ -15,11 +14,11 @@ interface ClassSlot {
   type: ClassType
 }
 
-const typeConfig: Record<ClassType, { label: string; color: string; border: string; glow: string }> = {
-  hyrox:    { label: 'HYROX',    color: '#F1B91E', border: 'border-[#F1B91E]/25', glow: 'shadow-[0_0_30px_rgba(241,185,30,0.08)]' },
-  funcional: { label: 'Funcional', color: '#4CA3FF', border: 'border-[#4CA3FF]/20', glow: 'shadow-[0_0_30px_rgba(76,163,255,0.06)]' },
-  crossfit: { label: 'CrossFit', color: '#E84393', border: 'border-[#E84393]/25', glow: 'shadow-[0_0_30px_rgba(232,67,147,0.08)]' },
-  personal: { label: 'Personal Training', color: '#CCCCCC', border: 'border-white/15', glow: '' },
+const typeConfig: Record<ClassType, { label: string; color: string }> = {
+  hyrox:     { label: 'HYROX',             color: '#F1B91E' },
+  funcional: { label: 'Funcional',         color: '#4CA3FF' },
+  crossfit:  { label: 'CrossFit',          color: '#E84393' },
+  personal:  { label: 'Personal Training', color: '#CCCCCC' },
 }
 
 // Trainers
@@ -85,65 +84,6 @@ const schedule: Record<string, ClassSlot[]> = {
 const days = ['LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB'] as const
 type Day = typeof days[number]
 
-/* Visual grid of squares showing spots taken vs available */
-function SpotsGrid({ taken, max, color }: { taken: number; max: number; color: string }) {
-  const remaining = max - taken
-  const isFull = remaining === 0
-  const isAlmostFull = !isFull && remaining <= 3
-
-  return (
-    <div className="flex flex-col items-end gap-3">
-      {/* Dot grid */}
-      <div className="hidden md:flex flex-wrap-reverse justify-end gap-[5px]" style={{ maxWidth: max <= 2 ? 32 : 200 }}>
-        {Array.from({ length: max }).map((_, i) => (
-          <div
-            key={i}
-            className="w-4 h-4 rounded-[2px] transition-all duration-300"
-            style={{
-              backgroundColor: i < taken
-                ? isFull ? '#ef4444' : isAlmostFull ? color : color
-                : 'rgba(255,255,255,0.08)',
-              opacity: i < taken ? (isFull ? 1 : 0.85) : 0.4,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Status label */}
-      <div className="text-right">
-        {isFull ? (
-          <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none' }}
-            className="text-red-400 text-[18px] tracking-[0.05em] uppercase">
-            COMPLETO
-          </span>
-        ) : isAlmostFull ? (
-          <>
-            <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, color }}
-              className="text-[22px] md:text-[32px] leading-none block">
-              {remaining}
-            </span>
-            <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color }}
-              className="text-[10px] md:text-[11px] tracking-[0.18em] uppercase">
-              {remaining === 1 ? 'Plaza libre' : 'Plazas libres'}
-            </span>
-          </>
-        ) : (
-          <>
-            <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-              className="text-white text-[22px] md:text-[32px] leading-none block">
-              {remaining}
-            </span>
-            <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-              className="text-white/35 text-[11px] tracking-[0.18em] uppercase">
-              {remaining === 1 ? 'Plaza libre' : 'Plazas libres'}
-            </span>
-          </>
-        )}
-      </div>
-    </div>
-  )
-}
-
 export default function Schedule() {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
@@ -156,87 +96,153 @@ export default function Schedule() {
 
   const classes = schedule[activeDay] ?? []
 
-  // Group by time for parallel classes
-  const grouped = classes.reduce<Record<string, ClassSlot[]>>((acc, cls) => {
-    if (!acc[cls.time]) acc[cls.time] = []
-    acc[cls.time].push(cls)
-    return acc
-  }, {})
-  const times = Object.keys(grouped).sort()
-
   return (
-    <section ref={ref} className="relative bg-[#141414] flex flex-col overflow-hidden">
-
-      <div className="absolute inset-0 geo-grid opacity-20 pointer-events-none" />
+    <section ref={ref} className="relative bg-[#141414] overflow-hidden">
 
       {/* ── HEADER ── */}
-      <div className="relative z-10 px-6 md:px-12 lg:px-16 pt-20 pb-0 flex-shrink-0">
-
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={inView ? { opacity: 1, x: 0 } : {}}
-          className="flex items-center gap-4 mb-6">
+      <div
+        className="relative z-10 max-w-[1400px] mx-auto"
+        style={{ padding: '5rem clamp(1.5rem,5vw,4rem) 0' }}
+      >
+        {/* Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="flex items-center gap-4 mb-6"
+        >
           <div className="w-2 h-2 bg-[#F1B91E]" />
-          <span className="section-label">Horario de Clases</span>
+          <span
+            style={{
+              fontFamily: 'var(--font-inter)',
+              fontWeight: 700,
+              fontSize: 'clamp(.85rem,1vw,1rem)',
+              letterSpacing: '.22em',
+              textTransform: 'uppercase',
+              color: '#F1B91E',
+            }}
+          >
+            Horario de Clases
+          </span>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-10">
+        {/* Title row */}
+        <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
           <div className="overflow-hidden">
             <motion.h2
               initial={{ y: 80, opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-              className="text-[11vw] md:text-[7vw] lg:text-[5.5vw] leading-[0.88] uppercase text-white"
+              style={{
+                fontFamily: 'var(--font-barlow)',
+                fontWeight: 800,
+                fontSize: 'clamp(3.6rem,7.8vw,7.2rem)',
+                lineHeight: '.88',
+                letterSpacing: '-.02em',
+                textTransform: 'uppercase',
+              }}
+              className="text-white"
             >
-              ELIGE TU <span  className="text-[#F1B91E]">sesión.</span>
+              ELIGE TU{' '}
+              <span style={{ color: '#F1B91E', fontStyle: 'italic', textTransform: 'none' }}>
+                sesión.
+              </span>
             </motion.h2>
           </div>
           <motion.p
-            initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.3 }}
-            style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-            className="text-white/45 text-[15px] leading-relaxed max-w-[340px] lg:text-right flex-shrink-0 pb-1"
+            style={{
+              fontFamily: 'var(--font-inter)',
+              fontWeight: 400,
+              fontSize: 'clamp(1.3rem,1.5vw,1.55rem)',
+              lineHeight: '1.55',
+              color: 'rgba(255,255,255,.45)',
+              maxWidth: '440px',
+            }}
           >
-            Entrenadores certificados. Plazas limitadas.<br />Reserva con antelación.
+            Entrenadores certificados. Plazas limitadas.
+            <br />
+            Reserva con antelación.
           </motion.p>
         </div>
 
         {/* ── DAY TABS ── */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2 }}
-          className="flex gap-0.5"
+          className="flex"
+          style={{ gap: '2px' }}
         >
           {days.map((day) => {
             const isActive = day === activeDay
             const count = schedule[day]?.length ?? 0
             return (
-              <button key={day} onClick={() => setActiveDay(day)}
-                className={`relative flex-1 py-5 px-2 transition-all duration-300 group border-t-2 ${
-                  isActive ? 'bg-[#F1B91E] border-[#F1B91E]' : 'bg-white/4 border-transparent hover:bg-white/8 hover:border-white/20'
-                }`}
+              <button
+                key={day}
+                onClick={() => setActiveDay(day)}
+                className="flex-1 transition-all duration-300 group"
+                style={{
+                  padding: '1.25rem .5rem',
+                  background: isActive ? '#F1B91E' : 'rgba(255,255,255,.04)',
+                  borderTop: isActive
+                    ? '2px solid #F1B91E'
+                    : '2px solid transparent',
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.background = 'rgba(255,255,255,.08)'
+                    e.currentTarget.style.borderTopColor = 'rgba(255,255,255,.2)'
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.background = 'rgba(255,255,255,.04)'
+                    e.currentTarget.style.borderTopColor = 'transparent'
+                  }
+                }}
               >
-                <div style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                  className={`text-[18px] md:text-[22px] tracking-[0.08em] uppercase leading-none ${
-                    isActive ? 'text-[#191919]' : 'text-white/55 group-hover:text-white'
-                  }`}>
+                <div
+                  style={{
+                    fontFamily: 'var(--font-barlow)',
+                    fontWeight: 800,
+                    fontSize: 'clamp(1.1rem,2vw,1.5rem)',
+                    letterSpacing: '.08em',
+                    textTransform: 'uppercase',
+                    lineHeight: 1,
+                    color: isActive ? '#191919' : 'rgba(255,255,255,.55)',
+                  }}
+                >
                   {day}
                 </div>
-                <div style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                  className={`text-[11px] tracking-[0.1em] mt-1.5 ${
-                    isActive ? 'text-[#191919]/55' : 'text-white/22'
-                  }`}>
+                <div
+                  style={{
+                    fontFamily: 'var(--font-inter)',
+                    fontWeight: 600,
+                    fontSize: '.7rem',
+                    letterSpacing: '.1em',
+                    marginTop: '.4rem',
+                    color: isActive ? 'rgba(25,25,25,.55)' : 'rgba(255,255,255,.22)',
+                  }}
+                >
                   {count} {count === 1 ? 'clase' : 'clases'}
                 </div>
               </button>
             )
           })}
         </motion.div>
+
         {/* Gold rule below tabs */}
-        <div className="h-[3px] w-full bg-[#F1B91E]" />
+        <div className="w-full bg-[#F1B91E]" style={{ height: '3px' }} />
       </div>
 
       {/* ── CLASS LIST ── */}
-      <div className="relative z-10 px-6 md:px-12 lg:px-16">
+      <div
+        className="relative z-10 max-w-[1400px] mx-auto"
+        style={{ padding: '0 clamp(1.5rem,5vw,4rem)' }}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={activeDay}
@@ -245,110 +251,214 @@ export default function Schedule() {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
-            {times.map((time, ti) => {
-              const slots = grouped[time]
+            {classes.map((cls, i) => {
+              const cfg = typeConfig[cls.type]
+              const remaining = cls.max - cls.taken
+
               return (
-                <div key={time} className="border-b border-white/6">
-                  <div className={`grid gap-0.5 ${slots.length > 1 ? 'lg:grid-cols-2' : ''}`}>
-                    {slots.map((cls, ci) => {
-                      const cfg = typeConfig[cls.type]
-                      const remaining = cls.max - cls.taken
-                      const isFull = remaining === 0
-                      const isAlmostFull = !isFull && remaining <= 3
-
-                      return (
-                        <motion.div
-                          key={ci}
-                          initial={{ opacity: 0, x: -16 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.5, delay: ti * 0.05 + ci * 0.07 }}
-                          className={`group relative flex items-center gap-4 md:gap-10 px-0 py-6 md:py-10 ${cfg.glow}
-                            hover:bg-white/[0.02] transition-all duration-300 cursor-pointer border-l-0
-                            hover:border-l-[3px] hover:pl-4 transition-all duration-200`}
-                          style={{ borderLeftColor: cfg.color }}
-                        >
-                          {/* Left: Time */}
-                          <div className="flex-shrink-0 w-[72px] md:w-[110px]">
-                            <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                              className="text-white/80 text-[26px] md:text-[44px] leading-none tracking-tight tabular-nums">
-                              {time}
-                            </span>
-                          </div>
-
-                          {/* Center: Class info */}
-                          <div className="flex-1 min-w-0">
-                            {/* Type pill */}
-                            <div className="flex items-center gap-3 mb-2">
-                              <div className="w-[10px] h-[10px] flex-shrink-0"
-                                style={{ backgroundColor: cfg.color }} />
-                              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color: cfg.color }}
-                                className="text-[12px] tracking-[0.22em] uppercase">
-                                {cfg.label}
-                              </span>
-                              {isAlmostFull && !isFull && (
-                                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color: cfg.color, borderColor: cfg.color }}
-                                  className="text-[10px] tracking-[0.15em] uppercase border px-2.5 py-1">
-                                  ÚLTIMAS PLAZAS
-                                </span>
-                              )}
-                            </div>
-
-                            {/* Class name */}
-                            <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                              className={`text-[17px] md:text-[30px] lg:text-[40px] uppercase leading-none mb-2 truncate ${
-                                isFull ? 'text-white/35' : 'text-white'
-                              }`}>
-                              {cls.name}
-                            </h4>
-
-                            {/* Trainer */}
-                            <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                              className="text-white/40 text-[12px] md:text-[15px] truncate">
-                              {cls.trainer}
-                            </p>
-
-                            {/* Reserve link — appears on hover */}
-                            {!isFull && (
-                              <div className="mt-4 max-h-0 overflow-hidden group-hover:max-h-12 transition-all duration-300">
-                                <Link href="/contacto"
-                                  className="inline-flex items-center gap-2 px-5 py-2.5 text-[#191919] text-[12px] tracking-[0.2em] uppercase"
-                                  style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, backgroundColor: cfg.color }}>
-                                  Reservar Plaza →
-                                </Link>
-                              </div>
-                            )}
-                          </div>
-
-                          {/* Right: Spots grid */}
-                          <div className="flex-shrink-0 pr-2">
-                            <SpotsGrid taken={cls.taken} max={cls.max} color={cfg.color} />
-                          </div>
-                        </motion.div>
-                      )
-                    })}
+                <motion.div
+                  key={`${cls.time}-${cls.type}-${i}`}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: i * 0.05 }}
+                  className="border-b border-white/[0.06] cursor-pointer transition-all duration-200 scls-row"
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'auto 1fr auto',
+                    gap: '1.5rem',
+                    padding: '1.6rem 0',
+                    borderLeft: '0px solid transparent',
+                    alignItems: 'center',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,.02)'
+                    e.currentTarget.style.borderLeft = `3px solid ${cfg.color}`
+                    e.currentTarget.style.paddingLeft = '1rem'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.borderLeft = '0px solid transparent'
+                    e.currentTarget.style.paddingLeft = '0'
+                  }}
+                >
+                  {/* Time */}
+                  <div
+                    style={{
+                      fontFamily: 'var(--font-barlow)',
+                      fontWeight: 800,
+                      fontSize: 'clamp(1.75rem,2.6vw,2.5rem)',
+                      color: '#FFFFFF',
+                      minWidth: '92px',
+                      whiteSpace: 'nowrap',
+                      fontVariantNumeric: 'tabular-nums',
+                      lineHeight: 1,
+                    }}
+                    className="scls-time"
+                  >
+                    {cls.time}
                   </div>
-                </div>
+
+                  {/* Info */}
+                  <div className="min-w-0">
+                    {/* Type dot + label */}
+                    <div className="flex items-center gap-3 mb-1">
+                      <div
+                        className="flex-shrink-0"
+                        style={{
+                          width: '10px',
+                          height: '10px',
+                          backgroundColor: cfg.color,
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontFamily: 'var(--font-inter)',
+                          fontWeight: 700,
+                          fontSize: '.82rem',
+                          letterSpacing: '.22em',
+                          textTransform: 'uppercase',
+                          color: cfg.color,
+                        }}
+                      >
+                        {cfg.label}
+                      </span>
+                    </div>
+
+                    {/* Class name */}
+                    <h4
+                      style={{
+                        fontFamily: 'var(--font-barlow)',
+                        fontWeight: 800,
+                        fontSize: 'clamp(1.8rem,2.6vw,2.4rem)',
+                        textTransform: 'uppercase',
+                        lineHeight: 1,
+                        color: '#FFFFFF',
+                        marginBottom: '.25rem',
+                      }}
+                      className="truncate"
+                    >
+                      {cls.name}
+                    </h4>
+
+                    {/* Coach */}
+                    <p
+                      style={{
+                        fontFamily: 'var(--font-inter)',
+                        fontWeight: 400,
+                        fontSize: '.95rem',
+                        color: 'rgba(255,255,255,.45)',
+                      }}
+                      className="truncate"
+                    >
+                      {cls.trainer}
+                    </p>
+                  </div>
+
+                  {/* Spots — hidden below 560px */}
+                  <div className="text-right scls-spots" style={{ flexShrink: 0 }}>
+                    <span
+                      style={{
+                        fontFamily: 'var(--font-barlow)',
+                        fontWeight: 800,
+                        fontSize: 'clamp(1.4rem,2.5vw,2rem)',
+                        color: '#FFFFFF',
+                        lineHeight: 1,
+                        display: 'block',
+                      }}
+                    >
+                      {remaining}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: 'var(--font-inter)',
+                        fontWeight: 600,
+                        fontSize: '.7rem',
+                        letterSpacing: '.16em',
+                        color: 'rgba(255,255,255,.35)',
+                        textTransform: 'uppercase',
+                      }}
+                    >
+                      {remaining === 1 ? 'Plaza libre' : 'Plazas libres'}
+                    </span>
+                  </div>
+                </motion.div>
               )
             })}
 
-            {/* Bottom CTA */}
-            <div className="flex items-center justify-between py-12 border-t border-white/8 mt-4 mb-2">
-              <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                className="text-white/30 text-[14px]">
+            {/* Footer */}
+            <div
+              className="flex flex-wrap items-center justify-between"
+              style={{
+                gap: '1.5rem',
+                padding: '3rem 0',
+                borderTop: '1px solid rgba(255,255,255,.08)',
+                marginTop: '1rem',
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: 'var(--font-inter)',
+                  fontWeight: 400,
+                  fontSize: '.9rem',
+                  color: 'rgba(255,255,255,.3)',
+                }}
+              >
                 ¿Necesitas ver el horario completo o gestionar reservas?
               </p>
-              <Link href="/contacto"
-                className="inline-flex items-center gap-3 border border-[#F1B91E]/40 text-[#F1B91E] px-6 py-4 hover:bg-[#F1B91E] hover:text-[#191919] transition-all duration-300 group flex-shrink-0 ml-8">
-                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                  className="text-[12px] tracking-[0.2em] uppercase">Horario Completo</span>
-                <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <button
+                data-contact
+                className="inline-flex items-center gap-3 transition-all duration-300 group flex-shrink-0"
+                style={{
+                  border: '1px solid rgba(241,185,30,.4)',
+                  color: '#F1B91E',
+                  padding: '1rem 1.75rem',
+                  fontFamily: 'var(--font-inter)',
+                  fontWeight: 700,
+                  fontSize: '.7rem',
+                  letterSpacing: '.25em',
+                  textTransform: 'uppercase',
+                  background: 'transparent',
+                  cursor: 'pointer',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#F1B91E'
+                  e.currentTarget.style.color = '#191919'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'transparent'
+                  e.currentTarget.style.color = '#F1B91E'
+                }}
+              >
+                <span>Horario Completo</span>
+                <svg
+                  className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                >
                   <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
-              </Link>
+              </button>
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* Responsive: hide spots below 560px, shrink time min-width */}
+      <style jsx>{`
+        @media (max-width: 560px) {
+          .scls-spots {
+            display: none !important;
+          }
+          .scls-row {
+            grid-template-columns: auto 1fr !important;
+          }
+          .scls-time {
+            min-width: 72px !important;
+          }
+        }
+      `}</style>
     </section>
   )
 }

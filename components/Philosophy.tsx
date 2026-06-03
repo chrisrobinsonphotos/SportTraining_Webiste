@@ -11,35 +11,61 @@ const values = [
   { num: '04', title: 'EXPERIENCIA HONESTA', body: 'Sin tendencias, sin suplementación innecesaria. Orientación honesta, basada en la ciencia.' },
 ]
 
+const brandEase = [0.16, 1, 0.3, 1] as const
+
 export default function Philosophy() {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="filosofia" ref={ref} className="relative bg-[#1E1E1E] min-h-screen flex overflow-hidden" style={{ scrollMarginTop: '90px' }}>
-
-      {/* LEFT: text column — full left side */}
-      <div className="relative z-10 w-full lg:w-[55%] flex flex-col px-6 md:px-12 lg:px-16 py-16">
-
-        {/* Top: label + headline — sits at natural height */}
-        <div className="flex-shrink-0">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="flex items-center gap-4 mb-8"
+    <section
+      id="filosofia"
+      ref={ref}
+      className="relative min-h-screen flex overflow-hidden"
+      style={{ backgroundColor: '#1E1E1E', scrollMarginTop: '90px' }}
+    >
+      {/* LEFT: text column */}
+      <div
+        className="relative z-10 w-full flex flex-col"
+        style={{ padding: '6rem clamp(1.5rem,5vw,4rem)', maxWidth: '100%' }}
+      >
+        {/* Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="flex items-center gap-4 mb-8"
+        >
+          <div className="w-2 h-2 bg-[#F1B91E]" />
+          <span
+            style={{
+              fontFamily: 'var(--font-inter)',
+              fontWeight: 700,
+              fontSize: 'clamp(.85rem,1vw,1rem)',
+              letterSpacing: '.22em',
+              textTransform: 'uppercase',
+              color: '#F1B91E',
+            }}
           >
-            <div className="w-2 h-2 bg-[#F1B91E]" />
-            <span className="section-label">Nuestra Filosofía</span>
-          </motion.div>
+            Nuestra Filosofía
+          </span>
+        </motion.div>
 
+        {/* Heading: ENTRENA / Para la / VIDA. */}
+        <div className="flex-shrink-0">
           <div className="overflow-hidden mb-1">
             <motion.h2
               initial={{ y: 100, opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[15vw] lg:text-[8vw] leading-[0.85] uppercase text-white"
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+              transition={{ duration: 0.9, delay: 0.1, ease: [...brandEase] }}
+              className="text-white uppercase"
+              style={{
+                fontFamily: 'var(--font-barlow)',
+                fontWeight: 800,
+                fontSize: 'clamp(3.6rem,7.8vw,7.2rem)',
+                lineHeight: '.85',
+                letterSpacing: '-.02em',
+              }}
             >
               ENTRENA
             </motion.h2>
@@ -48,9 +74,17 @@ export default function Philosophy() {
             <motion.h2
               initial={{ y: 100, opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
-              transition={{ duration: 0.9, delay: 0.17, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[15vw] lg:text-[8vw] leading-[0.85] uppercase text-[#F1B91E]"
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none' }}
+              transition={{ duration: 0.9, delay: 0.17, ease: [...brandEase] }}
+              style={{
+                fontFamily: 'var(--font-barlow)',
+                fontWeight: 800,
+                fontSize: 'clamp(3.6rem,7.8vw,7.2rem)',
+                lineHeight: '.85',
+                letterSpacing: '-.02em',
+                color: '#F1B91E',
+                fontStyle: 'italic',
+                textTransform: 'none',
+              }}
             >
               Para la
             </motion.h2>
@@ -59,122 +93,272 @@ export default function Philosophy() {
             <motion.h2
               initial={{ y: 100, opacity: 0 }}
               animate={inView ? { y: 0, opacity: 1 } : {}}
-              transition={{ duration: 0.9, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[15vw] lg:text-[8vw] leading-[0.85] uppercase text-white"
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
+              transition={{ duration: 0.9, delay: 0.24, ease: [...brandEase] }}
+              className="text-white uppercase"
+              style={{
+                fontFamily: 'var(--font-barlow)',
+                fontWeight: 800,
+                fontSize: 'clamp(3.6rem,7.8vw,7.2rem)',
+                lineHeight: '.85',
+                letterSpacing: '-.02em',
+              }}
             >
               VIDA.
             </motion.h2>
           </div>
         </div>
 
-        {/* Values — flex-1 claims all remaining height; each row shares it equally */}
-        <div className="flex flex-col flex-1 mt-8">
+        {/* Values */}
+        <div className="flex flex-col flex-1" style={{ marginTop: '2.5rem' }}>
           {values.map((item, i) => (
             <motion.div
               key={item.num}
               initial={{ opacity: 0, x: -30 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.35 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="flex-1 border-b border-white/8 flex items-center gap-6 group hover:border-[#F1B91E]/30 transition-colors duration-400"
+              transition={{ duration: 0.7, delay: 0.35 + i * 0.08, ease: [...brandEase] }}
+              className="flex-1 flex items-center group"
+              style={{
+                borderBottom: i < values.length - 1 ? '1px solid rgba(255,255,255,.08)' : 'none',
+                gap: '1.5rem',
+                padding: '1.5rem 0',
+                transition: 'border-color 0.4s cubic-bezier(0.16,1,0.3,1)',
+              }}
+              onMouseEnter={(e) => {
+                if (i < values.length - 1) {
+                  e.currentTarget.style.borderBottomColor = 'rgba(241,185,30,.3)'
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (i < values.length - 1) {
+                  e.currentTarget.style.borderBottomColor = 'rgba(255,255,255,.08)'
+                }
+              }}
             >
-              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                className="text-[#F1B91E] text-[15px] tracking-[0.2em] flex-shrink-0 w-10">{item.num}</span>
+              <span
+                className="flex-shrink-0"
+                style={{
+                  fontFamily: 'var(--font-inter)',
+                  fontWeight: 700,
+                  fontSize: '.9rem',
+                  letterSpacing: '.2em',
+                  color: '#F1B91E',
+                  width: '2.5rem',
+                }}
+              >
+                {item.num}
+              </span>
               <div>
-                <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
-                  className="text-white text-[44px] md:text-[56px] tracking-[0.02em] mb-6 uppercase leading-tight">
+                <h3
+                  style={{
+                    fontFamily: 'var(--font-barlow)',
+                    fontWeight: 700,
+                    fontSize: 'clamp(2.3rem,3.4vw,3.1rem)',
+                    letterSpacing: '.02em',
+                    textTransform: 'uppercase',
+                    lineHeight: '1.02',
+                    margin: '0 0 .5rem',
+                    color: '#FFFFFF',
+                  }}
+                >
                   {item.title}
                 </h3>
-                <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                  className="text-white/65 text-[20px] md:text-[23px] leading-relaxed">{item.body}</p>
+                <p
+                  style={{
+                    fontFamily: 'var(--font-inter)',
+                    fontWeight: 400,
+                    fontSize: 'clamp(1.3rem,1.5vw,1.55rem)',
+                    lineHeight: '1.5',
+                    color: 'rgba(255,255,255,.65)',
+                    maxWidth: '44ch',
+                    margin: 0,
+                  }}
+                >
+                  {item.body}
+                </p>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* RIGHT: two portrait panels side-by-side — Sr. left, Jr. right */}
-      <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[45%]">
-        {/* Gradient mask on the far left edge */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 z-10 bg-gradient-to-r from-[#1E1E1E] to-transparent" />
-        {/* Gradient on top and bottom — span full width */}
-        <div className="absolute inset-x-0 top-0 h-32 z-10 bg-gradient-to-b from-[#1E1E1E] to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-48 z-10 bg-gradient-to-t from-[#1E1E1E] via-[#1E1E1E]/60 to-transparent" />
+      {/* RIGHT: portrait panel — hidden below 1100px */}
+      <div
+        className="absolute right-0 top-0 bottom-0"
+        style={{ width: '58%', display: 'none' }}
+      >
+        {/* Left mask: 2.5rem wide */}
+        <div
+          className="absolute left-0 top-0 bottom-0 z-10"
+          style={{
+            width: '2.5rem',
+            background: 'linear-gradient(to right, #1E1E1E, transparent)',
+          }}
+        />
+        {/* Top mask: 4rem tall */}
+        <div
+          className="absolute inset-x-0 top-0 z-10"
+          style={{
+            height: '4rem',
+            background: 'linear-gradient(to bottom, #1E1E1E, transparent)',
+          }}
+        />
+        {/* Bottom mask: 8rem tall */}
+        <div
+          className="absolute inset-x-0 bottom-0 z-10"
+          style={{
+            height: '8rem',
+            background: 'linear-gradient(to top, #1E1E1E, transparent)',
+          }}
+        />
 
-        {/* Two portrait panels */}
-        <div className="h-full w-full flex gap-[2px]">
-
-          {/* Sr. */}
+        {/* Two side-by-side images */}
+        <div className="h-full w-full flex" style={{ gap: '2px' }}>
           <motion.div
             initial={{ opacity: 0, scale: 1.05 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1.2, ease: [...brandEase] }}
             className="relative flex-1 overflow-hidden"
           >
             <Image
               src="/trainer-miguel.jpg"
               alt="Miguel Ángel — Fundador y entrenador de Sport Training Murcia desde 2007"
               fill
-              className="object-cover object-top"
+              className="object-cover"
+              style={{ objectPosition: 'top center' }}
               quality={90}
-              sizes="22vw"
+              sizes="29vw"
             />
-            <div className="absolute inset-0 bg-[#1E1E1E]/20" />
           </motion.div>
 
-          {/* Jr. */}
           <motion.div
             initial={{ opacity: 0, scale: 1.05 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1.2, delay: 0.1, ease: [...brandEase] }}
             className="relative flex-1 overflow-hidden"
           >
             <Image
               src="/portrait-jr.jpg"
               alt="Miguel Ángel Jr. — Entrenador Personal Sport Training Murcia"
               fill
-              className="object-cover object-top"
+              className="object-cover"
+              style={{ objectPosition: 'top center' }}
               quality={90}
-              sizes="22vw"
+              sizes="29vw"
             />
-            <div className="absolute inset-0 bg-[#1E1E1E]/20" />
           </motion.div>
         </div>
 
-        {/* Byline — both names, bottom of image block */}
+        {/* Byline */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.6 }}
-          className="absolute bottom-10 left-10 right-10 z-20 flex items-end justify-between gap-6"
+          className="absolute z-20 flex items-end justify-between"
+          style={{ bottom: '2.5rem', left: '2.5rem', right: '2.5rem', gap: '1.5rem' }}
         >
           {/* Sr. */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 flex-shrink-0 overflow-hidden relative rounded-sm border border-[#F1B91E]/40">
-              <Image src="/trainer-miguel.jpg" alt="Miguel Ángel — Fundador Sport Training Murcia" fill className="object-cover object-top" sizes="40px" />
+            <div
+              className="flex-shrink-0 overflow-hidden relative"
+              style={{ width: '40px', height: '40px', border: '1px solid #F1B91E' }}
+            >
+              <Image
+                src="/trainer-miguel.jpg"
+                alt="Miguel Ángel — Fundador Sport Training Murcia"
+                fill
+                className="object-cover object-top"
+                sizes="40px"
+              />
             </div>
             <div>
-              <p style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
-                className="text-white text-[14px] tracking-[0.1em] uppercase leading-tight">Miguel Ángel</p>
-              <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 500 }}
-                className="text-white/55 text-[10px] tracking-[0.15em] uppercase">Fundador · 2007</p>
+              <p
+                className="leading-tight"
+                style={{
+                  fontFamily: 'var(--font-barlow)',
+                  fontWeight: 700,
+                  fontSize: '14px',
+                  letterSpacing: '.1em',
+                  textTransform: 'uppercase',
+                  color: '#FFFFFF',
+                  margin: 0,
+                }}
+              >
+                Miguel Ángel
+              </p>
+              <p
+                style={{
+                  fontFamily: 'var(--font-inter)',
+                  fontWeight: 500,
+                  fontSize: '10px',
+                  letterSpacing: '.15em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,.55)',
+                  margin: 0,
+                }}
+              >
+                Fundador · 2007
+              </p>
             </div>
           </div>
 
           {/* Jr. */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 flex-shrink-0 overflow-hidden relative rounded-sm border border-[#F1B91E]/40">
-              <Image src="/portrait-jr.jpg" alt="Miguel Ángel Jr. — Entrenador Sport Training Murcia" fill className="object-cover object-top" sizes="40px" />
+            <div
+              className="flex-shrink-0 overflow-hidden relative"
+              style={{ width: '40px', height: '40px', border: '1px solid #F1B91E' }}
+            >
+              <Image
+                src="/portrait-jr.jpg"
+                alt="Miguel Ángel Jr. — Entrenador Sport Training Murcia"
+                fill
+                className="object-cover object-top"
+                sizes="40px"
+              />
             </div>
             <div>
-              <p style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
-                className="text-white text-[14px] tracking-[0.1em] uppercase leading-tight">Miguel Ángel Jr.</p>
-              <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 500 }}
-                className="text-white/55 text-[10px] tracking-[0.15em] uppercase">Entrenador Personal</p>
+              <p
+                className="leading-tight"
+                style={{
+                  fontFamily: 'var(--font-barlow)',
+                  fontWeight: 700,
+                  fontSize: '14px',
+                  letterSpacing: '.1em',
+                  textTransform: 'uppercase',
+                  color: '#FFFFFF',
+                  margin: 0,
+                }}
+              >
+                Miguel Ángel Jr.
+              </p>
+              <p
+                style={{
+                  fontFamily: 'var(--font-inter)',
+                  fontWeight: 500,
+                  fontSize: '10px',
+                  letterSpacing: '.15em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,.55)',
+                  margin: 0,
+                }}
+              >
+                Entrenador Personal
+              </p>
             </div>
           </div>
         </motion.div>
       </div>
+
+      {/* Responsive: show portrait panel at >=1100px */}
+      <style>{`
+        @media (min-width: 1100px) {
+          #filosofia > div:nth-child(2) {
+            display: block !important;
+          }
+          #filosofia > div:first-child {
+            width: 44% !important;
+          }
+        }
+      `}</style>
     </section>
   )
 }

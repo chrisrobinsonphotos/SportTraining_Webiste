@@ -3,7 +3,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
 
 const trainers = [
   {
@@ -50,8 +49,7 @@ function TrainerCard({ trainer, index }: { trainer: typeof trainers[0]; index: n
       initial={{ opacity: 0, y: 60 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.9, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
-      className="relative group overflow-hidden"
-      style={{ minHeight: '70vh' }}
+      className="trainer-card group"
     >
       {/* Full-bleed portrait */}
       <div className="absolute inset-0">
@@ -59,69 +57,104 @@ function TrainerCard({ trainer, index }: { trainer: typeof trainers[0]; index: n
           src={trainer.image}
           alt={`${trainer.name} — Entrenador Sport Training Murcia`}
           fill
-          className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-          sizes="25vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          style={{ objectPosition: 'top center' }}
+          sizes="(min-width:1024px) 25vw, 50vw"
           quality={90}
         />
-        {/* Base dark gradient — always visible at bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] via-[#0F0F0F]/40 to-transparent" />
-        {/* Extra overlay on hover */}
-        <div className="absolute inset-0 bg-[#0F0F0F]/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        {/* Gold left rule — appears on hover */}
-        <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#F1B91E] scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-bottom" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(0deg, #0F0F0F 0%, rgba(15,15,15,0.4) 50%, transparent 100%)',
+          }}
+        />
+        <div className="trainer-gold-rule" />
       </div>
 
-      {/* Content — bottom anchored */}
-      <div className="relative z-10 flex flex-col justify-end h-full p-6 md:p-8" style={{ minHeight: '70vh' }}>
+      {/* Number */}
+      <span
+        className="absolute"
+        style={{
+          top: '1.5rem',
+          left: '1.5rem',
+          fontFamily: 'var(--font-inter)',
+          fontWeight: 700,
+          fontStyle: 'italic',
+          fontSize: '.75rem',
+          letterSpacing: '.3em',
+          color: 'rgba(241,185,30,.5)',
+        }}
+      >
+        {trainer.num}
+      </span>
 
-        {/* Number — top left */}
-        <div className="absolute top-6 left-6 md:top-8 md:left-8">
-          <span
-            style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, fontStyle: 'italic', textTransform: 'none' }}
-            className="text-[#F1B91E]/50 text-[12px] tracking-[0.3em]"
-          >
-            {trainer.num}
-          </span>
-        </div>
-
-        {/* Specialities — slide up on hover */}
-        <div className="mb-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-          <div className="flex flex-col gap-1.5">
-            {trainer.specialities.map((s) => (
-              <div key={s} className="flex items-center gap-2">
-                <div className="w-3 h-[1.5px] bg-[#F1B91E]" />
-                <span
-                  style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                  className="text-white/60 text-[11px] tracking-[0.15em] uppercase"
-                >
-                  {s}
-                </span>
-              </div>
-            ))}
-          </div>
+      {/* Content */}
+      <div className="relative z-10">
+        {/* Specs */}
+        <div className="trainer-specs">
+          {trainer.specialities.map((s) => (
+            <div key={s} className="flex items-center" style={{ gap: '.5rem' }}>
+              <div style={{ width: '12px', height: '1.5px', background: '#F1B91E', flexShrink: 0 }} />
+              <span
+                style={{
+                  fontFamily: 'var(--font-inter)',
+                  fontWeight: 600,
+                  fontSize: '.62rem',
+                  letterSpacing: '.15em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,.6)',
+                }}
+              >
+                {s}
+              </span>
+            </div>
+          ))}
         </div>
 
         {/* Gold divider */}
-        <div className="w-8 h-[2px] bg-[#F1B91E] mb-4 group-hover:w-full transition-all duration-500" />
+        <div className="trainer-divider" />
 
         {/* Name */}
         <h3
-          style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-          className="text-white text-[28px] md:text-[32px] lg:text-[36px] uppercase leading-none mb-2"
+          style={{
+            fontFamily: 'var(--font-barlow)',
+            fontWeight: 800,
+            fontSize: 'clamp(2.3rem,3.1vw,2.9rem)',
+            textTransform: 'uppercase',
+            lineHeight: 1,
+            margin: '0 0 .5rem',
+            color: '#fff',
+          }}
         >
           {trainer.name}
         </h3>
 
         {/* Role */}
         <p
-          style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-          className="text-[#F1B91E] text-[11px] tracking-[0.2em] uppercase mb-1"
+          style={{
+            fontFamily: 'var(--font-inter)',
+            fontWeight: 600,
+            fontSize: '.82rem',
+            letterSpacing: '.2em',
+            textTransform: 'uppercase',
+            color: '#F1B91E',
+            margin: 0,
+          }}
         >
           {trainer.role}
         </p>
+
+        {/* Since */}
         <p
-          style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-          className="text-white/30 text-[11px] tracking-[0.15em] uppercase"
+          style={{
+            fontFamily: 'var(--font-inter)',
+            fontWeight: 400,
+            fontSize: '.82rem',
+            letterSpacing: '.15em',
+            textTransform: 'uppercase',
+            color: 'rgba(255,255,255,.3)',
+            margin: 0,
+          }}
         >
           {trainer.since}
         </p>
@@ -135,65 +168,165 @@ export default function Trainers() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="equipo" ref={ref} className="relative bg-[#0F0F0F] min-h-screen flex flex-col overflow-hidden border-b-4 border-[#F1B91E]" style={{ scrollMarginTop: '90px' }}>
+    <section
+      id="equipo"
+      ref={ref}
+      className="relative bg-[#0F0F0F] overflow-hidden"
+      style={{ borderBottom: '4px solid #F1B91E', scrollMarginTop: '90px' }}
+    >
+      <style>{`
+        .trainers-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 2px;
+        }
+        @media (min-width: 1024px) {
+          .trainers-grid {
+            grid-template-columns: repeat(4, 1fr);
+          }
+        }
+        .trainer-card {
+          position: relative;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          min-height: 64vh;
+          padding: 1.75rem;
+        }
+        .trainer-gold-rule {
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 3px;
+          background: #F1B91E;
+          transform: scaleY(0);
+          transform-origin: bottom;
+          transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .trainer-card:hover .trainer-gold-rule {
+          transform: scaleY(1);
+        }
+        .trainer-specs {
+          display: flex;
+          flex-direction: column;
+          gap: .35rem;
+          margin-bottom: 1rem;
+          opacity: 0;
+          transform: translateY(1rem);
+          transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .trainer-card:hover .trainer-specs {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .trainer-divider {
+          width: 32px;
+          height: 2px;
+          background: #F1B91E;
+          margin-bottom: 1rem;
+          transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .trainer-card:hover .trainer-divider {
+          width: 100%;
+        }
+      `}</style>
 
       {/* Header */}
-      <div className="px-6 md:px-12 lg:px-16 pt-20 pb-10 flex-shrink-0">
-
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          className="flex items-center gap-4 mb-6"
-        >
-          <div className="w-2 h-2 bg-[#F1B91E]" />
-          <span className="section-label">Nuestro Equipo</span>
-        </motion.div>
-
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-          <div>
-            {/* Single semantic H2 for SEO — invisible to sighted users */}
-            <h2 className="sr-only">
-              Entrenadores Sport Training Murcia — Equipo de HYROX, CrossTraining y entrenamiento funcional
-            </h2>
-
-            {/* Decorative animated stack (sighted users) */}
-            <div className="overflow-hidden" aria-hidden="true">
-              <motion.span
-                initial={{ y: 80, opacity: 0 }}
-                animate={inView ? { y: 0, opacity: 1 } : {}}
-                transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                className="block text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-white"
-              >
-                COACHES
-              </motion.span>
-            </div>
-          </div>
-
+      <div
+        className="flex flex-wrap items-end justify-between"
+        style={{ padding: '5rem clamp(1.5rem,5vw,4rem) 2.5rem', gap: '1.5rem' }}
+      >
+        <div>
+          {/* Eyebrow */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="flex-shrink-0"
+            initial={{ opacity: 0, x: -20 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center mb-6"
+            style={{ gap: '1rem' }}
           >
-            <button
-              data-contact
-              className="inline-flex items-center gap-3 border border-[#F1B91E]/40 text-[#F1B91E] px-6 py-4 hover:bg-[#F1B91E] hover:text-[#191919] transition-all duration-300 group"
+            <div style={{ width: '8px', height: '8px', background: '#F1B91E' }} />
+            <span
+              style={{
+                fontFamily: 'var(--font-inter)',
+                fontWeight: 700,
+                fontSize: 'clamp(.85rem,1vw,1rem)',
+                letterSpacing: '.22em',
+                textTransform: 'uppercase',
+                color: '#F1B91E',
+              }}
             >
-              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                className="text-[12px] tracking-[0.2em] uppercase">
-                Conoce al Equipo
-              </span>
-              <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </button>
+              Nuestro Equipo
+            </span>
           </motion.div>
+
+          {/* SEO heading */}
+          <h2 className="sr-only">
+            Entrenadores Sport Training Murcia — Equipo de HYROX, CrossTraining y entrenamiento funcional
+          </h2>
+
+          {/* Display heading */}
+          <div className="overflow-hidden" aria-hidden="true">
+            <motion.span
+              initial={{ y: 80, opacity: 0 }}
+              animate={inView ? { y: 0, opacity: 1 } : {}}
+              transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="block text-white"
+              style={{
+                fontFamily: 'var(--font-barlow)',
+                fontWeight: 800,
+                fontSize: 'clamp(3.6rem,7.8vw,7.2rem)',
+                textTransform: 'uppercase',
+                lineHeight: 0.85,
+                letterSpacing: '-.02em',
+              }}
+            >
+              COACHES
+            </motion.span>
+          </div>
         </div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="flex-shrink-0"
+        >
+          <button
+            data-contact
+            className="inline-flex items-center border border-[#F1B91E]/40 text-[#F1B91E] hover:bg-[#F1B91E] hover:text-[#191919] transition-all duration-300 group/btn"
+            style={{ padding: '1rem 1.75rem', gap: '.75rem' }}
+          >
+            <span
+              style={{
+                fontFamily: 'var(--font-inter)',
+                fontWeight: 700,
+                fontSize: '.7rem',
+                letterSpacing: '.25em',
+                textTransform: 'uppercase',
+              }}
+            >
+              Conoce al Equipo
+            </span>
+            <svg
+              className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2.5}
+            >
+              <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </button>
+        </motion.div>
       </div>
 
-      {/* 4-column portrait grid — fills remaining space */}
-      <div className="flex-1 grid grid-cols-2 lg:grid-cols-4 gap-0.5 min-h-0">
+      {/* Grid */}
+      <div className="trainers-grid">
         {trainers.map((trainer, i) => (
           <TrainerCard key={trainer.num} trainer={trainer} index={i} />
         ))}

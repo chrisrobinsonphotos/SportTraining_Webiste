@@ -1,9 +1,8 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import Link from 'next/link'
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -25,7 +24,6 @@ interface CarouselSlide {
 }
 
 // ── Gallery data ───────────────────────────────────────────────────────────
-// Add new galleries here. Most recent first.
 
 const galleries: Gallery[] = [
   {
@@ -209,8 +207,6 @@ const galleries: Gallery[] = [
 ]
 
 // ── Carousel highlights ────────────────────────────────────────────────────
-// Curated picks shown in the rotating carousel. Each slide links back to its
-// parent gallery so clicking opens the right lightbox at the right image.
 
 const carouselSlides: CarouselSlide[] = [
   { src: '/relay-may-26/_MG_5804.jpg', caption: 'HYROX Relay Race · Mayo 2026', galleryId: 'relay-may-26' },
@@ -234,12 +230,11 @@ export default function Community() {
 
   // Carousel
   const [activeSlide, setActiveSlide] = useState(0)
-  const [direction, setDirection] = useState(1)
+  const [hovering, setHovering] = useState(false)
 
-  // Lightbox — null means closed
+  // Lightbox
   const [lightboxGalleryId, setLightboxGalleryId] = useState<string | null>(null)
   const [lbIndex, setLbIndex] = useState(0)
-  const [lbDirection, setLbDirection] = useState(1)
   const lbIndexRef = useRef(0)
   useEffect(() => { lbIndexRef.current = lbIndex }, [lbIndex])
 
@@ -249,9 +244,16 @@ export default function Community() {
     : null
   const lightboxImages: GalleryImage[] = lightboxGallery?.images ?? []
 
-  // ── Carousel ──
+  // ── Carousel auto-advance ──
+  useEffect(() => {
+    if (hovering) return
+    const timer = setInterval(() => {
+      setActiveSlide(prev => (prev + 1) % carouselSlides.length)
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [hovering])
+
   const paginate = (newIndex: number) => {
-    setDirection(newIndex > activeSlide ? 1 : -1)
     setActiveSlide((newIndex + carouselSlides.length) % carouselSlides.length)
   }
 
@@ -263,23 +265,20 @@ export default function Community() {
     const idx = gallery.images.findIndex(img => img.src === slide.src)
     setLightboxGalleryId(slide.galleryId)
     setLbIndex(idx >= 0 ? idx : 0)
-    setLbDirection(1)
   }
 
   // Opening directly from a gallery card
   const openGallery = (galleryId: string, startIndex = 0) => {
     setLightboxGalleryId(galleryId)
     setLbIndex(startIndex)
-    setLbDirection(1)
   }
 
-  const closeLightbox = () => setLightboxGalleryId(null)
+  const closeLightbox = useCallback(() => setLightboxGalleryId(null), [])
 
-  const lbGo = (newIndex: number) => {
+  const lbGo = useCallback((newIndex: number) => {
     const clamped = (newIndex + lightboxImages.length) % lightboxImages.length
-    setLbDirection(newIndex > lbIndexRef.current ? 1 : -1)
     setLbIndex(clamped)
-  }
+  }, [lightboxImages.length])
 
   // Keyboard navigation
   useEffect(() => {
@@ -291,7 +290,7 @@ export default function Community() {
     }
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
-  }, [lightboxGalleryId])
+  }, [lightboxGalleryId, closeLightbox, lbGo])
 
   // Scroll lock
   useEffect(() => {
@@ -303,246 +302,413 @@ export default function Community() {
     <>
       <section
         ref={ref}
-        className="relative bg-[#0D0D0D] min-h-screen flex flex-col overflow-hidden border-b-4 border-[#F1B91E]"
+        id="comunidad"
+        className="relative bg-[#0D0D0D] flex flex-col overflow-hidden"
+        style={{ borderBottom: '4px solid #F1B91E' }}
       >
-        {/* ── TOP: Carousel ──────────────────────────────────────────────── */}
-        <div className="relative flex-1 min-h-[65vh] overflow-hidden">
-          <AnimatePresence custom={direction}>
-            <motion.div
-              key={activeSlide}
-              custom={direction}
-              initial={{ opacity: 0, x: direction * 80 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: direction * -80 }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        {/* ── TOP: Photo Carousel ─────────────────────────────────────── */}
+        <div
+          className="relative min-h-[65vh] overflow-hidden"
+          onMouseEnter={() => setHovering(true)}
+          onMouseLeave={() => setHovering(false)}
+        >
+          {/* Cross-fade slides — all stacked absolute, opacity-only transitions */}
+          {carouselSlides.map((slide, i) => (
+            <div
+              key={slide.src}
               className="absolute inset-0"
+              style={{
+                opacity: i === activeSlide ? 1 : 0,
+                transition: 'opacity .7s ease',
+                zIndex: i === activeSlide ? 1 : 0,
+              }}
             >
               <Image
-                src={carouselSlides[activeSlide].src}
-                alt={carouselSlides[activeSlide].caption}
+                src={slide.src}
+                alt={slide.caption}
                 fill
                 sizes="100vw"
-                priority={activeSlide === 0}
+                priority={i === 0}
                 className="object-cover object-left-top"
                 quality={85}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#0D0D0D]/30 via-transparent to-[#0D0D0D]" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0D0D0D]/60 to-transparent" />
-            </motion.div>
-          </AnimatePresence>
+              {/* Vertical gradient from bg */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(to bottom, rgba(13,13,13,0.3) 0%, transparent 40%, rgba(13,13,13,1) 100%)',
+                }}
+              />
+              {/* Horizontal gradient from left */}
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(to right, rgba(13,13,13,0.6) 0%, transparent 50%)',
+                }}
+              />
+            </div>
+          ))}
 
           {/* Clickable overlay — opens lightbox for this slide's gallery */}
           <button
             onClick={openFromCarousel}
             aria-label="Ver galería completa"
-            className="absolute inset-0 z-10 w-full h-full cursor-zoom-in group"
-          >
-            <span className="absolute top-8 right-6 md:right-12 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <span
-                style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                className="text-[10px] tracking-[0.2em] uppercase text-white/60"
-              >
-                Ver galería
-              </span>
-              <span className="w-8 h-8 border border-white/30 flex items-center justify-center text-white/50">
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="square" d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
-                </svg>
-              </span>
-            </span>
-          </button>
+            className="absolute inset-0 z-10 w-full h-full cursor-zoom-in"
+          />
 
-          {/* Caption */}
-          <div className="absolute bottom-6 left-6 md:left-12 lg:left-16 z-20 pointer-events-none">
-            <motion.p
-              key={activeSlide}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, fontStyle: 'italic', textTransform: 'none' }}
-              className="text-white/70 text-[13px] tracking-[0.2em] uppercase"
+          {/* Eyebrow — top left */}
+          <div
+            className="absolute z-20 pointer-events-none"
+            style={{
+              top: '2rem',
+              left: 'clamp(1.5rem, 5vw, 4rem)',
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="flex items-center gap-4"
             >
-              {carouselSlides[activeSlide].caption}
-            </motion.p>
+              <div className="w-2 h-2 bg-[#F1B91E]" />
+              <span
+                style={{
+                  fontFamily: 'var(--font-inter)',
+                  fontWeight: 700,
+                  fontSize: 'clamp(.85rem, 1vw, 1rem)',
+                  letterSpacing: '.22em',
+                  textTransform: 'uppercase',
+                  color: '#F1B91E',
+                }}
+              >
+                Eventos & Comunidad
+              </span>
+            </motion.div>
           </div>
 
-          {/* Carousel controls */}
-          <div className="absolute bottom-6 right-6 md:right-12 z-20 flex items-center gap-3">
+          {/* Caption — bottom left */}
+          <div
+            className="absolute z-20 pointer-events-none"
+            style={{
+              bottom: '1.5rem',
+              left: 'clamp(1.5rem, 5vw, 4rem)',
+            }}
+          >
+            <p
+              key={activeSlide}
+              style={{
+                fontFamily: 'var(--font-inter)',
+                fontWeight: 600,
+                fontStyle: 'italic',
+                fontSize: '.78rem',
+                letterSpacing: '.2em',
+                color: 'rgba(255,255,255,.7)',
+                textTransform: 'none',
+                opacity: 1,
+                transition: 'opacity .3s ease',
+              }}
+            >
+              {carouselSlides[activeSlide].caption}
+            </p>
+          </div>
+
+          {/* Controls — bottom right */}
+          <div
+            className="absolute z-20 flex items-center gap-3"
+            style={{
+              bottom: '1.5rem',
+              right: 'clamp(1.5rem, 5vw, 4rem)',
+            }}
+          >
             <button
               onClick={(e) => { e.stopPropagation(); paginate(activeSlide - 1) }}
-              className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-[#F1B91E] hover:text-[#F1B91E] text-white/40 transition-all duration-300"
+              aria-label="Imagen anterior"
+              className="flex items-center justify-center text-white/40 hover:text-[#F1B91E] transition-all duration-300"
+              style={{
+                width: 36,
+                height: 36,
+                border: '1px solid rgba(255,255,255,.2)',
+              }}
+              onMouseEnter={(e) => { (e.currentTarget.style.borderColor = '#F1B91E') }}
+              onMouseLeave={(e) => { (e.currentTarget.style.borderColor = 'rgba(255,255,255,.2)') }}
             >
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="square" d="M19 12H5M12 19l-7-7 7-7" />
               </svg>
             </button>
             <span
-              style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-              className="text-[12px] tracking-[0.15em] text-white/50 tabular-nums w-16 text-center"
+              style={{
+                fontFamily: 'var(--font-inter)',
+                fontWeight: 600,
+                fontSize: '.75rem',
+                letterSpacing: '.15em',
+                color: 'rgba(255,255,255,.5)',
+                fontVariantNumeric: 'tabular-nums',
+                minWidth: '4rem',
+                textAlign: 'center',
+              }}
             >
               {String(activeSlide + 1).padStart(2, '0')} / {String(carouselSlides.length).padStart(2, '0')}
             </span>
             <button
               onClick={(e) => { e.stopPropagation(); paginate(activeSlide + 1) }}
-              className="w-9 h-9 border border-white/20 flex items-center justify-center hover:border-[#F1B91E] hover:text-[#F1B91E] text-white/40 transition-all duration-300"
+              aria-label="Imagen siguiente"
+              className="flex items-center justify-center text-white/40 hover:text-[#F1B91E] transition-all duration-300"
+              style={{
+                width: 36,
+                height: 36,
+                border: '1px solid rgba(255,255,255,.2)',
+              }}
+              onMouseEnter={(e) => { (e.currentTarget.style.borderColor = '#F1B91E') }}
+              onMouseLeave={(e) => { (e.currentTarget.style.borderColor = 'rgba(255,255,255,.2)') }}
             >
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </button>
           </div>
-
-          {/* Section label */}
-          <div className="absolute top-8 left-6 md:left-12 lg:left-16 z-20 pointer-events-none">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              className="flex items-center gap-4"
-            >
-              <div className="w-2 h-2 bg-[#F1B91E]" />
-              <span className="section-label">Eventos & Comunidad</span>
-            </motion.div>
-          </div>
         </div>
 
-        {/* ── BOTTOM: Headline + gallery cards ───────────────────────────── */}
-        <div className="px-6 md:px-12 lg:px-16 py-12 md:py-16 grid lg:grid-cols-[1fr_1fr] gap-12 lg:gap-20 flex-shrink-0">
-
-          {/* Left: Headline + description + CTA */}
-          <div>
-            <div className="overflow-hidden mb-1">
-              <motion.h2
-                initial={{ y: 80, opacity: 0 }}
-                animate={inView ? { y: 0, opacity: 1 } : {}}
-                transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                className="text-[12vw] md:text-[7vw] leading-[0.88] uppercase text-white"
-              >
-                NUESTRAS
-              </motion.h2>
-            </div>
-            <div className="overflow-hidden mb-1">
-              <motion.h2
-                initial={{ y: 80, opacity: 0 }}
-                animate={inView ? { y: 0, opacity: 1 } : {}}
-                transition={{ duration: 0.9, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                className="text-[12vw] md:text-[7vw] leading-[0.88] uppercase text-[#F1B91E]"
-              >
-                GALERÍAS.
-              </motion.h2>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="flex flex-wrap gap-3 mt-8 mb-8"
-            >
-              {['▪ HYROX', '▪ COMUNIDAD', '▪ EVENTOS'].map(p => (
-                <div key={p} className="border border-white/10 px-4 py-2.5">
-                  <span
-                    style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
-                    className="text-white text-[12px] tracking-[0.2em] uppercase"
-                  >
-                    {p}
-                  </span>
-                </div>
-              ))}
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.5 }}
-            >
-              <Link
-                href="/contacto"
-                aria-label="Contactar con Sport Training Murcia"
-                className="inline-flex items-center gap-3 bg-[#F1B91E] text-[#191919] px-7 py-4 hover:bg-[#C99200] transition-colors duration-300 group"
-              >
-                <span
-                  style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                  className="text-[11px] tracking-[0.25em] uppercase"
-                >
-                  Únete Ahora
-                </span>
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Right: Gallery cards */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col gap-4 self-center"
+        {/* ── BOTTOM: Headline + gallery cards (.comm-bottom) ─────────── */}
+        <div
+          style={{
+            padding: '3rem clamp(1.5rem, 5vw, 4rem) 4rem',
+          }}
+        >
+          <div
+            className="grid gap-12"
+            style={{
+              gridTemplateColumns: '1fr',
+              maxWidth: 1400,
+              margin: '0 auto',
+            }}
           >
-            {galleries.map((gallery) => (
-              <button
-                key={gallery.id}
-                onClick={() => openGallery(gallery.id)}
-                className="group text-left border border-white/10 hover:border-[#F1B91E]/50 transition-colors duration-300 overflow-hidden"
-              >
-                {/* Cover image */}
-                <div className="relative h-40 overflow-hidden">
-                  <Image
-                    src={gallery.cover}
-                    alt={gallery.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                    quality={80}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                  {/* Photo count badge */}
-                  <div className="absolute top-3 right-3">
-                    <span
-                      style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                      className="text-[10px] tracking-[0.2em] uppercase text-white/70 bg-black/50 px-2.5 py-1"
-                    >
-                      {gallery.images.length} fotos
-                    </span>
-                  </div>
+            {/* Responsive grid via media query — 1fr 1fr at >=1000px */}
+            <style jsx>{`
+              @media (min-width: 1000px) {
+                .comm-grid {
+                  grid-template-columns: 1fr 1fr !important;
+                  gap: 5rem !important;
+                }
+              }
+            `}</style>
+            <div
+              className="comm-grid grid gap-12"
+              style={{ gridTemplateColumns: '1fr' }}
+            >
+              {/* Left: Headline + tags + CTA */}
+              <div>
+                <div className="overflow-hidden mb-1">
+                  <motion.h2
+                    initial={{ y: 80, opacity: 0 }}
+                    animate={inView ? { y: 0, opacity: 1 } : {}}
+                    transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    style={{
+                      fontFamily: 'var(--font-barlow)',
+                      fontWeight: 800,
+                      fontSize: 'clamp(3.6rem, 7.8vw, 7.2rem)',
+                      lineHeight: '.85',
+                      letterSpacing: '-.02em',
+                      textTransform: 'uppercase',
+                      color: '#FFFFFF',
+                    }}
+                  >
+                    NUESTRAS
+                  </motion.h2>
+                </div>
+                <div className="overflow-hidden mb-1">
+                  <motion.h2
+                    initial={{ y: 80, opacity: 0 }}
+                    animate={inView ? { y: 0, opacity: 1 } : {}}
+                    transition={{ duration: 0.9, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+                    style={{
+                      fontFamily: 'var(--font-barlow)',
+                      fontWeight: 800,
+                      fontSize: 'clamp(3.6rem, 7.8vw, 7.2rem)',
+                      lineHeight: '.85',
+                      letterSpacing: '-.02em',
+                      color: '#F1B91E',
+                      fontStyle: 'italic',
+                      textTransform: 'none',
+                    }}
+                  >
+                    Galerías.
+                  </motion.h2>
                 </div>
 
-                {/* Card footer */}
-                <div className="flex items-center justify-between px-5 py-4">
-                  <div>
-                    <p
-                      style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                      className="text-white text-[18px] uppercase leading-tight tracking-wide"
+                {/* Tags */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.7, delay: 0.4 }}
+                  className="flex flex-wrap gap-3"
+                  style={{ marginTop: '2rem', marginBottom: '2rem' }}
+                >
+                  {['HYROX', 'COMUNIDAD', 'EVENTOS'].map(tag => (
+                    <div
+                      key={tag}
+                      style={{
+                        border: '1px solid rgba(255,255,255,.15)',
+                        padding: '0.625rem 1rem',
+                      }}
                     >
-                      {gallery.title}
-                    </p>
-                    <p
-                      style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                      className="text-white/40 text-[12px] tracking-[0.1em] mt-0.5"
-                    >
-                      {gallery.date}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2 text-white/30 group-hover:text-[#F1B91E] transition-colors duration-300">
+                      <span
+                        style={{
+                          fontFamily: 'var(--font-barlow)',
+                          fontWeight: 700,
+                          fontSize: '12px',
+                          letterSpacing: '.2em',
+                          textTransform: 'uppercase',
+                          color: '#FFFFFF',
+                        }}
+                      >
+                        &#9642; {tag}
+                      </span>
+                    </div>
+                  ))}
+                </motion.div>
+
+                {/* CTA button with data-contact */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.7, delay: 0.5 }}
+                >
+                  <button
+                    data-contact
+                    aria-label="Contactar con Sport Training Murcia"
+                    className="inline-flex items-center gap-3 bg-[#F1B91E] text-[#191919] hover:bg-[#C99200] transition-colors duration-300 group"
+                    style={{
+                      padding: '1rem 1.75rem',
+                    }}
+                  >
                     <span
-                      style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                      className="text-[10px] tracking-[0.2em] uppercase"
+                      style={{
+                        fontFamily: 'var(--font-inter)',
+                        fontWeight: 700,
+                        fontSize: '.7rem',
+                        letterSpacing: '.25em',
+                        textTransform: 'uppercase',
+                      }}
                     >
-                      Ver galería
+                      Únete Ahora
                     </span>
-                    <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
-                  </div>
-                </div>
-              </button>
-            ))}
-          </motion.div>
+                  </button>
+                </motion.div>
+              </div>
+
+              {/* Right: Gallery cards */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col gap-4 self-center"
+              >
+                {galleries.map((gallery) => (
+                  <button
+                    key={gallery.id}
+                    onClick={() => openGallery(gallery.id)}
+                    className="gal-card group text-left overflow-hidden transition-colors duration-300"
+                    style={{
+                      border: '1px solid rgba(255,255,255,.1)',
+                    }}
+                    onMouseEnter={(e) => { (e.currentTarget.style.borderColor = 'rgba(241,185,30,.5)') }}
+                    onMouseLeave={(e) => { (e.currentTarget.style.borderColor = 'rgba(255,255,255,.1)') }}
+                  >
+                    {/* Cover image — 300px height */}
+                    <div className="relative overflow-hidden" style={{ height: 300 }}>
+                      <Image
+                        src={gallery.cover}
+                        alt={gallery.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                        quality={80}
+                      />
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 40%, transparent 100%)',
+                        }}
+                      />
+                      {/* Photo count badge — top right */}
+                      <div className="absolute top-3 right-3">
+                        <span
+                          style={{
+                            fontFamily: 'var(--font-inter)',
+                            fontWeight: 600,
+                            fontSize: '10px',
+                            letterSpacing: '.2em',
+                            textTransform: 'uppercase',
+                            color: 'rgba(255,255,255,.7)',
+                            backgroundColor: 'rgba(0,0,0,.5)',
+                            padding: '0.25rem 0.625rem',
+                          }}
+                        >
+                          {gallery.images.length} fotos
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Card footer */}
+                    <div
+                      className="flex items-center justify-between"
+                      style={{ padding: '1rem 1.25rem' }}
+                    >
+                      <div>
+                        <p
+                          style={{
+                            fontFamily: 'var(--font-barlow)',
+                            fontWeight: 800,
+                            fontSize: '1.25rem',
+                            textTransform: 'uppercase',
+                            lineHeight: 1.2,
+                            letterSpacing: '.04em',
+                            color: '#FFFFFF',
+                          }}
+                        >
+                          {gallery.title}
+                        </p>
+                        <p
+                          style={{
+                            fontFamily: 'var(--font-inter)',
+                            fontWeight: 400,
+                            fontSize: '.8rem',
+                            letterSpacing: '.1em',
+                            color: 'rgba(255,255,255,.4)',
+                            marginTop: '0.125rem',
+                          }}
+                        >
+                          {gallery.date}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2 text-white/30 group-hover:text-[#F1B91E] transition-colors duration-300">
+                        <span
+                          style={{
+                            fontFamily: 'var(--font-inter)',
+                            fontWeight: 600,
+                            fontSize: '10px',
+                            letterSpacing: '.2em',
+                            textTransform: 'uppercase',
+                          }}
+                        >
+                          Ver galería
+                        </span>
+                        <span style={{ fontSize: '10px' }}>&rarr;</span>
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ── LIGHTBOX ──────────────────────────────────────────────────────── */}
+      {/* ── LIGHTBOX ──────────────────────────────────────────────────── */}
       <AnimatePresence>
         {lightboxGallery && (
           <motion.div
@@ -550,49 +716,88 @@ export default function Community() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[100] bg-black flex flex-col"
+            className="fixed inset-0 flex flex-col"
+            style={{
+              zIndex: 110,
+              backgroundColor: '#000000',
+            }}
           >
+            {/* Backdrop click to close */}
+            <div
+              className="absolute inset-0"
+              onClick={closeLightbox}
+              style={{ zIndex: 0 }}
+            />
+
             {/* Header */}
-            <div className="flex items-center justify-between px-6 md:px-10 py-4 flex-shrink-0 border-b border-white/8">
+            <div
+              className="relative flex items-center justify-between flex-shrink-0"
+              style={{
+                padding: '1rem 1.5rem',
+                borderBottom: '1px solid rgba(255,255,255,.08)',
+                zIndex: 2,
+              }}
+            >
               <div className="flex items-center gap-4">
                 <div className="w-2 h-2 bg-[#F1B91E]" />
                 <span
-                  style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                  className="text-[11px] tracking-[0.25em] uppercase text-white/60"
+                  style={{
+                    fontFamily: 'var(--font-inter)',
+                    fontWeight: 700,
+                    fontSize: '11px',
+                    letterSpacing: '.25em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,.6)',
+                  }}
                 >
                   Sport Training · {lightboxGallery.title}
                 </span>
-              </div>
-              <div className="flex items-center gap-6">
                 <span
-                  style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                  className="text-[12px] tracking-[0.15em] text-white/40 tabular-nums"
+                  style={{
+                    fontFamily: 'var(--font-inter)',
+                    fontWeight: 600,
+                    fontSize: '12px',
+                    letterSpacing: '.15em',
+                    color: 'rgba(255,255,255,.4)',
+                    fontVariantNumeric: 'tabular-nums',
+                  }}
                 >
                   {String(lbIndex + 1).padStart(2, '0')} / {String(lightboxImages.length).padStart(2, '0')}
                 </span>
-                <button
-                  onClick={closeLightbox}
-                  aria-label="Cerrar galería"
-                  className="w-9 h-9 border border-white/20 flex items-center justify-center text-white/50 hover:border-[#F1B91E] hover:text-[#F1B91E] transition-all duration-200"
-                >
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                    <path strokeLinecap="square" d="M18 6L6 18M6 6l12 12" />
-                  </svg>
-                </button>
               </div>
+              <button
+                onClick={closeLightbox}
+                aria-label="Cerrar galería"
+                className="flex items-center justify-center text-white/50 hover:text-[#F1B91E] transition-all duration-200"
+                style={{
+                  width: 36,
+                  height: 36,
+                  border: '1px solid rgba(255,255,255,.2)',
+                }}
+                onMouseEnter={(e) => { (e.currentTarget.style.borderColor = '#F1B91E') }}
+                onMouseLeave={(e) => { (e.currentTarget.style.borderColor = 'rgba(255,255,255,.2)') }}
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="square" d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
             </div>
 
-            {/* Image */}
-            <div className="relative flex-1 overflow-hidden">
-              <AnimatePresence custom={lbDirection}>
+            {/* Stage */}
+            <div
+              className="relative flex-1 overflow-hidden flex items-center justify-center"
+              style={{ zIndex: 1 }}
+            >
+              {/* Contained image */}
+              <AnimatePresence mode="wait">
                 <motion.div
                   key={`${lightboxGallery.id}-${lbIndex}`}
-                  custom={lbDirection}
-                  initial={{ opacity: 0, x: lbDirection * 60 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: lbDirection * -60 }}
-                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute inset-0 flex items-center justify-center px-16 md:px-24 py-4"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0 flex items-center justify-center"
+                  style={{ padding: '1rem 4rem' }}
                 >
                   <div className="relative w-full h-full">
                     <Image
@@ -607,7 +812,7 @@ export default function Community() {
                 </motion.div>
               </AnimatePresence>
 
-              {/* Hidden preload — fetches prev/next images while user views current */}
+              {/* Hidden preload */}
               <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ opacity: 0 }}>
                 {[-1, 1, 2].map(offset => {
                   const idx = (lbIndex + offset + lightboxImages.length) % lightboxImages.length
@@ -625,22 +830,40 @@ export default function Community() {
                 })}
               </div>
 
-              {/* Prev */}
+              {/* Prev arrow */}
               <button
                 onClick={() => lbGo(lbIndex - 1)}
                 aria-label="Imagen anterior"
-                className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 border border-white/20 flex items-center justify-center text-white/40 hover:border-[#F1B91E] hover:text-[#F1B91E] transition-all duration-200"
+                className="absolute top-1/2 -translate-y-1/2 flex items-center justify-center text-white/40 hover:text-[#F1B91E] transition-all duration-200"
+                style={{
+                  left: '1rem',
+                  width: 40,
+                  height: 40,
+                  border: '1px solid rgba(255,255,255,.2)',
+                  zIndex: 20,
+                }}
+                onMouseEnter={(e) => { (e.currentTarget.style.borderColor = '#F1B91E') }}
+                onMouseLeave={(e) => { (e.currentTarget.style.borderColor = 'rgba(255,255,255,.2)') }}
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="square" d="M19 12H5M12 19l-7-7 7-7" />
                 </svg>
               </button>
 
-              {/* Next */}
+              {/* Next arrow */}
               <button
                 onClick={() => lbGo(lbIndex + 1)}
                 aria-label="Imagen siguiente"
-                className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 border border-white/20 flex items-center justify-center text-white/40 hover:border-[#F1B91E] hover:text-[#F1B91E] transition-all duration-200"
+                className="absolute top-1/2 -translate-y-1/2 flex items-center justify-center text-white/40 hover:text-[#F1B91E] transition-all duration-200"
+                style={{
+                  right: '1rem',
+                  width: 40,
+                  height: 40,
+                  border: '1px solid rgba(255,255,255,.2)',
+                  zIndex: 20,
+                }}
+                onMouseEnter={(e) => { (e.currentTarget.style.borderColor = '#F1B91E') }}
+                onMouseLeave={(e) => { (e.currentTarget.style.borderColor = 'rgba(255,255,255,.2)') }}
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
@@ -649,22 +872,39 @@ export default function Community() {
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-between px-6 md:px-10 py-4 flex-shrink-0 border-t border-white/8">
-              <motion.p
-                key={`${lightboxGallery.id}-${lbIndex}-caption`}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, fontStyle: 'italic' }}
-                className="text-white/50 text-[12px] tracking-[0.18em] uppercase"
+            <div
+              className="relative flex items-center justify-between flex-shrink-0"
+              style={{
+                padding: '1rem 1.5rem',
+                borderTop: '1px solid rgba(255,255,255,.08)',
+                zIndex: 2,
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: 'var(--font-inter)',
+                  fontWeight: 600,
+                  fontStyle: 'italic',
+                  fontSize: '12px',
+                  letterSpacing: '.18em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,.5)',
+                }}
               >
                 {lightboxImages[lbIndex].caption}
-              </motion.p>
+              </p>
               <span
-                style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                className="hidden md:block text-[11px] tracking-[0.15em] text-white/20 uppercase"
+                className="hidden md:block"
+                style={{
+                  fontFamily: 'var(--font-inter)',
+                  fontWeight: 400,
+                  fontSize: '11px',
+                  letterSpacing: '.15em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,.2)',
+                }}
               >
-                ← → navegar · ESC cerrar
+                &larr; &rarr; navegar · ESC cerrar
               </span>
             </div>
           </motion.div>
