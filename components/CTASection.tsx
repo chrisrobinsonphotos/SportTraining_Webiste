@@ -53,7 +53,7 @@ export default function CTASection() {
           </motion.h2>
         </div>
 
-        <div className="overflow-hidden mb-6">
+        <div className="overflow-hidden mb-16">
           <motion.h2
             initial={{ y: 100, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
