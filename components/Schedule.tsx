@@ -133,7 +133,7 @@ export default function Schedule() {
       {/* ── HEADER ── */}
       <div
         className="relative z-10"
-        style={{ padding: '5rem clamp(1.5rem,5vw,4rem) 0', maxWidth: '1400px', margin: '0 auto' }}
+        style={{ padding: '5rem clamp(1.5rem,5vw,4rem) 0' }}
       >
         {/* Eyebrow */}
         <motion.div
@@ -275,7 +275,7 @@ export default function Schedule() {
       {/* ── CLASS LIST — constrained to left on desktop ── */}
       <div
         className="relative z-10"
-        style={{ padding: '0 clamp(1.5rem,5vw,4rem)', maxWidth: '1400px', margin: '0 auto' }}
+        style={{ padding: '0 clamp(1.5rem,5vw,4rem)' }}
       >
         <div className="xl:max-w-[58%]">
           <AnimatePresence mode="wait">
