@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const GOALS = ['HYROX', 'Funcional', 'CrossTraining', 'Personal', 'Adaptado'] as const
+const GOALS = ['HYROX', 'Funcional', 'Personal', 'Adaptado'] as const
 type Goal = (typeof GOALS)[number]
 
 const WA_NUMBER = '34622443495'
