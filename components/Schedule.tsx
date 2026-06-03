@@ -162,7 +162,8 @@ export default function Schedule() {
               maxWidth: '440px',
             }}
           >
-            Entrenadores certificados. Plazas limitadas.
+            Entrenadores certificados.{' '}
+            <span className="whitespace-nowrap">Plazas limitadas.</span>
             <br />
             Reserva con antelación.
           </motion.p>
