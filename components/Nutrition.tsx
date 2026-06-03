@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 const pillars = [
   { num: '01', label: 'ALIMENTACIÓN', image: '/nutrition-food.jpg', desc: 'La base real de cualquier progreso. Hábitos sólidos sobre los que construir resultados duraderos.' },
-  { num: '02', label: 'EVENTOS', image: '/relay-cover.jpg', desc: 'Competiciones HYROX, retos mensuales y talleres técnicos. Más que un entrenamiento — una experiencia.' },
+  { num: '02', label: 'PLANIFICACIÓN', image: '/nutrition-textil.jpg', desc: 'Planes nutricionales integrados con tu entrenamiento. Objetivos claros, seguimiento real, sin dietas genéricas.' },
   { num: '03', label: 'SUPLEMENTACIÓN', image: '/nutrition-supplements.jpg', desc: 'Solo cuando aporta valor. Pocos productos, calidad contrastada, dosis efectivas.' },
 ]
 
