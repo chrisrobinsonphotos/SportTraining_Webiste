@@ -12,7 +12,7 @@ export default function CommunityStatement() {
     <section
       ref={ref}
       className="relative overflow-hidden bg-[#191919] flex flex-col justify-center"
-      style={{ height: '80vh', minHeight: '520px' }}
+      style={{ height: '50vh', minHeight: '380px', maxHeight: '520px' }}
     >
       {/* Full-bleed background image */}
       <div className="absolute inset-0" style={{ transform: 'scale(1.1)' }}>
@@ -48,7 +48,7 @@ export default function CommunityStatement() {
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, letterSpacing: '-0.02em' }}
-            className="text-[clamp(4.2rem,9.6vw,8.4rem)] leading-[0.88] uppercase text-white"
+            className="text-[clamp(3.6rem,7.8vw,7.2rem)] leading-[0.88] uppercase text-white"
           >
             MÁS QUE
           </motion.h2>
@@ -60,7 +60,7 @@ export default function CommunityStatement() {
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none', letterSpacing: '-0.02em' }}
-            className="text-[clamp(4.2rem,9.6vw,8.4rem)] leading-[0.88] text-[#F1B91E]"
+            className="text-[clamp(3.6rem,7.8vw,7.2rem)] leading-[0.88] text-[#F1B91E]"
           >
             entrenar.
           </motion.h2>
