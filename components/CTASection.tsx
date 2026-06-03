@@ -53,7 +53,7 @@ export default function CTASection() {
           </motion.h2>
         </div>
 
-        <div className="overflow-hidden mb-16">
+        <div className="overflow-hidden">
           <motion.h2
             initial={{ y: 100, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
@@ -69,7 +69,8 @@ export default function CTASection() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.5 }}
-          className="flex flex-wrap gap-4 mt-2"
+          className="flex flex-wrap gap-4"
+          style={{ marginTop: 'clamp(3rem, 5vw, 5rem)' }}
         >
           <button
             data-contact
