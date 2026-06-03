@@ -17,8 +17,8 @@ export default function CommunityStatement() {
       {/* Full-bleed background image */}
       <div className="absolute inset-0" style={{ transform: 'scale(1.1)' }}>
         <Image
-          src="/_MG_4351.jpg"
-          alt="Equipo Sport Training Murcia — comunidad y eventos HYROX"
+          src="/_MG_5426.jpg"
+          alt="El esfuerzo real — Sport Training Murcia"
           fill
           sizes="100vw"
           className="object-cover object-center"
