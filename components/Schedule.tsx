@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
+import Image from 'next/image'
 
 type ClassType = 'funcional' | 'hyrox' | 'crossfit' | 'personal'
 
@@ -99,10 +100,40 @@ export default function Schedule() {
   return (
     <section ref={ref} className="relative bg-[#141414] overflow-hidden">
 
+      {/* ── RIGHT PHOTO PANEL — desktop only ── */}
+      <div className="hidden xl:block absolute right-0 top-0 bottom-0 w-[42%]">
+        <Image
+          src="/hyrox-group.jpg"
+          alt="Clase de entrenamiento en Sport Training Murcia"
+          fill
+          className="object-cover"
+          style={{ objectPosition: 'center top' }}
+          sizes="42vw"
+          quality={85}
+        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-[#141414]/30" />
+        {/* Left fade mask — blends into schedule bg */}
+        <div
+          className="absolute left-0 top-0 bottom-0"
+          style={{ width: '16rem', background: 'linear-gradient(90deg, #141414, transparent)' }}
+        />
+        {/* Top fade */}
+        <div
+          className="absolute left-0 right-0 top-0"
+          style={{ height: '6rem', background: 'linear-gradient(180deg, #141414, transparent)' }}
+        />
+        {/* Bottom fade */}
+        <div
+          className="absolute left-0 right-0 bottom-0"
+          style={{ height: '10rem', background: 'linear-gradient(0deg, #141414, transparent)' }}
+        />
+      </div>
+
       {/* ── HEADER ── */}
       <div
-        className="relative z-10 max-w-[1400px] mx-auto"
-        style={{ padding: '5rem clamp(1.5rem,5vw,4rem) 0' }}
+        className="relative z-10"
+        style={{ padding: '5rem clamp(1.5rem,5vw,4rem) 0', maxWidth: '1400px', margin: '0 auto' }}
       >
         {/* Eyebrow */}
         <motion.div
@@ -126,55 +157,57 @@ export default function Schedule() {
           </span>
         </motion.div>
 
-        {/* Title row */}
-        <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
-          <div className="overflow-hidden">
-            <motion.h2
-              initial={{ y: 80, opacity: 0 }}
-              animate={inView ? { y: 0, opacity: 1 } : {}}
-              transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        {/* Title row — constrained width on desktop so it doesn't bleed into photo */}
+        <div className="xl:max-w-[58%]">
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
+            <div className="overflow-hidden">
+              <motion.h2
+                initial={{ y: 80, opacity: 0 }}
+                animate={inView ? { y: 0, opacity: 1 } : {}}
+                transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  fontFamily: 'var(--font-barlow)',
+                  fontWeight: 800,
+                  fontSize: 'clamp(3.6rem,7.8vw,7.2rem)',
+                  lineHeight: '.88',
+                  letterSpacing: '-.02em',
+                  textTransform: 'uppercase',
+                }}
+                className="text-white"
+              >
+                ELIGE TU{' '}
+                <span style={{ color: '#F1B91E', fontStyle: 'italic', textTransform: 'none' }}>
+                  sesión.
+                </span>
+              </motion.h2>
+            </div>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.3 }}
               style={{
-                fontFamily: 'var(--font-barlow)',
-                fontWeight: 800,
-                fontSize: 'clamp(3.6rem,7.8vw,7.2rem)',
-                lineHeight: '.88',
-                letterSpacing: '-.02em',
-                textTransform: 'uppercase',
+                fontFamily: 'var(--font-inter)',
+                fontWeight: 400,
+                fontSize: 'clamp(1.3rem,1.5vw,1.55rem)',
+                lineHeight: '1.55',
+                color: 'rgba(255,255,255,.45)',
+                maxWidth: '440px',
               }}
-              className="text-white"
             >
-              ELIGE TU{' '}
-              <span style={{ color: '#F1B91E', fontStyle: 'italic', textTransform: 'none' }}>
-                sesión.
-              </span>
-            </motion.h2>
+              Entrenadores certificados.{' '}
+              <span className="whitespace-nowrap">Plazas limitadas.</span>
+              <br />
+              Reserva con antelación.
+            </motion.p>
           </div>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.3 }}
-            style={{
-              fontFamily: 'var(--font-inter)',
-              fontWeight: 400,
-              fontSize: 'clamp(1.3rem,1.5vw,1.55rem)',
-              lineHeight: '1.55',
-              color: 'rgba(255,255,255,.45)',
-              maxWidth: '440px',
-            }}
-          >
-            Entrenadores certificados.{' '}
-            <span className="whitespace-nowrap">Plazas limitadas.</span>
-            <br />
-            Reserva con antelación.
-          </motion.p>
         </div>
 
-        {/* ── DAY TABS ── */}
+        {/* ── DAY TABS — full width ── */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2 }}
-          className="flex"
+          className="flex xl:max-w-[58%]"
           style={{ gap: '2px' }}
         >
           {days.map((day) => {
@@ -236,217 +269,210 @@ export default function Schedule() {
         </motion.div>
 
         {/* Gold rule below tabs */}
-        <div className="w-full bg-[#F1B91E]" style={{ height: '3px' }} />
+        <div className="bg-[#F1B91E] xl:max-w-[58%]" style={{ height: '3px' }} />
       </div>
 
-      {/* ── CLASS LIST ── */}
+      {/* ── CLASS LIST — constrained to left on desktop ── */}
       <div
-        className="relative z-10 max-w-[1400px] mx-auto"
-        style={{ padding: '0 clamp(1.5rem,5vw,4rem)' }}
+        className="relative z-10"
+        style={{ padding: '0 clamp(1.5rem,5vw,4rem)', maxWidth: '1400px', margin: '0 auto' }}
       >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeDay}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {classes.map((cls, i) => {
-              const cfg = typeConfig[cls.type]
-              const remaining = cls.max - cls.taken
+        <div className="xl:max-w-[58%]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeDay}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {classes.map((cls, i) => {
+                const cfg = typeConfig[cls.type]
+                const remaining = cls.max - cls.taken
 
-              return (
-                <motion.div
-                  key={`${cls.time}-${cls.type}-${i}`}
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: i * 0.05 }}
-                  className="border-b border-white/[0.06] cursor-pointer transition-all duration-200 scls-row"
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'auto 1fr auto',
-                    gap: '1.5rem',
-                    padding: '1.6rem 0',
-                    borderLeft: '0px solid transparent',
-                    alignItems: 'center',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,.02)'
-                    e.currentTarget.style.borderLeft = `3px solid ${cfg.color}`
-                    e.currentTarget.style.paddingLeft = '1rem'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'transparent'
-                    e.currentTarget.style.borderLeft = '0px solid transparent'
-                    e.currentTarget.style.paddingLeft = '0'
-                  }}
-                >
-                  {/* Time */}
-                  <div
+                return (
+                  <motion.div
+                    key={`${cls.time}-${cls.type}-${i}`}
+                    initial={{ opacity: 0, x: -16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: i * 0.05 }}
+                    className="border-b border-white/[0.06] cursor-pointer transition-all duration-200 scls-row"
                     style={{
-                      fontFamily: 'var(--font-barlow)',
-                      fontWeight: 800,
-                      fontSize: 'clamp(1.75rem,2.6vw,2.5rem)',
-                      color: '#FFFFFF',
-                      minWidth: '92px',
-                      whiteSpace: 'nowrap',
-                      fontVariantNumeric: 'tabular-nums',
-                      lineHeight: 1,
+                      display: 'grid',
+                      gridTemplateColumns: 'auto 1fr auto',
+                      gap: '1.5rem',
+                      padding: '1.6rem 0',
+                      borderLeft: '0px solid transparent',
+                      alignItems: 'center',
                     }}
-                    className="scls-time"
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(255,255,255,.02)'
+                      e.currentTarget.style.borderLeft = `3px solid ${cfg.color}`
+                      e.currentTarget.style.paddingLeft = '1rem'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent'
+                      e.currentTarget.style.borderLeft = '0px solid transparent'
+                      e.currentTarget.style.paddingLeft = '0'
+                    }}
                   >
-                    {cls.time}
-                  </div>
+                    {/* Time */}
+                    <div
+                      style={{
+                        fontFamily: 'var(--font-barlow)',
+                        fontWeight: 800,
+                        fontSize: 'clamp(1.75rem,2.6vw,2.5rem)',
+                        color: '#FFFFFF',
+                        minWidth: '92px',
+                        whiteSpace: 'nowrap',
+                        fontVariantNumeric: 'tabular-nums',
+                        lineHeight: 1,
+                      }}
+                      className="scls-time"
+                    >
+                      {cls.time}
+                    </div>
 
-                  {/* Info */}
-                  <div className="min-w-0">
-                    {/* Type dot + label */}
-                    <div className="flex items-center gap-3 mb-1">
-                      <div
-                        className="flex-shrink-0"
+                    {/* Info */}
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-3 mb-1">
+                        <div
+                          className="flex-shrink-0"
+                          style={{ width: '10px', height: '10px', backgroundColor: cfg.color }}
+                        />
+                        <span
+                          style={{
+                            fontFamily: 'var(--font-inter)',
+                            fontWeight: 700,
+                            fontSize: '.82rem',
+                            letterSpacing: '.22em',
+                            textTransform: 'uppercase',
+                            color: cfg.color,
+                          }}
+                        >
+                          {cfg.label}
+                        </span>
+                      </div>
+                      <h4
                         style={{
-                          width: '10px',
-                          height: '10px',
-                          backgroundColor: cfg.color,
+                          fontFamily: 'var(--font-barlow)',
+                          fontWeight: 800,
+                          fontSize: 'clamp(1.8rem,2.6vw,2.4rem)',
+                          textTransform: 'uppercase',
+                          lineHeight: 1,
+                          color: '#FFFFFF',
+                          marginBottom: '.25rem',
                         }}
-                      />
+                        className="truncate"
+                      >
+                        {cls.name}
+                      </h4>
+                      <p
+                        style={{
+                          fontFamily: 'var(--font-inter)',
+                          fontWeight: 400,
+                          fontSize: '.95rem',
+                          color: 'rgba(255,255,255,.45)',
+                        }}
+                        className="truncate"
+                      >
+                        {cls.trainer}
+                      </p>
+                    </div>
+
+                    {/* Spots */}
+                    <div className="text-right scls-spots" style={{ flexShrink: 0 }}>
+                      <span
+                        style={{
+                          fontFamily: 'var(--font-barlow)',
+                          fontWeight: 800,
+                          fontSize: 'clamp(1.4rem,2.5vw,2rem)',
+                          color: '#FFFFFF',
+                          lineHeight: 1,
+                          display: 'block',
+                        }}
+                      >
+                        {remaining}
+                      </span>
                       <span
                         style={{
                           fontFamily: 'var(--font-inter)',
-                          fontWeight: 700,
-                          fontSize: '.82rem',
-                          letterSpacing: '.22em',
+                          fontWeight: 600,
+                          fontSize: '.7rem',
+                          letterSpacing: '.16em',
+                          color: 'rgba(255,255,255,.35)',
                           textTransform: 'uppercase',
-                          color: cfg.color,
                         }}
                       >
-                        {cfg.label}
+                        {remaining === 1 ? 'Plaza libre' : 'Plazas libres'}
                       </span>
                     </div>
+                  </motion.div>
+                )
+              })}
 
-                    {/* Class name */}
-                    <h4
-                      style={{
-                        fontFamily: 'var(--font-barlow)',
-                        fontWeight: 800,
-                        fontSize: 'clamp(1.8rem,2.6vw,2.4rem)',
-                        textTransform: 'uppercase',
-                        lineHeight: 1,
-                        color: '#FFFFFF',
-                        marginBottom: '.25rem',
-                      }}
-                      className="truncate"
-                    >
-                      {cls.name}
-                    </h4>
-
-                    {/* Coach */}
-                    <p
-                      style={{
-                        fontFamily: 'var(--font-inter)',
-                        fontWeight: 400,
-                        fontSize: '.95rem',
-                        color: 'rgba(255,255,255,.45)',
-                      }}
-                      className="truncate"
-                    >
-                      {cls.trainer}
-                    </p>
-                  </div>
-
-                  {/* Spots — hidden below 560px */}
-                  <div className="text-right scls-spots" style={{ flexShrink: 0 }}>
-                    <span
-                      style={{
-                        fontFamily: 'var(--font-barlow)',
-                        fontWeight: 800,
-                        fontSize: 'clamp(1.4rem,2.5vw,2rem)',
-                        color: '#FFFFFF',
-                        lineHeight: 1,
-                        display: 'block',
-                      }}
-                    >
-                      {remaining}
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: 'var(--font-inter)',
-                        fontWeight: 600,
-                        fontSize: '.7rem',
-                        letterSpacing: '.16em',
-                        color: 'rgba(255,255,255,.35)',
-                        textTransform: 'uppercase',
-                      }}
-                    >
-                      {remaining === 1 ? 'Plaza libre' : 'Plazas libres'}
-                    </span>
-                  </div>
-                </motion.div>
-              )
-            })}
-
-            {/* Footer */}
-            <div
-              className="flex flex-wrap items-center justify-between"
-              style={{
-                gap: '1.5rem',
-                padding: '3rem 0',
-                borderTop: '1px solid rgba(255,255,255,.08)',
-                marginTop: '1rem',
-              }}
-            >
-              <p
+              {/* Footer */}
+              <div
+                className="flex flex-wrap items-center justify-between"
                 style={{
-                  fontFamily: 'var(--font-inter)',
-                  fontWeight: 400,
-                  fontSize: '.9rem',
-                  color: 'rgba(255,255,255,.3)',
+                  gap: '1.5rem',
+                  padding: '3rem 0',
+                  borderTop: '1px solid rgba(255,255,255,.08)',
+                  marginTop: '1rem',
                 }}
               >
-                ¿Necesitas ver el horario completo o gestionar reservas?
-              </p>
-              <button
-                data-contact
-                className="inline-flex items-center gap-3 transition-all duration-300 group flex-shrink-0"
-                style={{
-                  border: '1px solid rgba(241,185,30,.4)',
-                  color: '#F1B91E',
-                  padding: '1rem 1.75rem',
-                  fontFamily: 'var(--font-inter)',
-                  fontWeight: 700,
-                  fontSize: '.7rem',
-                  letterSpacing: '.25em',
-                  textTransform: 'uppercase',
-                  background: 'transparent',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = '#F1B91E'
-                  e.currentTarget.style.color = '#191919'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'transparent'
-                  e.currentTarget.style.color = '#F1B91E'
-                }}
-              >
-                <span>Horario Completo</span>
-                <svg
-                  className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2.5}
+                <p
+                  style={{
+                    fontFamily: 'var(--font-inter)',
+                    fontWeight: 400,
+                    fontSize: '.9rem',
+                    color: 'rgba(255,255,255,.3)',
+                  }}
                 >
-                  <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+                  ¿Necesitas ver el horario completo o gestionar reservas?
+                </p>
+                <button
+                  data-contact
+                  className="inline-flex items-center gap-3 transition-all duration-300 group flex-shrink-0"
+                  style={{
+                    border: '1px solid rgba(241,185,30,.4)',
+                    color: '#F1B91E',
+                    padding: '1rem 1.75rem',
+                    fontFamily: 'var(--font-inter)',
+                    fontWeight: 700,
+                    fontSize: '.7rem',
+                    letterSpacing: '.25em',
+                    textTransform: 'uppercase',
+                    background: 'transparent',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#F1B91E'
+                    e.currentTarget.style.color = '#191919'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.color = '#F1B91E'
+                  }}
+                >
+                  <span>Horario Completo</span>
+                  <svg
+                    className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2.5}
+                  >
+                    <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
 
-      {/* Responsive: hide spots below 560px, shrink time min-width */}
+      {/* Responsive: hide spots below 560px */}
       <style jsx>{`
         @media (max-width: 560px) {
           .scls-spots {
