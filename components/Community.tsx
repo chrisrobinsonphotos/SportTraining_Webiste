@@ -493,11 +493,11 @@ export default function Community() {
               }
             `}</style>
             <div
-              className="comm-grid grid gap-12"
+              className="comm-grid grid gap-12 items-center"
               style={{ gridTemplateColumns: '1fr' }}
             >
               {/* Left: Headline + tags + CTA */}
-              <div>
+              <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
                 <div className="overflow-hidden mb-1">
                   <motion.h2
                     initial={{ y: 80, opacity: 0 }}
