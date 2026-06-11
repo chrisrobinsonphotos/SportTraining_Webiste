@@ -199,7 +199,7 @@ export default function Hero() {
           <div className="flex items-center gap-4 shrink-0">
             <button
               data-contact
-              aria-label="Únete a Sport Training Murcia — contacto y reserva"
+              aria-label="Pide tu día de prueba en Sport Training Murcia"
               className="group flex items-center gap-3 transition-colors duration-300"
               style={{
                 background: '#F1B91E',
@@ -218,7 +218,7 @@ export default function Hero() {
                   textTransform: 'uppercase',
                 }}
               >
-                Únete Ahora
+                Pide tu Día de Prueba
               </span>
               <svg
                 className="w-4 h-4 group-hover:translate-x-1 transition-transform"

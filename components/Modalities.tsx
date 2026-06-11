@@ -305,7 +305,7 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
         {/* CTA button */}
         <button
           data-contact
-          aria-label={`Contratar plan ${tier.badge} — ${tier.name.replace('\n', ' ')} en Sport Training Murcia`}
+          aria-label={`Empieza con un día de prueba — plan ${tier.badge} (${tier.name.replace('\n', ' ')}) en Sport Training Murcia`}
           className="w-full transition-all duration-200"
           style={
             tier.buttonVariant === 'primary'
@@ -351,7 +351,7 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
             }
           }}
         >
-          Contratar
+          Empezar
         </button>
       </div>
     </motion.article>

@@ -78,7 +78,7 @@ export default function CTASection() {
             style={{ padding: '1rem 1.75rem' }}
           >
             <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-              className="text-[0.7rem] tracking-[0.25em] uppercase">Contactar Ahora</span>
+              className="text-[0.7rem] tracking-[0.25em] uppercase">Pide tu Día de Prueba</span>
             <svg className="w-[15px] h-[15px] group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
             </svg>

@@ -9,8 +9,29 @@ type Goal = (typeof GOALS)[number]
 const WA_NUMBER = '34622443495'
 
 function buildWhatsAppUrl(name: string, phone: string, goal: string) {
-  const msg = `Hola Sport Training, soy ${name} (tel: ${phone}). Me interesa ${goal} y me gustaría reservar una sesión de prueba.`
+  const msg = `Hola Sport Training, soy ${name} (tel: ${phone}). Me interesa ${goal} y quiero pedir mi día de prueba.`
   return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`
+}
+
+/**
+ * Capture the lead server-side before handing off to WhatsApp.
+ * Fire-and-forget: if it fails, the WhatsApp flow still proceeds —
+ * but when it works, the lead is recorded (email + GA4) even if the
+ * person never sends the WhatsApp message.
+ */
+function captureLead(name: string, phone: string, goal: string) {
+  try {
+    const w = window as unknown as { gtag?: (...args: unknown[]) => void }
+    w.gtag?.('event', 'trial_request', { method: 'modal' })
+    void fetch('/api/prueba', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombre: name, telefono: phone, interes: goal, canal: 'modal' }),
+      keepalive: true,
+    })
+  } catch {
+    // non-fatal — WhatsApp handoff is the primary path
+  }
 }
 
 /* ── SVG icons ─────────────────────────────────────────────────── */
@@ -133,6 +154,7 @@ export default function ContactModal() {
     if (!trimmedPhone) { flashField('phone'); valid = false }
     if (!valid) return
 
+    captureLead(trimmedName, trimmedPhone, goal)
     window.open(buildWhatsAppUrl(trimmedName, trimmedPhone, goal), '_blank')
     setSubmitted(true)
   }
@@ -193,8 +215,8 @@ export default function ContactModal() {
                     style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
                     className="text-[3rem] leading-[0.95] uppercase text-white mt-2 mb-2"
                   >
-                    RESERVA TU<br />
-                    <em className="text-[#F1B91E] not-italic" style={{ fontStyle: 'italic', textTransform: 'none' }}>Sesión.</em>
+                    TU DÍA DE<br />
+                    <em className="text-[#F1B91E] not-italic" style={{ fontStyle: 'italic', textTransform: 'none' }}>Prueba.</em>
                   </h2>
 
                   {/* Lead text */}
@@ -202,7 +224,7 @@ export default function ContactModal() {
                     style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
                     className="text-white/60 text-[1rem] leading-relaxed mb-10 max-w-[480px]"
                   >
-                    Completa el formulario y te contactaremos por WhatsApp para confirmar tu primera sesión.
+                    Completa el formulario y te contactamos por WhatsApp para activar tu día de prueba. Gratis, sin compromiso.
                   </p>
 
                   {/* Form */}
