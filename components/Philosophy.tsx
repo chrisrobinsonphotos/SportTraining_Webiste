@@ -238,7 +238,7 @@ export default function Philosophy() {
           >
             <Image
               src="/portrait-jr.jpg"
-              alt="Miguel Ángel Jr. — Entrenador Personal Sport Training Murcia"
+              alt="Miguel Ángel Jr. — Director General Sport Training Murcia"
               fill
               className="object-cover"
               style={{ objectPosition: 'top center' }}
@@ -341,7 +341,7 @@ export default function Philosophy() {
                   margin: 0,
                 }}
               >
-                Entrenador Personal
+                Director General
               </p>
             </div>
           </div>

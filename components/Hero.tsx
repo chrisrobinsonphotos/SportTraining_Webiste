@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import AppBadges from './AppBadges'
 
 const brandEase = [0.16, 1, 0.3, 1] as const
 
@@ -196,66 +197,69 @@ export default function Hero() {
             Construye un cuerpo lo suficientemente fuerte para la vida.
           </p>
 
-          <div className="flex items-center gap-4 shrink-0">
-            <button
-              data-contact
-              aria-label="Pide tu día de prueba en Sport Training Murcia"
-              className="group flex items-center gap-3 transition-colors duration-300"
-              style={{
-                background: '#F1B91E',
-                color: '#191919',
-                padding: '1rem 1.75rem',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = '#C99200')}
-              onMouseLeave={(e) => (e.currentTarget.style.background = '#F1B91E')}
-            >
-              <span
+          <div className="flex flex-col gap-5 shrink-0">
+            <div className="flex items-center gap-4">
+              <button
+                data-contact
+                aria-label="Pide tu día de prueba en Sport Training Murcia"
+                className="group flex items-center gap-3 transition-colors duration-300"
                 style={{
-                  fontFamily: 'var(--font-inter)',
-                  fontWeight: 700,
-                  fontSize: '0.7rem',
-                  letterSpacing: '0.25em',
-                  textTransform: 'uppercase',
+                  background: '#F1B91E',
+                  color: '#191919',
+                  padding: '1rem 1.75rem',
                 }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = '#C99200')}
+                onMouseLeave={(e) => (e.currentTarget.style.background = '#F1B91E')}
               >
-                Pide tu Día de Prueba
-              </span>
-              <svg
-                className="w-4 h-4 group-hover:translate-x-1 transition-transform"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </button>
-            <Link
-              href="/#filosofia"
-              aria-label="Conoce el método de entrenamiento de Sport Training Murcia"
-              className="group flex items-center gap-3 transition-all duration-300"
-              style={{
-                border: '1px solid rgba(255,255,255,0.2)',
-                color: '#FFFFFF',
-                padding: '1rem 1.75rem',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#F1B91E')}
-              onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)')}
-            >
-              <span
-                className="group-hover:text-[#F1B91E] transition-colors"
+                <span
+                  style={{
+                    fontFamily: 'var(--font-inter)',
+                    fontWeight: 700,
+                    fontSize: '0.7rem',
+                    letterSpacing: '0.25em',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  Pide tu Día de Prueba
+                </span>
+                <svg
+                  className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                >
+                  <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
+              <Link
+                href="/#filosofia"
+                aria-label="Conoce el método de entrenamiento de Sport Training Murcia"
+                className="group flex items-center gap-3 transition-all duration-300"
                 style={{
-                  fontFamily: 'var(--font-inter)',
-                  fontWeight: 600,
-                  fontSize: '0.7rem',
-                  letterSpacing: '0.25em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(255,255,255,0.7)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  color: '#FFFFFF',
+                  padding: '1rem 1.75rem',
                 }}
+                onMouseEnter={(e) => (e.currentTarget.style.borderColor = '#F1B91E')}
+                onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)')}
               >
-                Nuestro Método
-              </span>
-            </Link>
+                <span
+                  className="group-hover:text-[#F1B91E] transition-colors"
+                  style={{
+                    fontFamily: 'var(--font-inter)',
+                    fontWeight: 600,
+                    fontSize: '0.7rem',
+                    letterSpacing: '0.25em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,0.7)',
+                  }}
+                >
+                  Nuestro Método
+                </span>
+              </Link>
+            </div>
+            <AppBadges variant="compact" />
           </div>
         </motion.div>
       </motion.div>

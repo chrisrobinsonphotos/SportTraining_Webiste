@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import AppBadges from './AppBadges'
 
 // Single-page site for now — all in-section links point to homepage anchors,
 // and anything without a dedicated section routes to /contacto. Restore deep
@@ -118,6 +119,16 @@ export default function Footer() {
                   {s.icon}
                 </a>
               ))}
+            </div>
+
+            <div className="mb-6">
+              <span
+                className="block text-[10px] tracking-[0.2em] text-white/25 uppercase mb-3"
+                style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+              >
+                Descarga la app
+              </span>
+              <AppBadges variant="footer" />
             </div>
 
             <div className="flex items-center gap-2">

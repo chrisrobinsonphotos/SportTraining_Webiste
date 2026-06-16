@@ -32,7 +32,7 @@ export const trainers: Trainer[] = [
   {
     num: '02',
     name: 'Miguel Ángel Jr.',
-    role: 'Entrenador Personal',
+    role: 'Director General',
     since: 'Sport Training',
     specialities: ['CrossTraining', 'Rendimiento', 'HYROX'],
     image: '/trainer-jr.jpg',

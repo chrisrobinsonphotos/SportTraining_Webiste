@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import AppBadges from './AppBadges'
 
 export default function CTASection() {
   const ref = useRef<HTMLDivElement>(null)
@@ -69,27 +70,44 @@ export default function CTASection() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.5 }}
-          className="flex flex-wrap gap-4"
+          className="flex flex-col gap-5"
           style={{ marginTop: 'clamp(3rem, 5vw, 5rem)' }}
         >
-          <button
-            data-contact
-            className="group flex items-center gap-3 bg-[#F1B91E] text-[#191919] hover:bg-[#C99200] transition-colors duration-300"
-            style={{ padding: '1rem 1.75rem' }}
-          >
-            <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-              className="text-[0.7rem] tracking-[0.25em] uppercase">Pide tu Día de Prueba</span>
-            <svg className="w-[15px] h-[15px] group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </button>
-          <Link href="/#modalidades"
-            className="flex items-center gap-3 border border-white/20 text-white/65 hover:border-[#F1B91E] hover:text-[#F1B91E] transition-all duration-300"
-            style={{ padding: '1rem 1.75rem' }}
-          >
-            <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-              className="text-[0.7rem] tracking-[0.25em] uppercase">Ver Modalidades</span>
-          </Link>
+          <div className="flex flex-wrap gap-4">
+            <button
+              data-contact
+              className="group flex items-center gap-3 bg-[#F1B91E] text-[#191919] hover:bg-[#C99200] transition-colors duration-300"
+              style={{ padding: '1rem 1.75rem' }}
+            >
+              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+                className="text-[0.7rem] tracking-[0.25em] uppercase">Pide tu Día de Prueba</span>
+              <svg className="w-[15px] h-[15px] group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+            <Link href="/#modalidades"
+              className="flex items-center gap-3 border border-white/20 text-white/65 hover:border-[#F1B91E] hover:text-[#F1B91E] transition-all duration-300"
+              style={{ padding: '1rem 1.75rem' }}
+            >
+              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                className="text-[0.7rem] tracking-[0.25em] uppercase">Ver Modalidades</span>
+            </Link>
+          </div>
+          <div className="flex flex-wrap items-center gap-4">
+            <span
+              style={{
+                fontFamily: 'var(--font-inter)',
+                fontWeight: 600,
+                fontSize: '0.65rem',
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.3)',
+              }}
+            >
+              Reserva tu clase
+            </span>
+            <AppBadges variant="compact" />
+          </div>
         </motion.div>
       </div>
 

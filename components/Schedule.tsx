@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import Image from 'next/image'
+import AppBadges from './AppBadges'
 
 type ClassType = 'funcional' | 'hyrox' | 'crossfit' | 'personal'
 
@@ -413,59 +414,77 @@ export default function Schedule() {
 
               {/* Footer */}
               <div
-                className="flex flex-wrap items-center justify-between"
                 style={{
-                  gap: '1.5rem',
                   padding: '3rem 0',
                   borderTop: '1px solid rgba(255,255,255,.08)',
                   marginTop: '1rem',
                 }}
               >
-                <p
-                  style={{
-                    fontFamily: 'var(--font-inter)',
-                    fontWeight: 400,
-                    fontSize: '.9rem',
-                    color: 'rgba(255,255,255,.3)',
-                  }}
+                <div
+                  className="flex flex-wrap items-center justify-between"
+                  style={{ gap: '1.5rem', marginBottom: '2rem' }}
                 >
-                  ¿Necesitas ver el horario completo o gestionar reservas?
-                </p>
-                <button
-                  data-contact
-                  className="inline-flex items-center gap-3 transition-all duration-300 group flex-shrink-0"
-                  style={{
-                    border: '1px solid rgba(241,185,30,.4)',
-                    color: '#F1B91E',
-                    padding: '1rem 1.75rem',
-                    fontFamily: 'var(--font-inter)',
-                    fontWeight: 700,
-                    fontSize: '.7rem',
-                    letterSpacing: '.25em',
-                    textTransform: 'uppercase',
-                    background: 'transparent',
-                    cursor: 'pointer',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#F1B91E'
-                    e.currentTarget.style.color = '#191919'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'transparent'
-                    e.currentTarget.style.color = '#F1B91E'
-                  }}
-                >
-                  <span>Horario Completo</span>
-                  <svg
-                    className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2.5}
+                  <p
+                    style={{
+                      fontFamily: 'var(--font-inter)',
+                      fontWeight: 400,
+                      fontSize: '.9rem',
+                      color: 'rgba(255,255,255,.3)',
+                    }}
                   >
-                    <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </button>
+                    ¿Necesitas ver el horario completo o gestionar reservas?
+                  </p>
+                  <button
+                    data-contact
+                    className="inline-flex items-center gap-3 transition-all duration-300 group flex-shrink-0"
+                    style={{
+                      border: '1px solid rgba(241,185,30,.4)',
+                      color: '#F1B91E',
+                      padding: '1rem 1.75rem',
+                      fontFamily: 'var(--font-inter)',
+                      fontWeight: 700,
+                      fontSize: '.7rem',
+                      letterSpacing: '.25em',
+                      textTransform: 'uppercase',
+                      background: 'transparent',
+                      cursor: 'pointer',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = '#F1B91E'
+                      e.currentTarget.style.color = '#191919'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent'
+                      e.currentTarget.style.color = '#F1B91E'
+                    }}
+                  >
+                    <span>Horario Completo</span>
+                    <svg
+                      className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                    >
+                      <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+                <div className="flex flex-wrap items-center gap-4">
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-inter)',
+                      fontWeight: 600,
+                      fontSize: '.65rem',
+                      letterSpacing: '.18em',
+                      textTransform: 'uppercase',
+                      color: 'rgba(255,255,255,.25)',
+                    }}
+                  >
+                    Reserva desde la app
+                  </span>
+                  <AppBadges variant="compact" />
+                </div>
               </div>
             </motion.div>
           </AnimatePresence>
