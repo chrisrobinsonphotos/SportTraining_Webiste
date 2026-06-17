@@ -31,7 +31,7 @@ export default function Nutrition() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="flex items-center gap-4 mb-8">
+          <div className="flex items-center gap-4 mb-12">
             <div className="w-2 h-2 bg-[#F1B91E] flex-shrink-0" />
             <span
               style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
