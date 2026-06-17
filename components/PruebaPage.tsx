@@ -10,14 +10,7 @@ const WA_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)
 
 const brandEase = [0.16, 1, 0.3, 1] as const
 
-const INTERES_OPTIONS = [
-  { value: '', label: 'Selecciona una opción' },
-  { value: 'HYROX', label: 'HYROX' },
-  { value: 'Funcional', label: 'Funcional' },
-  { value: 'CrossTraining', label: 'CrossTraining' },
-  { value: 'Gimnasio libre', label: 'Gimnasio libre' },
-  { value: 'No lo sé aún', label: 'No lo sé aún' },
-]
+const INTERES_OPTIONS = ['HYROX', 'Funcional', 'CrossTraining', 'Gimnasio libre', 'No lo sé aún'] as const
 
 const STEPS = [
   {
@@ -55,9 +48,9 @@ const EXPECT = [
 type FormState = 'idle' | 'submitting' | 'success' | 'error'
 
 const inputClass =
-  'w-full bg-[#1a1a1a] border-0 border-b border-white/20 px-4 py-3 text-white text-base placeholder-white/25 focus:outline-none focus:border-[#F1B91E] transition-colors duration-200'
+  'w-full bg-transparent border border-white/12 text-white text-[1rem] outline-none focus:border-[#F1B91E] transition-colors duration-200 placeholder-white/25'
 
-const labelClass = 'block text-[10px] tracking-[0.25em] uppercase mb-2 text-white/50'
+const labelClass = 'block text-[0.65rem] tracking-[.18em] uppercase mb-3 text-white/40'
 
 function trackTrialEvent(method: string) {
   if (typeof window !== 'undefined') {
@@ -86,13 +79,13 @@ export default function PruebaPage() {
     nombre: '',
     telefono: '',
     email: '',
-    interes: '',
+    interes: 'HYROX',
     mensaje: '',
   })
   const [state, setState] = useState<FormState>('idle')
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
     setForm(prev => ({ ...prev, [name]: value }))
@@ -112,7 +105,7 @@ export default function PruebaPage() {
       if (res.ok) {
         trackTrialEvent('page_form')
         setState('success')
-        setForm({ nombre: '', telefono: '', email: '', interes: '', mensaje: '' })
+        setForm({ nombre: '', telefono: '', email: '', interes: 'HYROX', mensaje: '' })
       } else {
         setState('error')
       }
@@ -164,7 +157,7 @@ export default function PruebaPage() {
               TU PRIMER DÍA
             </motion.h1>
           </div>
-          <div className="overflow-hidden mb-8">
+          <div className="overflow-hidden mb-10">
             <motion.h1
               initial={{ y: 110, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -181,7 +174,7 @@ export default function PruebaPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.4, ease: brandEase }}
             style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
-            className="max-w-xl text-white/75 text-lg mb-12"
+            className="max-w-xl text-white/75 text-lg mb-14"
           >
             Entrena un día con nosotros antes de decidir nada. Ven. Conoce el espacio.
             Hay una diferencia entre estar en forma y ser capaz — y se nota desde la primera sesión.
@@ -191,7 +184,7 @@ export default function PruebaPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.55, ease: brandEase }}
-            className="flex flex-wrap gap-4 pb-16"
+            className="flex flex-wrap gap-4 pb-20"
           >
             <a
               href="#solicitar"
@@ -226,8 +219,8 @@ export default function PruebaPage() {
       </section>
 
       {/* ── CÓMO FUNCIONA ─────────────────────────────────────────────── */}
-      <section ref={stepsRef} className="bg-[#161616] border-t border-white/5" style={{ padding: '6rem clamp(1.5rem,5vw,4rem)' }}>
-        <div className="flex items-center gap-4 mb-12">
+      <section ref={stepsRef} className="bg-[#161616] border-t border-white/5" style={{ padding: '8rem clamp(1.5rem,5vw,4rem)' }}>
+        <div className="flex items-center gap-4 mb-16">
           <div className="w-2 h-2 bg-[#F1B91E]" />
           <span className="section-label">Cómo Funciona</span>
         </div>
@@ -239,17 +232,17 @@ export default function PruebaPage() {
               initial={{ opacity: 0, y: 24 }}
               animate={stepsInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.12, ease: brandEase }}
-              className="bg-[#1E1E1E] border border-white/5 p-10 hover:border-[#F1B91E]/30 transition-colors duration-300"
+              className="bg-[#1E1E1E] border border-white/5 p-12 hover:border-[#F1B91E]/30 transition-colors duration-300"
             >
               <div
                 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic' }}
-                className="text-[3.5rem] leading-none text-[#F1B91E] mb-6"
+                className="text-[3.5rem] leading-none text-[#F1B91E] mb-8"
               >
                 {step.num}
               </div>
               <h3
                 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                className="text-[1.75rem] uppercase leading-[0.95] mb-4"
+                className="text-[1.75rem] uppercase leading-[0.95] mb-5"
               >
                 {step.title}
               </h3>
@@ -262,15 +255,15 @@ export default function PruebaPage() {
       </section>
 
       {/* ── QUÉ ESPERAR ───────────────────────────────────────────────── */}
-      <section ref={expectRef} className="bg-[#191919]" style={{ padding: '6rem clamp(1.5rem,5vw,4rem)' }}>
-        <div className="flex items-center gap-4 mb-6">
+      <section ref={expectRef} className="bg-[#191919]" style={{ padding: '8rem clamp(1.5rem,5vw,4rem)' }}>
+        <div className="flex items-center gap-4 mb-8">
           <div className="w-2 h-2 bg-[#F1B91E]" />
           <span className="section-label">Tu Primer Día</span>
         </div>
 
         <h2
           style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-          className="text-[clamp(2.8rem,6vw,5rem)] leading-[0.9] uppercase mb-16"
+          className="text-[clamp(2.8rem,6vw,5rem)] leading-[0.9] uppercase mb-20"
         >
           SIN SORPRESAS.{' '}
           <span className="text-[#F1B91E]" style={{ fontStyle: 'italic', textTransform: 'none' }}>
@@ -278,7 +271,7 @@ export default function PruebaPage() {
           </span>
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-10 max-w-5xl">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-16 gap-y-12 max-w-5xl">
           {EXPECT.map((item, i) => (
             <motion.div
               key={item.title}
@@ -286,8 +279,8 @@ export default function PruebaPage() {
               animate={expectInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.1, ease: brandEase }}
             >
-              <div className="h-[1px] bg-[#F1B91E]/40 mb-6" />
-              <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }} className="text-[1.4rem] uppercase mb-3">
+              <div className="h-[1px] bg-[#F1B91E]/40 mb-8" />
+              <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }} className="text-[1.4rem] uppercase mb-4">
                 {item.title}
               </h3>
               <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }} className="text-white/60 text-[0.95rem] leading-relaxed">
@@ -299,17 +292,17 @@ export default function PruebaPage() {
       </section>
 
       {/* ── FORM ──────────────────────────────────────────────────────── */}
-      <section id="solicitar" ref={formRef} className="bg-[#161616] border-t border-white/5" style={{ padding: '6rem clamp(1.5rem,5vw,4rem) 8rem' }}>
+      <section id="solicitar" ref={formRef} className="bg-[#111111] border-t border-white/5" style={{ padding: '8rem clamp(1.5rem,5vw,4rem) 10rem' }}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-6xl">
           {/* Left: headline + WhatsApp */}
           <div>
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex items-center gap-4 mb-8">
               <div className="w-2 h-2 bg-[#F1B91E]" />
               <span className="section-label">Solicitar</span>
             </div>
             <h2
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-              className="text-[clamp(3rem,6vw,5.5rem)] leading-[0.88] uppercase mb-8"
+              className="text-[clamp(3rem,6vw,5.5rem)] leading-[0.88] uppercase mb-10"
             >
               PIDE TU
               <br />
@@ -317,7 +310,7 @@ export default function PruebaPage() {
                 Día de prueba.
               </span>
             </h2>
-            <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }} className="text-white/65 text-base leading-relaxed mb-10 max-w-md">
+            <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }} className="text-white/65 text-base leading-relaxed mb-12 max-w-md">
               Te contestamos, activamos tu acceso y tienes 7 días para venir a entrenar.
               Si lo prefieres, escríbenos directamente por WhatsApp.
             </p>
@@ -336,93 +329,194 @@ export default function PruebaPage() {
             </a>
           </div>
 
-          {/* Right: form */}
-          <div>
-            {state === 'success' ? (
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: brandEase }}
-                className="border border-[#F1B91E]/40 bg-[#1E1E1E] p-10"
-              >
-                <div className="h-[3px] bg-[#F1B91E] w-12 mb-8" />
-                <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }} className="text-[2.2rem] uppercase leading-none mb-6">
-                  HECHO.
-                </h3>
-                <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/70 text-[0.95rem] leading-relaxed mb-4">
-                  Tu solicitud está enviada. Te escribimos en breve para confirmar y activar tu acceso de prueba.
-                </p>
-                <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/50 text-[0.85rem] leading-relaxed">
-                  Desde la activación tienes 7 días para venir. Trae ropa de entrenar y agua. Del resto nos ocupamos nosotros.
-                </p>
-              </motion.div>
-            ) : (
-              <motion.form
-                onSubmit={handleSubmit}
-                initial={{ opacity: 0, y: 20 }}
-                animate={formInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.15, ease: brandEase }}
-                className="space-y-7"
-              >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">
-                  <div>
-                    <label htmlFor="nombre" className={labelClass}>Nombre *</label>
-                    <input id="nombre" name="nombre" type="text" required value={form.nombre} onChange={handleChange} placeholder="Tu nombre" className={inputClass} />
-                  </div>
-                  <div>
-                    <label htmlFor="telefono" className={labelClass}>Teléfono *</label>
-                    <input id="telefono" name="telefono" type="tel" required value={form.telefono} onChange={handleChange} placeholder="600 000 000" className={inputClass} />
-                  </div>
-                </div>
+          {/* Right: form card — styled to match ContactModal */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={formInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.15, ease: brandEase }}
+            className="bg-[#1A1A1A] border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden"
+          >
+            <div className="h-[3px] bg-[#F1B91E] w-full" />
 
-                <div>
-                  <label htmlFor="email" className={labelClass}>Email</label>
-                  <input id="email" name="email" type="email" value={form.email} onChange={handleChange} placeholder="tu@email.com" className={inputClass} />
-                </div>
-
-                <div>
-                  <label htmlFor="interes" className={labelClass}>Me interesa</label>
-                  <select id="interes" name="interes" value={form.interes} onChange={handleChange} className={`${inputClass} appearance-none cursor-pointer`}>
-                    {INTERES_OPTIONS.map(opt => (
-                      <option key={opt.value} value={opt.value} className="bg-[#1a1a1a]">
-                        {opt.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label htmlFor="mensaje" className={labelClass}>Mensaje (opcional)</label>
-                  <textarea id="mensaje" name="mensaje" rows={3} value={form.mensaje} onChange={handleChange} placeholder="Cuéntanos tu situación si quieres — nivel, objetivos, lesiones..." className={`${inputClass} resize-none`} />
-                </div>
-
-                <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/35 text-[0.75rem] leading-relaxed">
-                  Al enviar, aceptas que tratemos tus datos para gestionar tu día de prueba.{' '}
-                  <a href="/privacidad" className="text-white/55 underline hover:text-[#F1B91E] transition-colors">Política de privacidad</a>.
-                </p>
-
-                <button
-                  type="submit"
-                  disabled={state === 'submitting'}
-                  className="group flex items-center gap-3 bg-[#F1B91E] text-[#191919] hover:bg-[#C99200] transition-colors duration-300 disabled:opacity-60 cursor-pointer"
-                  style={{ padding: '1.1rem 2rem' }}
+            <div style={{ padding: 'clamp(2rem, 5vw, 3rem)' }}>
+              {state === 'success' ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: brandEase }}
                 >
-                  <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-[0.75rem] tracking-[0.25em] uppercase">
-                    {state === 'submitting' ? 'Enviando…' : 'Enviar Solicitud'}
-                  </span>
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                    <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </button>
-
-                {state === 'error' && (
-                  <p style={{ fontFamily: 'var(--font-inter)' }} className="text-[#F1B91E] text-[0.85rem]">
-                    No se pudo enviar. Inténtalo de nuevo o escríbenos por WhatsApp.
+                  <div className="h-[3px] bg-[#F1B91E] w-12 mb-8" />
+                  <h3 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }} className="text-[2.2rem] uppercase leading-none mb-6">
+                    HECHO.
+                  </h3>
+                  <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/70 text-[0.95rem] leading-relaxed mb-4">
+                    Tu solicitud está enviada. Te escribimos en breve para confirmar y activar tu acceso de prueba.
                   </p>
-                )}
-              </motion.form>
-            )}
-          </div>
+                  <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/50 text-[0.85rem] leading-relaxed">
+                    Desde la activación tienes 7 días para venir. Trae ropa de entrenar y agua. Del resto nos ocupamos nosotros.
+                  </p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} noValidate>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                    <div>
+                      <label
+                        htmlFor="nombre"
+                        style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                        className={labelClass}
+                      >
+                        Nombre *
+                      </label>
+                      <input
+                        id="nombre" name="nombre" type="text" required
+                        value={form.nombre} onChange={handleChange}
+                        placeholder="Tu nombre"
+                        className={inputClass}
+                        style={{ fontFamily: 'var(--font-inter)', padding: '1rem 1.25rem' }}
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="telefono"
+                        style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                        className={labelClass}
+                      >
+                        Teléfono *
+                      </label>
+                      <input
+                        id="telefono" name="telefono" type="tel" required
+                        value={form.telefono} onChange={handleChange}
+                        placeholder="600 000 000"
+                        className={inputClass}
+                        style={{ fontFamily: 'var(--font-inter)', padding: '1rem 1.25rem' }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mb-8">
+                    <label
+                      htmlFor="email"
+                      style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                      className={labelClass}
+                    >
+                      Email
+                    </label>
+                    <input
+                      id="email" name="email" type="email"
+                      value={form.email} onChange={handleChange}
+                      placeholder="tu@email.com"
+                      className={inputClass}
+                      style={{ fontFamily: 'var(--font-inter)', padding: '1rem 1.25rem' }}
+                    />
+                  </div>
+
+                  <div className="mb-10">
+                    <label
+                      style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                      className="block text-[0.65rem] tracking-[.18em] uppercase text-white/40 mb-4"
+                    >
+                      Me interesa
+                    </label>
+                    <div className="flex flex-wrap gap-3">
+                      {INTERES_OPTIONS.map(opt => {
+                        const active = form.interes === opt
+                        return (
+                          <button
+                            key={opt}
+                            type="button"
+                            onClick={() => setForm(prev => ({ ...prev, interes: opt }))}
+                            className="transition-all duration-150 cursor-pointer"
+                            style={{
+                              fontFamily: 'var(--font-inter)',
+                              fontWeight: 600,
+                              fontSize: '0.75rem',
+                              letterSpacing: '0.14em',
+                              textTransform: 'uppercase',
+                              padding: '0.85rem 1.5rem',
+                              border: active ? '1px solid #F1B91E' : '1px solid rgba(255,255,255,0.12)',
+                              background: active ? '#F1B91E' : 'transparent',
+                              color: active ? '#191919' : 'rgba(255,255,255,0.6)',
+                            }}
+                          >
+                            {opt}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="mb-8">
+                    <label
+                      htmlFor="mensaje"
+                      style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
+                      className={labelClass}
+                    >
+                      Mensaje (opcional)
+                    </label>
+                    <textarea
+                      id="mensaje" name="mensaje" rows={3}
+                      value={form.mensaje} onChange={handleChange}
+                      placeholder="Cuéntanos tu situación si quieres — nivel, objetivos, lesiones..."
+                      className={`${inputClass} resize-none`}
+                      style={{ fontFamily: 'var(--font-inter)', padding: '1rem 1.25rem' }}
+                    />
+                  </div>
+
+                  <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/35 text-[0.75rem] leading-relaxed mb-8">
+                    Al enviar, aceptas que tratemos tus datos para gestionar tu día de prueba.{' '}
+                    <a href="/privacidad" className="text-white/55 underline hover:text-[#F1B91E] transition-colors">Política de privacidad</a>.
+                  </p>
+
+                  <button
+                    type="submit"
+                    disabled={state === 'submitting'}
+                    className="w-full bg-[#F1B91E] text-[#191919] flex items-center justify-center gap-3 hover:bg-[#C99200] transition-all duration-200 disabled:opacity-60 cursor-pointer"
+                    style={{
+                      fontFamily: 'var(--font-inter)',
+                      fontWeight: 700,
+                      fontSize: '0.75rem',
+                      letterSpacing: '0.25em',
+                      textTransform: 'uppercase',
+                      padding: '1.25rem 2rem',
+                    }}
+                  >
+                    {state === 'submitting' ? 'Enviando…' : 'Enviar Solicitud'}
+                    <svg className="w-[15px] h-[15px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+
+                  {state === 'error' && (
+                    <p style={{ fontFamily: 'var(--font-inter)' }} className="text-[#F1B91E] text-[0.85rem] mt-4">
+                      No se pudo enviar. Inténtalo de nuevo o escríbenos por WhatsApp.
+                    </p>
+                  )}
+                </form>
+              )}
+
+              {state !== 'success' && (
+                <div className="mt-8 pt-8" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                  <a
+                    href={WA_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackTrialEvent('whatsapp_form_card')}
+                    className="w-full bg-[#25D366] text-white flex items-center justify-center gap-3 hover:brightness-110 transition-all duration-150"
+                    style={{
+                      fontFamily: 'var(--font-inter)',
+                      fontWeight: 600,
+                      fontSize: '0.8rem',
+                      letterSpacing: '0.08em',
+                      padding: '1rem 2rem',
+                    }}
+                  >
+                    <WhatsAppIcon />
+                    O escríbenos por WhatsApp
+                  </a>
+                </div>
+              )}
+            </div>
+          </motion.div>
         </div>
       </section>
     </main>
