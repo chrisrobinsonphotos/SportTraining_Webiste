@@ -141,7 +141,7 @@ export default function Schedule() {
           initial={{ opacity: 0, x: -20 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex items-center gap-4 mb-6"
+          className="flex items-center gap-4 mb-8"
         >
           <div className="w-2 h-2 bg-[#F1B91E]" />
           <span
