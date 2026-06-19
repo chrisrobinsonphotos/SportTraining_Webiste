@@ -947,7 +947,7 @@ export default function NutricionAlimentacion() {
           initial={{ opacity: 0, y: 30 }}
           animate={ctaInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [...brandEase] }}
-          className="max-w-[700px] mx-auto text-center"
+          className="max-w-[1200px] mx-auto text-center"
         >
           <h2
             className="text-white uppercase mb-6"
@@ -967,7 +967,7 @@ export default function NutricionAlimentacion() {
 
           <p
             style={{ fontFamily: 'var(--font-inter)' }}
-            className="text-white/50 text-[1rem] leading-[1.7] mb-10"
+            className="text-white/50 text-[1rem] leading-[1.7] mb-10 max-w-[600px] mx-auto"
           >
             Trabajamos contigo un plan nutricional integrado con tu entrenamiento. Sin dietas genéricas, sin restricciones absurdas. Comida real, resultados reales.
           </p>

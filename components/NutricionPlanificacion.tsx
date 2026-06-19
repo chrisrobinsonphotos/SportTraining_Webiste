@@ -1327,7 +1327,7 @@ export default function NutricionPlanificacion() {
           initial={{ opacity: 0, y: 30 }}
           animate={ctaInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [...brandEase] }}
-          className="max-w-[700px] mx-auto text-center"
+          className="max-w-[1200px] mx-auto text-center"
         >
           <h2
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, letterSpacing: '-0.02em' }}
@@ -1341,7 +1341,7 @@ export default function NutricionPlanificacion() {
 
           <p
             style={{ fontFamily: 'var(--font-inter)' }}
-            className="text-white/50 text-[1rem] leading-[1.7] mb-10"
+            className="text-white/50 text-[1rem] leading-[1.7] mb-10 max-w-[600px] mx-auto"
           >
             Tu peso, tu nivel de actividad, tu historial y tus objetivos son &uacute;nicos. Un plan gen&eacute;rico
             no resuelve problemas espec&iacute;ficos. Habl&eacute;moslo y dise&ntilde;amos algo que funcione para ti.
