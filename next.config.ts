@@ -34,9 +34,7 @@ const nextConfig: NextConfig = {
       { source: "/modalidades", destination: "/", permanent: false },
       { source: "/modalidades/:path*", destination: "/", permanent: false },
 
-      // Nutrition & shop
-      { source: "/nutricion", destination: "/", permanent: false },
-      { source: "/nutricion/:path*", destination: "/", permanent: false },
+      // Shop
       { source: "/tienda", destination: "/contacto", permanent: false },
 
       // Community & schedule

@@ -3,11 +3,12 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const pillars = [
-  { num: '01', label: 'ALIMENTACIÓN', image: '/nutrition-food.jpg', desc: 'La base real de cualquier progreso. Hábitos sólidos sobre los que construir resultados duraderos.' },
-  { num: '02', label: 'PLANIFICACIÓN', image: '/nutrition-textil.jpg', desc: 'Planes nutricionales integrados con tu entrenamiento. Objetivos claros, seguimiento real, sin dietas genéricas.' },
-  { num: '03', label: 'SUPLEMENTACIÓN', image: '/nutrition-supplements.jpg', desc: 'Solo cuando aporta valor. Pocos productos, calidad contrastada, dosis efectivas.' },
+  { num: '01', label: 'ALIMENTACIÓN', image: '/nutrition-food.jpg', href: '/nutricion/alimentacion', desc: 'La base real de cualquier progreso. Hábitos sólidos sobre los que construir resultados duraderos.' },
+  { num: '02', label: 'PLANIFICACIÓN', image: '/nutrition-textil.jpg', href: '/nutricion/planificacion', desc: 'Planes nutricionales integrados con tu entrenamiento. Objetivos claros, seguimiento real, sin dietas genéricas.' },
+  { num: '03', label: 'SUPLEMENTACIÓN', image: '/nutrition-supplements.jpg', href: '/nutricion/suplementacion', desc: 'Solo cuando aporta valor. Pocos productos, calidad contrastada, dosis efectivas.' },
 ]
 
 export default function Nutrition() {
@@ -78,14 +79,13 @@ export default function Nutrition() {
       {/* Pillar cards */}
       <div className="grid gap-[2px]" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }}>
         {pillars.map((item, i) => (
+          <Link key={item.num} href={item.href}>
           <motion.div
-            key={item.num}
             initial={{ opacity: 0, y: 50 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.2 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="relative group overflow-hidden flex flex-col justify-end cursor-pointer"
             style={{ minHeight: '46vh', padding: '2rem' }}
-            data-contact
           >
             {/* Background image */}
             <div className="absolute inset-0">
@@ -123,6 +123,7 @@ export default function Nutrition() {
               </p>
             </div>
           </motion.div>
+          </Link>
         ))}
       </div>
     </section>
