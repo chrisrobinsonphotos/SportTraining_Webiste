@@ -943,43 +943,37 @@ export default function NutricionAlimentacion() {
         className="relative overflow-hidden"
         style={{ backgroundColor: '#0a0a0a', padding: 'clamp(5rem,10vh,8rem) clamp(1.5rem,5vw,4rem)' }}
       >
-        <div className="max-w-[1200px] mx-auto text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 40 }}
-            animate={ctaInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.1, ease: [...brandEase] }}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={ctaInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: [...brandEase] }}
+          className="max-w-[700px] mx-auto text-center"
+        >
+          <h2
             className="text-white uppercase mb-6"
             style={{
               fontFamily: 'var(--font-barlow)',
               fontWeight: 800,
-              fontSize: 'clamp(2.4rem,5vw,4.5rem)',
-              lineHeight: '0.95',
+              fontSize: 'clamp(2.4rem,4.5vw,4rem)',
+              lineHeight: '0.92',
               letterSpacing: '-0.02em',
             }}
           >
             LISTO PARA CAMBIAR{' '}
-            <br className="hidden md:block" />
             <span className="text-[#F1B91E] italic" style={{ textTransform: 'none' }}>
               tu alimentación.
             </span>
-          </motion.h2>
+          </h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={ctaInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.25, ease: [...brandEase] }}
+          <p
             style={{ fontFamily: 'var(--font-inter)' }}
-            className="text-white/50 text-[0.95rem] leading-[1.6] max-w-[48ch] mx-auto mb-10 text-center"
+            className="text-white/50 text-[1rem] leading-[1.7] mb-10"
           >
             Trabajamos contigo un plan nutricional integrado con tu entrenamiento. Sin dietas genéricas, sin restricciones absurdas. Comida real, resultados reales.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={ctaInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.4, ease: [...brandEase] }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+
             {/* Primary CTA */}
             <button
               data-contact
@@ -1015,8 +1009,8 @@ export default function NutricionAlimentacion() {
                 WhatsApp
               </span>
             </a>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </section>
     </div>
   )
