@@ -125,7 +125,7 @@ export default function RootLayout({
           PLACEHOLDERS (flagged in comments, easy to grep):
           - aggregateRating values: update with real GBP numbers
           - openingHours: confirm actual schedule with client
-          - priceRange: reflects current Modalities tiers (€25–€450/mes)
+          - priceRange: reflects current Modalities tiers (€30–€450/mes)
         */}
         <Script
           id="ld-graph"
@@ -147,7 +147,7 @@ export default function RootLayout({
                   telephone: "+34647797693",
                   email: "info@sporttraining.es",
                   foundingDate: "2007",
-                  priceRange: "€25–€450",
+                  priceRange: "€30–€450",
                   currenciesAccepted: "EUR",
                   paymentAccepted: "Cash, Credit Card, Bank Transfer",
                   slogan: SITE_TAGLINE,
@@ -229,7 +229,7 @@ export default function RootLayout({
                         itemOffered: { "@type": "Service", name: "Entrenamiento Libre (Bronce)" },
                         priceSpecification: {
                           "@type": "PriceSpecification",
-                          price: "25",
+                          price: "30",
                           priceCurrency: "EUR",
                         },
                       },
@@ -331,7 +331,7 @@ export default function RootLayout({
                       name: "¿Cuánto cuesta entrenar en Sport Training Murcia?",
                       acceptedAnswer: {
                         "@type": "Answer",
-                        text: "Tenemos tres modalidades. Entrenamiento Libre desde €25/mes, Entrenamiento en Grupo desde €50/mes y Entrenamiento Personal desde €150/mes. Todos los planes incluyen acceso completo al gimnasio.",
+                        text: "Tenemos tres modalidades. Entrenamiento Libre desde €30/mes, Entrenamiento en Grupo desde €50/mes y Entrenamiento Personal desde €150/mes. Todos los planes incluyen acceso completo al gimnasio.",
                       },
                     },
                     {

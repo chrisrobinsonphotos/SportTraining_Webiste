@@ -74,7 +74,7 @@ const tiers: Tier[] = [
     tagline: 'Autonomía total',
     image: '/gym-wide.jpg',
     imageFilter: 'grayscale(100%) contrast(1.15) brightness(0.9)',
-    priceAmount: '€25',
+    priceAmount: '€30',
     pricePeriod: '/mes',
     range: 'Tarifa única · acceso libre',
     rangeWhite: false,
