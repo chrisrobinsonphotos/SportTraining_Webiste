@@ -22,9 +22,10 @@ const nextConfig: NextConfig = {
       // have already crawled. Using 302 (temporary) so we can build the real pages
       // later without the redirect being cached permanently by Google.
 
-      // Training disciplines
+      // Training disciplines — /entrenamientos/hyrox and /entrenamientos/funcional
+      // are now REAL pages, so they must NOT be redirected. Only the bare
+      // /entrenamientos index (no page yet) still redirects home.
       { source: "/entrenamientos", destination: "/", permanent: false },
-      { source: "/entrenamientos/:path*", destination: "/", permanent: false },
 
       // Gym info pages
       { source: "/gym", destination: "/", permanent: false },

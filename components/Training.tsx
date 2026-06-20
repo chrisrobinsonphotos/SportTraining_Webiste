@@ -3,8 +3,19 @@
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 
-const disciplines = [
+type Discipline = {
+  num: string
+  name: string
+  tagline: string
+  description: string
+  image: string
+  accent: boolean
+  href?: string
+}
+
+const disciplines: Discipline[] = [
   {
     num: '01',
     name: 'HYROX',
@@ -13,6 +24,7 @@ const disciplines = [
       '8km de carrera intercalados con 8 estaciones de trabajo funcional. Desde el primer entreno hasta la competición — aquí se construye el rendimiento.',
     image: '/hyrox-sled.jpg',
     accent: true,
+    href: '/entrenamientos/hyrox',
   },
   {
     num: '02',
@@ -22,6 +34,7 @@ const disciplines = [
       'Patrones naturales: empujar, traccionar, agacharse, rotar. El fundamento de cualquier cuerpo capaz.',
     image: '/funcional.jpg',
     accent: false,
+    href: '/entrenamientos/funcional',
   },
 ]
 
@@ -29,17 +42,16 @@ function DisciplineCard({
   item,
   index,
 }: {
-  item: (typeof disciplines)[0]
+  item: Discipline
   index: number
 }) {
-  const ref = useRef<HTMLButtonElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
   const [hovered, setHovered] = useState(false)
 
-  return (
-    <motion.button
+  const cardVisual = (
+    <motion.div
       ref={ref}
-      data-contact
       initial={{ opacity: 0, y: 60 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{
@@ -49,7 +61,8 @@ function DisciplineCard({
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative overflow-hidden flex flex-col justify-end cursor-pointer text-left"
+      data-contact={item.href ? undefined : true}
+      className="relative overflow-hidden flex flex-col justify-end cursor-pointer text-left h-full"
       style={{ minHeight: '62vh' }}
     >
       {/* Background image */}
@@ -198,8 +211,18 @@ function DisciplineCard({
           </div>
         </div>
       </div>
-    </motion.button>
+    </motion.div>
   )
+
+  if (item.href) {
+    return (
+      <Link href={item.href} aria-label={item.name} className="block">
+        {cardVisual}
+      </Link>
+    )
+  }
+
+  return cardVisual
 }
 
 export default function Training() {
