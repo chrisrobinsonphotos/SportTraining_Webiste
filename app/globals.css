@@ -88,10 +88,10 @@ body {
   background-size: 80px 80px;
 }
 
-/* Section label style */
+/* Section label style — aligned to the systematized `label` type step */
 .section-label {
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: var(--fs-label);
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -213,3 +213,46 @@ body {
   color: #ffffff;
   border-bottom: 1px solid rgba(241, 185, 30, 0.4);
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   SHARED DESIGN SYSTEM — "Nutrición cleanness" standard
+   Derived from the /nutricion/* pages. Purely additive: defines tokens
+   and utility classes. Nothing renders differently until a component
+   opts in by using these classes. Apply section-by-section.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Systematized type scale — the ONLY sizes used across the site.
+     (Data-viz / chart axis labels are the one allowed exception.) */
+  --fs-display: clamp(3.5rem, 8vw, 7.5rem);   /* hero H1            */
+  --fs-h1:      clamp(2.8rem, 5.5vw, 5rem);   /* section heading    */
+  --fs-h2:      clamp(1.6rem, 2.1vw, 2.1rem);  /* subsection         */
+  --fs-h3:      clamp(1.1rem, 1.3vw, 1.25rem); /* card title         */
+  --fs-lead:    clamp(1rem, 1vw, 1.1rem);      /* intro / lead copy  */
+  --fs-body:    0.9375rem;                     /* body text (15px)   */
+  --fs-small:   0.8125rem;                     /* meta / secondary   */
+  --fs-label:   0.75rem;                       /* eyebrows / labels  */
+
+  /* Shared section rhythm */
+  --section-pad-y: clamp(4rem, 8vw, 8rem);
+  --section-pad-y-hero: clamp(6rem, 12vw, 10rem);
+  --section-pad-x: clamp(1.5rem, 5vw, 4rem);
+  --container-max: 1200px;
+}
+
+/* ── Layout primitives ── */
+.st-section        { padding: var(--section-pad-y) var(--section-pad-x); }
+.st-section--hero  { padding: var(--section-pad-y-hero) var(--section-pad-x) var(--section-pad-y); }
+.st-container      { max-width: var(--container-max); margin-inline: auto; }
+.st-measure        { max-width: 58ch; }
+.st-measure-tight  { max-width: 52ch; }
+
+/* ── Type scale utilities ── */
+.t-display { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-display); line-height: 0.9;  letter-spacing: -0.02em; }
+.t-h1      { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-h1);      line-height: 0.92; letter-spacing: -0.02em; text-transform: uppercase; }
+.t-h2      { font-family: var(--font-display); font-weight: 800; font-size: var(--fs-h2);      line-height: 1;    text-transform: uppercase; }
+.t-h3      { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-h3);      line-height: 1.1; }
+.t-lead    { font-family: var(--font-body);    font-weight: 400; font-size: var(--fs-lead);    line-height: 1.65; }
+.t-body    { font-family: var(--font-body);    font-weight: 400; font-size: var(--fs-body);    line-height: 1.65; }
+.t-small   { font-family: var(--font-body);    font-weight: 400; font-size: var(--fs-small);   line-height: 1.5; }
+.t-label   { font-family: var(--font-body);    font-weight: 700; font-size: var(--fs-label);   line-height: 1; letter-spacing: 0.22em; text-transform: uppercase; }

@@ -375,7 +375,7 @@ export default function NutricionAlimentacion() {
                 {macros.map((m) => (
                   <div key={m.name} className="flex items-center gap-2">
                     <span className="w-3 h-3 flex-shrink-0" style={{ backgroundColor: m.color }} />
-                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-white/70 text-[0.7rem] tracking-[0.1em] uppercase">
+                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-white/70 text-[0.75rem] tracking-[0.1em] uppercase">
                       {m.pct}% {m.name.split('Í')[0].toLowerCase()}{m.name.includes('Í') ? 'í' + m.name.split('Í')[1].toLowerCase() : ''}
                     </span>
                   </div>
@@ -419,7 +419,7 @@ export default function NutricionAlimentacion() {
                     {macro.funcion}
                   </p>
                   <div className="flex items-start gap-2">
-                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-[#F1B91E] text-[0.7rem] tracking-[0.15em] uppercase flex-shrink-0 mt-[2px]">
+                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-[#F1B91E] text-[0.75rem] tracking-[0.15em] uppercase flex-shrink-0 mt-[2px]">
                       Fuentes
                     </span>
                     <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/50 text-[0.85rem] leading-[1.5]">
@@ -525,7 +525,7 @@ export default function NutricionAlimentacion() {
 
                 <div className="space-y-4">
                   <div>
-                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.65rem] tracking-[0.2em] uppercase block mb-1">
+                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.75rem] tracking-[0.2em] uppercase block mb-1">
                       Desayuno
                     </span>
                     <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/75 text-[0.85rem] leading-[1.5]">
@@ -533,7 +533,7 @@ export default function NutricionAlimentacion() {
                     </p>
                   </div>
                   <div>
-                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.65rem] tracking-[0.2em] uppercase block mb-1">
+                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.75rem] tracking-[0.2em] uppercase block mb-1">
                       Comida
                     </span>
                     <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/75 text-[0.85rem] leading-[1.5]">
@@ -541,7 +541,7 @@ export default function NutricionAlimentacion() {
                     </p>
                   </div>
                   <div>
-                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.65rem] tracking-[0.2em] uppercase block mb-1">
+                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.75rem] tracking-[0.2em] uppercase block mb-1">
                       Post-entreno
                     </span>
                     <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/75 text-[0.85rem] leading-[1.5]">
@@ -549,7 +549,7 @@ export default function NutricionAlimentacion() {
                     </p>
                   </div>
                   <div>
-                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.65rem] tracking-[0.2em] uppercase block mb-1">
+                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.75rem] tracking-[0.2em] uppercase block mb-1">
                       Cena
                     </span>
                     <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/75 text-[0.85rem] leading-[1.5]">
@@ -579,7 +579,7 @@ export default function NutricionAlimentacion() {
 
                 <div className="space-y-4">
                   <div>
-                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.65rem] tracking-[0.2em] uppercase block mb-1">
+                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.75rem] tracking-[0.2em] uppercase block mb-1">
                       Desayuno
                     </span>
                     <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/75 text-[0.85rem] leading-[1.5]">
@@ -587,7 +587,7 @@ export default function NutricionAlimentacion() {
                     </p>
                   </div>
                   <div>
-                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.65rem] tracking-[0.2em] uppercase block mb-1">
+                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.75rem] tracking-[0.2em] uppercase block mb-1">
                       Comida
                     </span>
                     <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/75 text-[0.85rem] leading-[1.5]">
@@ -595,7 +595,7 @@ export default function NutricionAlimentacion() {
                     </p>
                   </div>
                   <div>
-                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.65rem] tracking-[0.2em] uppercase block mb-1">
+                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.75rem] tracking-[0.2em] uppercase block mb-1">
                       Merienda
                     </span>
                     <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/75 text-[0.85rem] leading-[1.5]">
@@ -603,7 +603,7 @@ export default function NutricionAlimentacion() {
                     </p>
                   </div>
                   <div>
-                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.65rem] tracking-[0.2em] uppercase block mb-1">
+                    <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-white/50 text-[0.75rem] tracking-[0.2em] uppercase block mb-1">
                       Cena
                     </span>
                     <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/75 text-[0.85rem] leading-[1.5]">
@@ -720,7 +720,7 @@ export default function NutricionAlimentacion() {
                   </span>
                   <span
                     style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                    className="text-white/40 text-[0.7rem] tracking-[0.1em] uppercase block mb-4"
+                    className="text-white/40 text-[0.75rem] tracking-[0.1em] uppercase block mb-4"
                   >
                     {item.time}
                   </span>
@@ -816,7 +816,7 @@ export default function NutricionAlimentacion() {
                 <div className="relative z-10">
                   <span
                     style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                    className="text-[#F1B91E] text-[0.65rem] tracking-[0.2em] uppercase block mb-2"
+                    className="text-[#F1B91E] text-[0.75rem] tracking-[0.2em] uppercase block mb-2"
                   >
                     {h.momento}
                   </span>

@@ -99,7 +99,7 @@ function TrainerCard({ trainer, index }: { trainer: typeof trainers[0]; index: n
                 style={{
                   fontFamily: 'var(--font-inter)',
                   fontWeight: 600,
-                  fontSize: '.62rem',
+                  fontSize: 'var(--fs-label)',
                   letterSpacing: '.15em',
                   textTransform: 'uppercase',
                   color: 'rgba(255,255,255,.6)',
@@ -119,7 +119,7 @@ function TrainerCard({ trainer, index }: { trainer: typeof trainers[0]; index: n
           style={{
             fontFamily: 'var(--font-barlow)',
             fontWeight: 800,
-            fontSize: 'clamp(2.3rem,3.1vw,2.9rem)',
+            fontSize: 'var(--fs-h2)',
             textTransform: 'uppercase',
             lineHeight: 1,
             margin: '0 0 .5rem',
@@ -253,7 +253,7 @@ export default function Trainers() {
               style={{
                 fontFamily: 'var(--font-inter)',
                 fontWeight: 700,
-                fontSize: 'clamp(.85rem,1vw,1rem)',
+                fontSize: 'var(--fs-label)',
                 letterSpacing: '.22em',
                 textTransform: 'uppercase',
                 color: '#F1B91E',
@@ -278,7 +278,7 @@ export default function Trainers() {
               style={{
                 fontFamily: 'var(--font-barlow)',
                 fontWeight: 800,
-                fontSize: 'clamp(3.6rem,7.8vw,7.2rem)',
+                fontSize: 'var(--fs-h1)',
                 textTransform: 'uppercase',
                 lineHeight: 0.85,
                 letterSpacing: '-.02em',
@@ -305,7 +305,7 @@ export default function Trainers() {
               style={{
                 fontFamily: 'var(--font-inter)',
                 fontWeight: 700,
-                fontSize: '.7rem',
+                fontSize: 'var(--fs-label)',
                 letterSpacing: '.25em',
                 textTransform: 'uppercase',
               }}

@@ -90,7 +90,7 @@ export default function Adaptado() {
               style={{
                 fontFamily: 'var(--font-inter)',
                 fontWeight: 700,
-                fontSize: 'clamp(.85rem,1vw,1rem)',
+                fontSize: 'var(--fs-label)',
                 letterSpacing: '.22em',
                 textTransform: 'uppercase',
                 color: '#F1B91E',
@@ -113,7 +113,7 @@ export default function Adaptado() {
               style={{
                 fontFamily: 'var(--font-barlow)',
                 fontWeight: 800,
-                fontSize: 'clamp(3.6rem,7.8vw,7.2rem)',
+                fontSize: 'var(--fs-h1)',
                 lineHeight: 0.85,
                 letterSpacing: '-.02em',
                 textTransform: 'uppercase',
@@ -137,7 +137,7 @@ export default function Adaptado() {
               style={{
                 fontFamily: 'var(--font-barlow)',
                 fontWeight: 800,
-                fontSize: 'clamp(3.6rem,7.8vw,7.2rem)',
+                fontSize: 'var(--fs-h1)',
                 lineHeight: 0.85,
                 letterSpacing: '-.02em',
                 fontStyle: 'italic',
@@ -162,7 +162,7 @@ export default function Adaptado() {
               style={{
                 fontFamily: 'var(--font-barlow)',
                 fontWeight: 800,
-                fontSize: 'clamp(3.6rem,7.8vw,7.2rem)',
+                fontSize: 'var(--fs-h1)',
                 lineHeight: 0.85,
                 letterSpacing: '-.02em',
                 textTransform: 'uppercase',
@@ -203,7 +203,7 @@ export default function Adaptado() {
                 style={{
                   fontFamily: 'var(--font-barlow)',
                   fontWeight: 700,
-                  fontSize: 'clamp(2.3rem,3.4vw,3.1rem)',
+                  fontSize: 'var(--fs-h2)',
                   letterSpacing: '.03em',
                   textTransform: 'uppercase',
                   lineHeight: 1.05,
@@ -217,7 +217,7 @@ export default function Adaptado() {
                 style={{
                   fontFamily: 'var(--font-inter)',
                   fontWeight: 400,
-                  fontSize: 'clamp(1.3rem,1.5vw,1.55rem)',
+                  fontSize: 'var(--fs-lead)',
                   lineHeight: 1.5,
                   color: 'rgba(255,255,255,.65)',
                   maxWidth: '44ch',
@@ -259,7 +259,7 @@ export default function Adaptado() {
                 style={{
                   fontFamily: 'var(--font-inter)',
                   fontWeight: 700,
-                  fontSize: '.7rem',
+                  fontSize: 'var(--fs-label)',
                   letterSpacing: '.25em',
                   textTransform: 'uppercase',
                 }}

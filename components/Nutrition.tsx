@@ -36,14 +36,14 @@ export default function Nutrition() {
             <div className="w-2 h-2 bg-[#F1B91E] flex-shrink-0" />
             <span
               style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-              className="text-[#F1B91E] text-[clamp(0.85rem,1vw,1rem)] tracking-[0.22em] uppercase"
+              className="text-[#F1B91E] text-[length:var(--fs-label)] tracking-[0.22em] uppercase"
             >
               Nutrición & Suplementación
             </span>
           </div>
           <h2
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, letterSpacing: '-0.02em' }}
-            className="text-[clamp(3.6rem,7.8vw,7.2rem)] leading-[0.88] uppercase text-white"
+            className="text-[length:var(--fs-h1)] leading-[0.88] uppercase text-white"
           >
             LOS HÁBITOS{' '}
             <span className="text-[#F1B91E] italic" style={{ textTransform: 'none' }}>
@@ -110,14 +110,14 @@ export default function Nutrition() {
               </span>
               <h4
                 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                className="text-white text-[clamp(2.3rem,3.4vw,3.1rem)] uppercase leading-none mb-4"
+                className="text-white text-[length:var(--fs-h2)] uppercase leading-none mb-4"
               >
                 {item.label}
               </h4>
               <div className="h-[2px] bg-[#F1B91E]/60 w-8 mb-4 group-hover:w-full transition-all duration-500" />
               <p
                 style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                className="text-[clamp(1.3rem,1.5vw,1.55rem)] leading-[1.5] text-white/70 max-w-[300px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                className="text-[length:var(--fs-lead)] leading-[1.5] text-white/70 max-w-[300px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               >
                 {item.desc}
               </p>

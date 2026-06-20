@@ -286,7 +286,7 @@ function LeucineChart({ data, inView }: { data: typeof bigThree[2]['leucine']; i
             animate={inView ? { height: `${(item.g / maxVal) * 120}px` } : { height: 0 }}
             transition={{ duration: 0.8, delay: 0.2 + i * 0.1, ease: [...brandEase] }}
           />
-          <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 500 }} className="text-white/50 text-[0.65rem] mt-2 text-center uppercase tracking-wider">
+          <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 500 }} className="text-white/50 text-[0.75rem] mt-2 text-center uppercase tracking-wider">
             {item.source}
           </span>
         </div>
@@ -612,7 +612,7 @@ export default function NutricionSuplementacion() {
 
                 {/* Card */}
                 <div className="bg-[#191919] border border-white/5" style={{ padding: '1.25rem' }}>
-                  <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color: slot.color }} className="text-[0.65rem] tracking-[0.2em] uppercase block mb-2">
+                  <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color: slot.color }} className="text-[0.75rem] tracking-[0.2em] uppercase block mb-2">
                     {slot.label}
                   </span>
                   <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }} className="text-white text-[1.1rem] uppercase mb-2">
@@ -666,7 +666,7 @@ export default function NutricionSuplementacion() {
               {/* Warning indicator */}
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-2 h-2 bg-[#CC3333]" />
-                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-[#CC3333] text-[0.65rem] tracking-[0.2em] uppercase">
+                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-[#CC3333] text-[0.75rem] tracking-[0.2em] uppercase">
                   Red flag
                 </span>
               </div>

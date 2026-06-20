@@ -90,7 +90,7 @@ export default function Hero() {
             style={{
               fontFamily: 'var(--font-inter)',
               fontWeight: 700,
-              fontSize: 'clamp(0.85rem, 1vw, 1rem)',
+              fontSize: 'var(--fs-label)',
               letterSpacing: '0.22em',
               textTransform: 'uppercase',
               color: '#F1B91E',
@@ -117,7 +117,7 @@ export default function Hero() {
               style={{
                 fontFamily: 'var(--font-barlow)',
                 fontWeight: 800,
-                fontSize: 'clamp(3.5rem, 13vw, 12rem)',
+                fontSize: 'var(--fs-display)',
                 lineHeight: 0.85,
                 letterSpacing: '-0.03em',
                 textTransform: 'uppercase',
@@ -139,7 +139,7 @@ export default function Hero() {
               style={{
                 fontFamily: 'var(--font-barlow)',
                 fontWeight: 800,
-                fontSize: 'clamp(3.5rem, 13vw, 12rem)',
+                fontSize: 'var(--fs-display)',
                 lineHeight: 0.85,
                 letterSpacing: '-0.03em',
                 textTransform: 'none',
@@ -162,7 +162,7 @@ export default function Hero() {
               style={{
                 fontFamily: 'var(--font-barlow)',
                 fontWeight: 800,
-                fontSize: 'clamp(3.5rem, 13vw, 12rem)',
+                fontSize: 'var(--fs-display)',
                 lineHeight: 0.85,
                 letterSpacing: '-0.03em',
                 textTransform: 'uppercase',
@@ -176,27 +176,25 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* hero-foot: sub text + buttons */}
+        {/* Value proposition — lead step, sits directly under the headline */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={show ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.62, ease: brandEase }}
+          className="t-lead"
+          style={{ color: 'rgba(255,255,255,0.78)', maxWidth: '34ch', marginTop: '2rem' }}
+        >
+          Construye un cuerpo lo suficientemente fuerte para la vida.
+        </motion.p>
+
+        {/* hero-foot: buttons */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={show ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.8, ease: brandEase }}
-          className="flex flex-wrap items-end justify-between"
-          style={{ gap: '2rem', maxWidth: 980, marginTop: '2.5rem' }}
+          className="flex flex-wrap items-end justify-start"
+          style={{ gap: '2rem', maxWidth: 980, marginTop: '1.75rem' }}
         >
-          <p
-            style={{
-              fontFamily: 'var(--font-inter)',
-              fontWeight: 300,
-              color: 'rgba(255,255,255,0.5)',
-              fontSize: '1.05rem',
-              lineHeight: 1.6,
-              maxWidth: 380,
-            }}
-          >
-            Construye un cuerpo lo suficientemente fuerte para la vida.
-          </p>
-
           <div className="flex flex-col gap-5 shrink-0">
             <div className="flex items-center gap-4">
               <button
@@ -215,7 +213,7 @@ export default function Hero() {
                   style={{
                     fontFamily: 'var(--font-inter)',
                     fontWeight: 700,
-                    fontSize: '0.7rem',
+                    fontSize: 'var(--fs-label)',
                     letterSpacing: '0.25em',
                     textTransform: 'uppercase',
                   }}
@@ -249,7 +247,7 @@ export default function Hero() {
                   style={{
                     fontFamily: 'var(--font-inter)',
                     fontWeight: 600,
-                    fontSize: '0.7rem',
+                    fontSize: 'var(--fs-label)',
                     letterSpacing: '0.25em',
                     textTransform: 'uppercase',
                     color: 'rgba(255,255,255,0.7)',
@@ -299,7 +297,7 @@ export default function Hero() {
                   style={{
                     fontFamily: 'var(--font-inter)',
                     fontWeight: 600,
-                    fontSize: '0.65rem',
+                    fontSize: 'var(--fs-label)',
                     letterSpacing: '0.2em',
                     textTransform: 'uppercase',
                     color: 'rgba(255,255,255,0.35)',
@@ -340,7 +338,7 @@ export default function Hero() {
                 style={{
                   fontFamily: 'var(--font-inter)',
                   fontWeight: 600,
-                  fontSize: '0.55rem',
+                  fontSize: 'var(--fs-label)',
                   letterSpacing: '0.25em',
                   textTransform: 'uppercase',
                   color: 'rgba(255,255,255,0.25)',

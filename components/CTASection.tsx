@@ -48,7 +48,7 @@ export default function CTASection() {
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, letterSpacing: '-0.02em' }}
-            className="text-[clamp(4.2rem,9.6vw,8.4rem)] leading-[0.85] uppercase text-white"
+            className="text-[length:var(--fs-display)] leading-[0.85] uppercase text-white"
           >
             ÚNETE A LA
           </motion.h2>
@@ -60,7 +60,7 @@ export default function CTASection() {
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, letterSpacing: '-0.02em' }}
-            className="text-[clamp(4.2rem,9.6vw,8.4rem)] leading-[0.85] text-[#F1B91E]"
+            className="text-[length:var(--fs-display)] leading-[0.85] text-[#F1B91E]"
           >
             Comunidad ST.
           </motion.h2>
@@ -80,7 +80,7 @@ export default function CTASection() {
               style={{ padding: '1rem 1.75rem' }}
             >
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                className="text-[0.7rem] tracking-[0.25em] uppercase">Pide tu Día de Prueba</span>
+                className="text-[0.75rem] tracking-[0.25em] uppercase">Pide tu Día de Prueba</span>
               <svg className="w-[15px] h-[15px] group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
               </svg>
@@ -90,7 +90,7 @@ export default function CTASection() {
               style={{ padding: '1rem 1.75rem' }}
             >
               <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                className="text-[0.7rem] tracking-[0.25em] uppercase">Ver Modalidades</span>
+                className="text-[0.75rem] tracking-[0.25em] uppercase">Ver Modalidades</span>
             </Link>
           </div>
           <div className="flex flex-wrap items-center gap-4">
@@ -98,7 +98,7 @@ export default function CTASection() {
               style={{
                 fontFamily: 'var(--font-inter)',
                 fontWeight: 600,
-                fontSize: '0.65rem',
+                fontSize: 'var(--fs-label)',
                 letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 color: 'rgba(255,255,255,0.3)',
@@ -153,14 +153,14 @@ export default function CTASection() {
                   </svg>
                   <span
                     style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                    className="text-[#F1B91E] text-[0.62rem] tracking-[0.18em] uppercase"
+                    className="text-[#F1B91E] text-[0.75rem] tracking-[0.18em] uppercase"
                   >
                     {card.tag}
                   </span>
                 </div>
                 <h4
                   style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-                  className="text-white text-[clamp(1.7rem,2.2vw,2.1rem)] uppercase leading-tight mb-2"
+                  className="text-white text-[length:var(--fs-h3)] uppercase leading-tight mb-2"
                 >
                   {card.title}
                 </h4>
@@ -176,7 +176,7 @@ export default function CTASection() {
                   </svg>
                   <span
                     style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                    className="text-white/40 text-[0.6rem] tracking-[0.18em] uppercase"
+                    className="text-white/40 text-[0.75rem] tracking-[0.18em] uppercase"
                   >
                     ESCANEA con tu cámara
                   </span>

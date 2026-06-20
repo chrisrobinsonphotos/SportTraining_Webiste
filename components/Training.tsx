@@ -105,7 +105,7 @@ function DisciplineCard({
           style={{
             fontFamily: 'var(--font-barlow)',
             fontWeight: 800,
-            fontSize: 'clamp(3.3rem,4.8vw,4.3rem)',
+            fontSize: 'var(--fs-h2)',
             lineHeight: 1,
             textTransform: 'uppercase',
           }}
@@ -153,7 +153,7 @@ function DisciplineCard({
             style={{
               fontFamily: 'var(--font-inter)',
               fontWeight: 400,
-              fontSize: '.95rem',
+              fontSize: 'var(--fs-body)',
               lineHeight: 1.6,
               maxWidth: '300px',
             }}
@@ -209,7 +209,7 @@ export default function Training() {
   return (
     <section
       id="entrenamientos"
-      className="relative bg-[#191919] min-h-screen flex flex-col overflow-hidden"
+      className="relative bg-[#191919] overflow-hidden"
       style={{ scrollMarginTop: '90px' }}
     >
       {/* Header (.sec-head) */}
@@ -234,7 +234,7 @@ export default function Training() {
               style={{
                 fontFamily: 'var(--font-inter)',
                 fontWeight: 700,
-                fontSize: 'clamp(.85rem,1vw,1rem)',
+                fontSize: 'var(--fs-label)',
                 letterSpacing: '.22em',
                 textTransform: 'uppercase',
               }}
@@ -257,8 +257,8 @@ export default function Training() {
               style={{
                 fontFamily: 'var(--font-barlow)',
                 fontWeight: 800,
-                fontSize: 'clamp(3.6rem,7.8vw,7.2rem)',
-                lineHeight: 0.88,
+                fontSize: 'var(--fs-h1)',
+                lineHeight: 0.9,
                 textTransform: 'uppercase',
                 letterSpacing: '-.02em',
               }}
@@ -285,9 +285,9 @@ export default function Training() {
           transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           style={{
             fontFamily: 'var(--font-inter)',
-            fontWeight: 300,
-            fontSize: 'clamp(1.3rem,1.5vw,1.55rem)',
-            lineHeight: 1.55,
+            fontWeight: 400,
+            fontSize: 'var(--fs-lead)',
+            lineHeight: 1.7,
             maxWidth: '440px',
           }}
           className="text-white/65"
@@ -297,9 +297,8 @@ export default function Training() {
         </motion.p>
       </div>
 
-      {/* Tile grid */}
+      {/* Tile grid — content-fit, no forced full-height void */}
       <div
-        className="flex-1 min-h-0"
         style={{
           display: 'grid',
           gap: '2px',

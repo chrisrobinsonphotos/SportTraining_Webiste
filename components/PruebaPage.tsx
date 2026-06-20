@@ -50,7 +50,7 @@ type FormState = 'idle' | 'submitting' | 'success' | 'error'
 const inputClass =
   'w-full bg-transparent border border-white/12 text-white text-[1rem] outline-none focus:border-[#F1B91E] transition-colors duration-200 placeholder-white/25'
 
-const labelClass = 'block text-[0.65rem] tracking-[.18em] uppercase mb-3 text-white/40'
+const labelClass = 'block text-[0.75rem] tracking-[.18em] uppercase mb-3 text-white/40'
 
 function trackTrialEvent(method: string) {
   if (typeof window !== 'undefined') {
@@ -193,7 +193,7 @@ export default function PruebaPage() {
             >
               <span
                 style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                className="text-[0.7rem] tracking-[0.25em] uppercase"
+                className="text-[0.75rem] tracking-[0.25em] uppercase"
               >
                 Pide tu Día de Prueba
               </span>
@@ -210,7 +210,7 @@ export default function PruebaPage() {
               style={{ padding: '1rem 1.75rem' }}
             >
               <WhatsAppIcon />
-              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[0.7rem] tracking-[0.25em] uppercase">
+              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[0.75rem] tracking-[0.25em] uppercase">
                 Por WhatsApp
               </span>
             </a>
@@ -323,7 +323,7 @@ export default function PruebaPage() {
               style={{ padding: '1rem 1.75rem' }}
             >
               <WhatsAppIcon />
-              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[0.7rem] tracking-[0.25em] uppercase">
+              <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[0.75rem] tracking-[0.25em] uppercase">
                 WhatsApp · 622 443 495
               </span>
             </a>
@@ -413,7 +413,7 @@ export default function PruebaPage() {
                   <div className="mb-10">
                     <label
                       style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                      className="block text-[0.65rem] tracking-[.18em] uppercase text-white/40 mb-4"
+                      className="block text-[0.75rem] tracking-[.18em] uppercase text-white/40 mb-4"
                     >
                       Me interesa
                     </label>

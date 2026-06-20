@@ -48,7 +48,7 @@ export default function CommunityStatement() {
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, letterSpacing: '-0.02em' }}
-            className="text-[clamp(3.6rem,7.8vw,7.2rem)] leading-[0.88] uppercase text-white"
+            className="text-[length:var(--fs-h1)] leading-[0.88] uppercase text-white"
           >
             MÁS QUE
           </motion.h2>
@@ -60,7 +60,7 @@ export default function CommunityStatement() {
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
             style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontStyle: 'italic', textTransform: 'none', letterSpacing: '-0.02em' }}
-            className="text-[clamp(3.6rem,7.8vw,7.2rem)] leading-[0.88] text-[#F1B91E]"
+            className="text-[length:var(--fs-h1)] leading-[0.88] text-[#F1B91E]"
           >
             entrenar.
           </motion.h2>
@@ -72,7 +72,7 @@ export default function CommunityStatement() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
           style={{ fontFamily: 'var(--font-inter)', fontWeight: 500 }}
-          className="text-[clamp(0.85rem,1vw,1rem)] tracking-[0.18em] uppercase text-white/45 max-w-[28rem] mt-6"
+          className="text-[length:var(--fs-label)] tracking-[0.18em] uppercase text-white/45 max-w-[28rem] mt-6"
         >
           Eventos, comunidad y el espíritu que hace de Sport Training algo único.
         </motion.p>

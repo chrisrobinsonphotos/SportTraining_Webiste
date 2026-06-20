@@ -391,7 +391,7 @@ function CalcSection({
               <div key={field.label} className="flex items-center gap-2 bg-[#0a0a0a]" style={{ padding: '0.6rem 0.8rem' }}>
                 <span
                   style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                  className="text-white/40 text-[0.7rem] uppercase tracking-[0.1em] w-[50px] flex-shrink-0"
+                  className="text-white/40 text-[0.75rem] uppercase tracking-[0.1em] w-[50px] flex-shrink-0"
                 >
                   {field.label}
                 </span>
@@ -404,7 +404,7 @@ function CalcSection({
                   className="flex-1 bg-transparent text-white text-[1rem] outline-none placeholder:text-white/15"
                   style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700, border: 'none' }}
                 />
-                <span style={{ fontFamily: 'var(--font-inter)' }} className="text-white/25 text-[0.7rem]">
+                <span style={{ fontFamily: 'var(--font-inter)' }} className="text-white/25 text-[0.75rem]">
                   {field.unit}
                 </span>
               </div>
@@ -413,7 +413,7 @@ function CalcSection({
 
           {/* Formula display */}
           <div className="bg-[#0a0a0a] p-4 mb-5" style={{ border: '1px solid rgba(241,185,30,0.15)' }}>
-            <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[#F1B91E]/80 text-[0.7rem] tracking-[0.1em] uppercase mb-2">
+            <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[#F1B91E]/80 text-[0.75rem] tracking-[0.1em] uppercase mb-2">
               {sexo === 'hombre' ? 'Hombres' : 'Mujeres'}
             </p>
             <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 500 }} className="text-white/70 text-[0.8rem] leading-[1.6]">
@@ -427,7 +427,7 @@ function CalcSection({
           <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '1rem' }}>
             {hasInput ? (
               <>
-                <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[0.6rem] tracking-[0.15em] uppercase text-white/30 mb-1">
+                <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[0.75rem] tracking-[0.15em] uppercase text-white/30 mb-1">
                   Tu TMB
                 </p>
                 <p style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }} className="text-white text-[1.6rem]">
@@ -448,7 +448,7 @@ function CalcSection({
                 style={{ width: hasInput ? '45%' : '0%' }}
               />
             </div>
-            <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/25 text-[0.6rem] mt-1">
+            <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/25 text-[0.75rem] mt-1">
               Base energ&eacute;tica — ~45% del gasto total
             </p>
           </div>
@@ -513,7 +513,7 @@ function CalcSection({
                       </span>
                       <span
                         style={{ fontFamily: 'var(--font-inter)' }}
-                        className="text-white/20 text-[0.65rem] ml-2"
+                        className="text-white/20 text-[0.75rem] ml-2"
                       >
                         {level.desc}
                       </span>
@@ -543,7 +543,7 @@ function CalcSection({
           <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '1rem' }}>
             {hasInput ? (
               <>
-                <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[0.6rem] tracking-[0.15em] uppercase text-white/30 mb-1">
+                <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[0.75rem] tracking-[0.15em] uppercase text-white/30 mb-1">
                   {fmt(tmb)} kcal &times; {factor}
                 </p>
                 <p style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }} className="text-white text-[1.6rem]">
@@ -564,7 +564,7 @@ function CalcSection({
                 style={{ width: hasInput ? `${(activityIdx + 1) / ACTIVITY_LEVELS.length * 100}%` : '0%' }}
               />
             </div>
-            <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/25 text-[0.6rem] mt-1">
+            <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/25 text-[0.75rem] mt-1">
               Gasto por actividad — nivel {activityIdx + 1} de {ACTIVITY_LEVELS.length}
             </p>
           </div>
@@ -626,7 +626,7 @@ function CalcSection({
                       >
                         {obj.label}
                       </p>
-                      <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/30 text-[0.7rem]">
+                      <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/30 text-[0.75rem]">
                         {obj.desc}
                       </p>
                     </div>
@@ -634,7 +634,7 @@ function CalcSection({
                       style={{ fontFamily: 'var(--font-barlow)', fontWeight: 700 }}
                       className={`text-[0.9rem] ${isActive ? 'text-white/70' : 'text-white/30'}`}
                     >
-                      {obj.adj > 0 ? '+' : ''}{obj.adj} <span className="text-[0.65rem]">kcal</span>
+                      {obj.adj > 0 ? '+' : ''}{obj.adj} <span className="text-[0.75rem]">kcal</span>
                     </p>
                   </div>
                 </button>
@@ -651,14 +651,14 @@ function CalcSection({
           >
             {hasInput ? (
               <>
-                <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[0.6rem] tracking-[0.15em] uppercase text-[#F1B91E]/60 mb-1">
+                <p style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[0.75rem] tracking-[0.15em] uppercase text-[#F1B91E]/60 mb-1">
                   Tu objetivo cal&oacute;rico diario
                 </p>
                 <p style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }} className="text-[#F1B91E] text-[2.2rem]">
                   {fmt(finalKcal)} <span className="text-white/40 text-[1rem]">kcal/d&iacute;a</span>
                 </p>
                 <div className="mt-3 flex flex-col gap-1">
-                  <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/30 text-[0.7rem]">
+                  <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/30 text-[0.75rem]">
                     TMB: {fmt(tmb)} &times; Actividad ({factor}) = {fmt(getd)}
                     {adj !== 0 && ` ${adj > 0 ? '+' : '−'} ${Math.abs(adj)}`}
                   </p>
@@ -678,7 +678,7 @@ function CalcSection({
                 style={{ width: hasInput ? '100%' : '0%' }}
               />
             </div>
-            <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/25 text-[0.6rem] mt-1">
+            <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/25 text-[0.75rem] mt-1">
               Tu objetivo energ&eacute;tico diario completo
             </p>
           </div>
@@ -860,7 +860,7 @@ export default function NutricionPlanificacion() {
             style={{
               fontFamily: 'var(--font-inter)',
               fontWeight: 700,
-              fontSize: '0.7rem',
+              fontSize: '0.75rem',
               letterSpacing: '0.2em',
               textTransform: 'uppercase' as const,
               padding: '0.75rem 1.5rem',
@@ -877,7 +877,7 @@ export default function NutricionPlanificacion() {
             style={{
               fontFamily: 'var(--font-inter)',
               fontWeight: 700,
-              fontSize: '0.7rem',
+              fontSize: '0.75rem',
               letterSpacing: '0.2em',
               textTransform: 'uppercase' as const,
               padding: '0.75rem 1.5rem',
@@ -940,14 +940,14 @@ export default function NutricionPlanificacion() {
                     >
                       <span
                         style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                        className="text-[0.55rem] tracking-[0.15em] uppercase text-white/30 mb-1"
+                        className="text-[0.75rem] tracking-[0.15em] uppercase text-white/30 mb-1"
                       >
                         {slot.meal}
                       </span>
                       {slot.example && (
                         <span
                           style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                          className="text-[0.65rem] leading-[1.4] text-white/55"
+                          className="text-[0.75rem] leading-[1.4] text-white/55"
                         >
                           {slot.example}
                         </span>
@@ -964,13 +964,13 @@ export default function NutricionPlanificacion() {
         <div className="flex items-center gap-6 mt-6">
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 bg-[#F1B91E]" />
-            <span style={{ fontFamily: 'var(--font-inter)' }} className="text-[0.7rem] text-white/40 tracking-wider uppercase">
+            <span style={{ fontFamily: 'var(--font-inter)' }} className="text-[0.75rem] text-white/40 tracking-wider uppercase">
               Entrenamiento
             </span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 bg-white/20" />
-            <span style={{ fontFamily: 'var(--font-inter)' }} className="text-[0.7rem] text-white/40 tracking-wider uppercase">
+            <span style={{ fontFamily: 'var(--font-inter)' }} className="text-[0.75rem] text-white/40 tracking-wider uppercase">
               Descanso
             </span>
           </div>
@@ -1109,10 +1109,10 @@ export default function NutricionPlanificacion() {
                 ].map((m) => (
                   <div key={m.label}>
                     <div className="flex justify-between mb-1">
-                      <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[0.6rem] tracking-[0.15em] uppercase text-white/40">
+                      <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[0.75rem] tracking-[0.15em] uppercase text-white/40">
                         {m.label}
                       </span>
-                      <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-[0.6rem] text-white/60">
+                      <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-[0.75rem] text-white/60">
                         {m.pct}%
                       </span>
                     </div>
@@ -1125,10 +1125,10 @@ export default function NutricionPlanificacion() {
 
               {/* Meta */}
               <div className="flex flex-col gap-1 mb-4" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '0.75rem' }}>
-                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[0.6rem] tracking-[0.12em] uppercase text-[#F1B91E]/70">
+                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }} className="text-[0.75rem] tracking-[0.12em] uppercase text-[#F1B91E]/70">
                   {phase.kcalLabel}
                 </span>
-                <span style={{ fontFamily: 'var(--font-inter)' }} className="text-[0.65rem] text-white/35">
+                <span style={{ fontFamily: 'var(--font-inter)' }} className="text-[0.75rem] text-white/35">
                   Duraci&oacute;n: {phase.duration}
                 </span>
               </div>
@@ -1138,7 +1138,7 @@ export default function NutricionPlanificacion() {
                 {phase.keyFoods.map((food, fi) => (
                   <div key={fi} className="flex items-start gap-2">
                     <div className="w-1 h-1 bg-white/20 flex-shrink-0 mt-[6px]" />
-                    <span style={{ fontFamily: 'var(--font-inter)' }} className="text-[0.7rem] text-white/40 leading-[1.4]">
+                    <span style={{ fontFamily: 'var(--font-inter)' }} className="text-[0.75rem] text-white/40 leading-[1.4]">
                       {food}
                     </span>
                   </div>
@@ -1218,7 +1218,7 @@ export default function NutricionPlanificacion() {
                   </h3>
                   <span
                     style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                    className="text-[#F1B91E]/60 text-[0.65rem] tracking-[0.15em] uppercase"
+                    className="text-[#F1B91E]/60 text-[0.75rem] tracking-[0.15em] uppercase"
                   >
                     {step.time}
                   </span>
@@ -1294,7 +1294,7 @@ export default function NutricionPlanificacion() {
               </h3>
 
               <div className="mb-4">
-                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-[#FF4444]/70 text-[0.6rem] tracking-[0.15em] uppercase block mb-1">
+                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-[#FF4444]/70 text-[0.75rem] tracking-[0.15em] uppercase block mb-1">
                   Por qu&eacute; falla
                 </span>
                 <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/45 text-[0.8rem] leading-[1.5]">
@@ -1303,7 +1303,7 @@ export default function NutricionPlanificacion() {
               </div>
 
               <div className="mt-auto" style={{ borderTop: '1px solid rgba(241,185,30,0.1)', paddingTop: '0.75rem' }}>
-                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-[#F1B91E]/70 text-[0.6rem] tracking-[0.15em] uppercase block mb-1">
+                <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }} className="text-[#F1B91E]/70 text-[0.75rem] tracking-[0.15em] uppercase block mb-1">
                   Qu&eacute; hacer
                 </span>
                 <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/60 text-[0.8rem] leading-[1.5]">
@@ -1355,7 +1355,7 @@ export default function NutricionPlanificacion() {
             >
               <span
                 style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                className="text-[0.7rem] tracking-[0.25em] uppercase"
+                className="text-[0.75rem] tracking-[0.25em] uppercase"
               >
                 Solicitar Plan Nutricional
               </span>
@@ -1376,7 +1376,7 @@ export default function NutricionPlanificacion() {
               </svg>
               <span
                 style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-                className="text-[0.7rem] tracking-[0.25em] uppercase"
+                className="text-[0.75rem] tracking-[0.25em] uppercase"
               >
                 WhatsApp
               </span>

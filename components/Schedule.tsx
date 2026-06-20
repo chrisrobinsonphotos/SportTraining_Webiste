@@ -148,7 +148,7 @@ export default function Schedule() {
             style={{
               fontFamily: 'var(--font-inter)',
               fontWeight: 700,
-              fontSize: 'clamp(.85rem,1vw,1rem)',
+              fontSize: 'var(--fs-label)',
               letterSpacing: '.22em',
               textTransform: 'uppercase',
               color: '#F1B91E',
@@ -169,7 +169,7 @@ export default function Schedule() {
                 style={{
                   fontFamily: 'var(--font-barlow)',
                   fontWeight: 800,
-                  fontSize: 'clamp(3.6rem,7.8vw,7.2rem)',
+                  fontSize: 'var(--fs-h1)',
                   lineHeight: '.88',
                   letterSpacing: '-.02em',
                   textTransform: 'uppercase',
@@ -189,7 +189,7 @@ export default function Schedule() {
               style={{
                 fontFamily: 'var(--font-inter)',
                 fontWeight: 400,
-                fontSize: 'clamp(1.3rem,1.5vw,1.55rem)',
+                fontSize: 'var(--fs-lead)',
                 lineHeight: '1.55',
                 color: 'rgba(255,255,255,.45)',
                 maxWidth: '440px',
@@ -243,7 +243,7 @@ export default function Schedule() {
                   style={{
                     fontFamily: 'var(--font-barlow)',
                     fontWeight: 800,
-                    fontSize: 'clamp(1.1rem,2vw,1.5rem)',
+                    fontSize: 'var(--fs-lead)',
                     letterSpacing: '.08em',
                     textTransform: 'uppercase',
                     lineHeight: 1,
@@ -256,7 +256,7 @@ export default function Schedule() {
                   style={{
                     fontFamily: 'var(--font-inter)',
                     fontWeight: 600,
-                    fontSize: '.7rem',
+                    fontSize: 'var(--fs-label)',
                     letterSpacing: '.1em',
                     marginTop: '.4rem',
                     color: isActive ? 'rgba(25,25,25,.55)' : 'rgba(255,255,255,.22)',
@@ -322,7 +322,7 @@ export default function Schedule() {
                       style={{
                         fontFamily: 'var(--font-barlow)',
                         fontWeight: 800,
-                        fontSize: 'clamp(1.75rem,2.6vw,2.5rem)',
+                        fontSize: 'var(--fs-h3)',
                         color: '#FFFFFF',
                         minWidth: '92px',
                         whiteSpace: 'nowrap',
@@ -399,7 +399,7 @@ export default function Schedule() {
                         style={{
                           fontFamily: 'var(--font-inter)',
                           fontWeight: 600,
-                          fontSize: '.7rem',
+                          fontSize: 'var(--fs-label)',
                           letterSpacing: '.16em',
                           color: 'rgba(255,255,255,.35)',
                           textTransform: 'uppercase',
@@ -443,7 +443,7 @@ export default function Schedule() {
                       padding: '1rem 1.75rem',
                       fontFamily: 'var(--font-inter)',
                       fontWeight: 700,
-                      fontSize: '.7rem',
+                      fontSize: 'var(--fs-label)',
                       letterSpacing: '.25em',
                       textTransform: 'uppercase',
                       background: 'transparent',
@@ -475,7 +475,7 @@ export default function Schedule() {
                     style={{
                       fontFamily: 'var(--font-inter)',
                       fontWeight: 600,
-                      fontSize: '.65rem',
+                      fontSize: 'var(--fs-label)',
                       letterSpacing: '.18em',
                       textTransform: 'uppercase',
                       color: 'rgba(255,255,255,.25)',

@@ -74,7 +74,7 @@ function ReviewCard({
           fontFamily: 'var(--font-inter)',
           fontWeight: 400,
           fontStyle: 'italic',
-          fontSize: 'clamp(1.25rem, 1.45vw, 1.45rem)',
+          fontSize: 'var(--fs-lead)',
         }}
         className="text-white/65 leading-relaxed flex-1 mb-6
                    group-hover:text-white/80 transition-colors duration-400"
@@ -214,7 +214,7 @@ export default function Reviews() {
                 style={{
                   fontFamily: 'var(--font-barlow)',
                   fontWeight: 800,
-                  fontSize: 'clamp(3.6rem, 7.8vw, 7.2rem)',
+                  fontSize: 'var(--fs-h1)',
                   lineHeight: 0.88,
                 }}
                 className="uppercase text-white"
@@ -231,7 +231,7 @@ export default function Reviews() {
                   fontFamily: 'var(--font-barlow)',
                   fontWeight: 800,
                   fontStyle: 'italic',
-                  fontSize: 'clamp(3.6rem, 7.8vw, 7.2rem)',
+                  fontSize: 'var(--fs-h1)',
                   lineHeight: 0.88,
                 }}
                 className="text-[#F1B91E]"

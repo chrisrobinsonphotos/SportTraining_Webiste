@@ -259,7 +259,7 @@ export default function ContactModal() {
                       <div>
                         <label
                           style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                          className="block text-[0.65rem] tracking-[.18em] uppercase text-white/40 mb-3"
+                          className="block text-[0.75rem] tracking-[.18em] uppercase text-white/40 mb-3"
                         >
                           Nombre
                         </label>
@@ -283,7 +283,7 @@ export default function ContactModal() {
                       <div>
                         <label
                           style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                          className="block text-[0.65rem] tracking-[.18em] uppercase text-white/40 mb-3"
+                          className="block text-[0.75rem] tracking-[.18em] uppercase text-white/40 mb-3"
                         >
                           Teléfono / WhatsApp
                         </label>
@@ -308,7 +308,7 @@ export default function ContactModal() {
                     <div className="mb-10">
                       <label
                         style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                        className="block text-[0.65rem] tracking-[.18em] uppercase text-white/40 mb-4"
+                        className="block text-[0.75rem] tracking-[.18em] uppercase text-white/40 mb-4"
                       >
                         Me interesa
                       </label>
@@ -379,7 +379,7 @@ export default function ContactModal() {
                         <div>
                           <span
                             style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                            className="block text-[0.6rem] tracking-[.18em] uppercase text-white/35 mb-1"
+                            className="block text-[0.75rem] tracking-[.18em] uppercase text-white/35 mb-1"
                           >
                             Dirección
                           </span>
@@ -403,7 +403,7 @@ export default function ContactModal() {
                         <div>
                           <span
                             style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
-                            className="block text-[0.6rem] tracking-[.18em] uppercase text-white/35 mb-1"
+                            className="block text-[0.75rem] tracking-[.18em] uppercase text-white/35 mb-1"
                           >
                             Teléfono
                           </span>

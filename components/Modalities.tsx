@@ -158,7 +158,7 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
             style={{
               fontFamily: 'var(--font-inter)',
               fontWeight: 700,
-              fontSize: '1.05rem',
+              fontSize: 'var(--fs-small)',
               letterSpacing: '.3em',
               textTransform: 'uppercase' as const,
               backgroundColor: tier.badgeBg,
@@ -173,7 +173,7 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
               style={{
                 fontFamily: 'var(--font-inter)',
                 fontWeight: 600,
-                fontSize: '0.7rem',
+                fontSize: 'var(--fs-label)',
                 letterSpacing: '.15em',
                 textTransform: 'uppercase' as const,
                 color: '#F1B91E',
@@ -195,7 +195,7 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
           style={{
             fontFamily: 'var(--font-barlow)',
             fontWeight: 800,
-            fontSize: 'clamp(3.3rem, 4.8vw, 4.3rem)',
+            fontSize: 'var(--fs-h2)',
             lineHeight: 0.9,
             textTransform: 'uppercase' as const,
             color: '#fff',
@@ -228,8 +228,8 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
               style={{
                 fontFamily: 'var(--font-inter)',
                 fontWeight: 500,
-                fontSize: '0.95rem',
-                color: 'rgba(255,255,255,0.5)',
+                fontSize: 'var(--fs-small)',
+                color: 'rgba(255,255,255,0.55)',
                 marginRight: '0.4rem',
               }}
             >
@@ -240,7 +240,7 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
             style={{
               fontFamily: 'var(--font-barlow)',
               fontWeight: 800,
-              fontSize: 'clamp(3.25rem, 5vw, 4.75rem)',
+              fontSize: 'var(--fs-h1)',
               lineHeight: 1,
               color: '#fff',
             }}
@@ -251,8 +251,8 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
             style={{
               fontFamily: 'var(--font-inter)',
               fontWeight: 500,
-              fontSize: '1.1rem',
-              color: 'rgba(255,255,255,0.45)',
+              fontSize: 'var(--fs-small)',
+              color: 'rgba(255,255,255,0.5)',
               marginLeft: '0.25rem',
             }}
           >
@@ -264,8 +264,8 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
         <p
           style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: 'clamp(1.1rem, 1.25vw, 1.3rem)',
-            color: tier.rangeWhite ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.35)',
+            fontSize: 'var(--fs-small)',
+            color: tier.rangeWhite ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.45)',
             marginBottom: '1.5rem',
             lineHeight: 1.4,
           }}
@@ -292,8 +292,8 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
                 style={{
                   fontFamily: 'var(--font-inter)',
                   fontWeight: 500,
-                  fontSize: '0.95rem',
-                  color: 'rgba(255,255,255,0.75)',
+                  fontSize: 'var(--fs-body)',
+                  color: 'rgba(255,255,255,0.78)',
                 }}
               >
                 {feat}
@@ -314,7 +314,7 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
                   color: '#191919',
                   border: 'none',
                   padding: '1.35rem 1.75rem',
-                  fontSize: '1.15rem',
+                  fontSize: 'var(--fs-label)',
                   letterSpacing: '.25em',
                   textTransform: 'uppercase' as const,
                   fontFamily: 'var(--font-inter)',
@@ -326,7 +326,7 @@ function TierCard({ tier, index }: { tier: Tier; index: number }) {
                   color: 'rgba(255,255,255,0.65)',
                   border: '1px solid rgba(255,255,255,0.2)',
                   padding: '1.35rem 1.75rem',
-                  fontSize: '1.15rem',
+                  fontSize: 'var(--fs-label)',
                   letterSpacing: '.25em',
                   textTransform: 'uppercase' as const,
                   fontFamily: 'var(--font-inter)',
@@ -387,8 +387,8 @@ export default function Modalities() {
             initial={{ y: 80, opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : {}}
             transition={{ duration: 0.9, delay: 0.1, ease: [...brandEase] }}
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
-            className="text-[12vw] md:text-[8vw] lg:text-[6vw] leading-[0.88] uppercase text-white"
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontSize: 'var(--fs-h1)', lineHeight: 0.9 }}
+            className="uppercase text-white"
           >
             ELIGE TU{' '}
             <span className="text-[#F1B91E]" style={{ fontStyle: 'italic' }}>
