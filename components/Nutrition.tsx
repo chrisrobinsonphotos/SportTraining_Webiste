@@ -59,7 +59,7 @@ export default function Nutrition() {
           className="flex-shrink-0"
         >
           <button
-            data-contact
+            data-nutrition
             className="inline-flex items-center gap-3 bg-transparent text-[#F1B91E] border border-[#F1B91E]/40 hover:bg-[#F1B91E] hover:text-[#191919] transition-all duration-300 group"
             style={{ padding: '1rem 1.75rem' }}
           >

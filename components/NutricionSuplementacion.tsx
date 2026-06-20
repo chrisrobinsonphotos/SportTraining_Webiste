@@ -737,7 +737,7 @@ export default function NutricionSuplementacion() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
-              data-contact
+              data-nutrition
               className="inline-flex items-center gap-3 bg-[#F1B91E] text-[#0a0a0a] hover:bg-[#d9a71a] transition-colors duration-300"
               style={{ padding: '1rem 2rem' }}
             >

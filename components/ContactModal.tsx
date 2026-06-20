@@ -6,10 +6,17 @@ import { motion, AnimatePresence } from 'framer-motion'
 const GOALS = ['HYROX', 'Funcional', 'Personal', 'Adaptado'] as const
 type Goal = (typeof GOALS)[number]
 
+const NUTRITION_GOALS = ['Pérdida de grasa', 'Rendimiento', 'Planificación', 'Suplementación'] as const
+type NutritionGoal = (typeof NUTRITION_GOALS)[number]
+
+type ModalVariant = 'training' | 'nutrition'
+
 const WA_NUMBER = '34622443495'
 
-function buildWhatsAppUrl(name: string, phone: string, goal: string) {
-  const msg = `Hola Sport Training, soy ${name} (tel: ${phone}). Me interesa ${goal} y quiero pedir mi día de prueba.`
+function buildWhatsAppUrl(name: string, phone: string, goal: string, variant: ModalVariant) {
+  const msg = variant === 'nutrition'
+    ? `Hola Sport Training, soy ${name} (tel: ${phone}). Me interesa ${goal} y quiero pedir una consulta nutricional.`
+    : `Hola Sport Training, soy ${name} (tel: ${phone}). Me interesa ${goal} y quiero pedir mi día de prueba.`
   return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`
 }
 
@@ -19,14 +26,14 @@ function buildWhatsAppUrl(name: string, phone: string, goal: string) {
  * but when it works, the lead is recorded (email + GA4) even if the
  * person never sends the WhatsApp message.
  */
-function captureLead(name: string, phone: string, goal: string) {
+function captureLead(name: string, phone: string, goal: string, variant: ModalVariant) {
   try {
     const w = window as unknown as { gtag?: (...args: unknown[]) => void }
-    w.gtag?.('event', 'trial_request', { method: 'modal' })
+    w.gtag?.('event', variant === 'nutrition' ? 'nutrition_request' : 'trial_request', { method: 'modal' })
     void fetch('/api/prueba', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombre: name, telefono: phone, interes: goal, canal: 'modal' }),
+      body: JSON.stringify({ nombre: name, telefono: phone, interes: goal, canal: variant === 'nutrition' ? 'modal-nutricion' : 'modal' }),
       keepalive: true,
     })
   } catch {
@@ -89,9 +96,11 @@ function WhatsAppIcon() {
 
 export default function ContactModal() {
   const [open, setOpen] = useState(false)
+  const [variant, setVariant] = useState<ModalVariant>('training')
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [goal, setGoal] = useState<Goal>('HYROX')
+  const [nutritionGoal, setNutritionGoal] = useState<NutritionGoal>('Pérdida de grasa')
   const [submitted, setSubmitted] = useState(false)
   const [shakeFields, setShakeFields] = useState<{ name: boolean; phone: boolean }>({ name: false, phone: false })
 
@@ -100,9 +109,16 @@ export default function ContactModal() {
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
-      const trigger = (e.target as HTMLElement).closest('[data-contact]')
-      if (trigger) {
+      const el = e.target as HTMLElement
+      const nutritionTrigger = el.closest('[data-nutrition]')
+      const contactTrigger = el.closest('[data-contact]')
+      if (nutritionTrigger) {
         e.preventDefault()
+        setVariant('nutrition')
+        setOpen(true)
+      } else if (contactTrigger) {
+        e.preventDefault()
+        setVariant('training')
         setOpen(true)
       }
     }
@@ -135,6 +151,7 @@ export default function ContactModal() {
       setName('')
       setPhone('')
       setGoal('HYROX')
+      setNutritionGoal('Pérdida de grasa')
       setShakeFields({ name: false, phone: false })
     }, 300)
   }, [])
@@ -154,8 +171,9 @@ export default function ContactModal() {
     if (!trimmedPhone) { flashField('phone'); valid = false }
     if (!valid) return
 
-    captureLead(trimmedName, trimmedPhone, goal)
-    window.open(buildWhatsAppUrl(trimmedName, trimmedPhone, goal), '_blank')
+    const activeGoal = variant === 'nutrition' ? nutritionGoal : goal
+    captureLead(trimmedName, trimmedPhone, activeGoal, variant)
+    window.open(buildWhatsAppUrl(trimmedName, trimmedPhone, activeGoal, variant), '_blank')
     setSubmitted(true)
   }
 
@@ -164,6 +182,7 @@ export default function ContactModal() {
     setName('')
     setPhone('')
     setGoal('HYROX')
+    setNutritionGoal('Pérdida de grasa')
   }
 
   const firstName = name.trim().split(' ')[0] || ''
@@ -215,8 +234,11 @@ export default function ContactModal() {
                     style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}
                     className="text-[3rem] leading-[0.95] uppercase text-white mt-2 mb-2"
                   >
-                    TU DÍA DE<br />
-                    <em className="text-[#F1B91E] not-italic" style={{ fontStyle: 'italic', textTransform: 'none' }}>Prueba.</em>
+                    {variant === 'nutrition' ? (
+                      <>TU CONSULTA<br /><em className="text-[#F1B91E] not-italic" style={{ fontStyle: 'italic', textTransform: 'none' }}>Nutricional.</em></>
+                    ) : (
+                      <>TU DÍA DE<br /><em className="text-[#F1B91E] not-italic" style={{ fontStyle: 'italic', textTransform: 'none' }}>Prueba.</em></>
+                    )}
                   </h2>
 
                   {/* Lead text */}
@@ -224,7 +246,9 @@ export default function ContactModal() {
                     style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
                     className="text-white/60 text-[1rem] leading-relaxed mb-10 max-w-[480px]"
                   >
-                    Completa el formulario y te contactamos por WhatsApp para activar tu día de prueba. Gratis, sin compromiso.
+                    {variant === 'nutrition'
+                      ? 'Completa el formulario y te contactamos por WhatsApp para agendar tu consulta nutricional. Sin compromiso.'
+                      : 'Completa el formulario y te contactamos por WhatsApp para activar tu día de prueba. Gratis, sin compromiso.'}
                   </p>
 
                   {/* Form */}
@@ -289,13 +313,13 @@ export default function ContactModal() {
                         Me interesa
                       </label>
                       <div className="flex flex-wrap gap-3">
-                        {GOALS.map(g => {
-                          const active = goal === g
+                        {(variant === 'nutrition' ? NUTRITION_GOALS : GOALS).map(g => {
+                          const active = variant === 'nutrition' ? nutritionGoal === g : goal === g
                           return (
                             <button
                               key={g}
                               type="button"
-                              onClick={() => setGoal(g)}
+                              onClick={() => variant === 'nutrition' ? setNutritionGoal(g as NutritionGoal) : setGoal(g as Goal)}
                               className="transition-all duration-150 cursor-pointer"
                               style={{
                                 fontFamily: 'var(--font-inter)',
@@ -331,7 +355,7 @@ export default function ContactModal() {
                         padding: '1.25rem 2rem',
                       }}
                     >
-                      Solicitar Sesión
+                      {variant === 'nutrition' ? 'Solicitar Consulta' : 'Solicitar Sesión'}
                       <ArrowRightIcon />
                     </button>
                   </form>

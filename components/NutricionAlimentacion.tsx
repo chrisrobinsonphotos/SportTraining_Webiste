@@ -976,7 +976,7 @@ export default function NutricionAlimentacion() {
 
             {/* Primary CTA */}
             <button
-              data-contact
+              data-nutrition
               className="inline-flex items-center gap-3 bg-[#F1B91E] text-[#0a0a0a] hover:bg-[#d9a61a] transition-colors duration-300 group"
               style={{ padding: '1rem 2.5rem' }}
             >
