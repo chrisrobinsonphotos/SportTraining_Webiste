@@ -150,11 +150,14 @@ function EvidencePyramid({ activeTier, onSelect }: { activeTier: string | null; 
         const isActive = activeTier === t.id
         const widthPercent = 40 + i * 20
         return (
-          <button
+          <motion.button
             key={t.id}
             type="button"
             onClick={() => onSelect(t.id)}
-            className="transition-all duration-300 cursor-pointer relative group"
+            className="cursor-pointer relative"
+            whileHover={{ scale: 1.06, y: -4 }}
+            whileTap={{ scale: 0.97 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 15 }}
             style={{
               width: `${widthPercent}%`,
               backgroundColor: t.fill,
@@ -180,7 +183,7 @@ function EvidencePyramid({ activeTier, onSelect }: { activeTier: string | null; 
             >
               {t.id} — {t.label}
             </span>
-          </button>
+          </motion.button>
         )
       })}
     </div>
