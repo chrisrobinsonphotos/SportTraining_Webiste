@@ -138,71 +138,52 @@ function SectionLabel({ text }: { text: string }) {
 
 function EvidencePyramid({ activeTier, onSelect }: { activeTier: string | null; onSelect: (id: string) => void }) {
   const pyramidTiers = [
-    { id: 'S', y: 0, topWidth: 60, bottomWidth: 180, height: 80, fill: '#F1B91E', label: 'S' },
-    { id: 'A', y: 84, topWidth: 180, bottomWidth: 320, height: 80, fill: '#c9981a', label: 'A' },
-    { id: 'B', y: 168, topWidth: 320, bottomWidth: 460, height: 80, fill: '#7a6a2e', label: 'B' },
-    { id: 'C', y: 252, topWidth: 460, bottomWidth: 600, height: 80, fill: '#3a3a3a', label: 'C' },
+    { id: 'S', label: 'EVIDENCIA FUERTE', fill: '#F1B91E', textColor: '#0a0a0a' },
+    { id: 'A', label: 'EVIDENCIA MODERADA', fill: '#c9981a', textColor: '#0a0a0a' },
+    { id: 'B', label: 'EVIDENCIA EMERGENTE', fill: '#7a6a2e', textColor: '#dddddd' },
+    { id: 'C', label: 'EVIDENCIA INSUFICIENTE', fill: '#3a3a3a', textColor: '#999999' },
   ]
-  const cx = 340
-  const svgHeight = 360
-  const svgWidth = 680
 
   return (
-    <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="w-full max-w-[680px] mx-auto" xmlns="http://www.w3.org/2000/svg">
-      {pyramidTiers.map((t) => {
+    <div className="flex flex-col items-center gap-[3px] w-full max-w-[680px] mx-auto">
+      {pyramidTiers.map((t, i) => {
         const isActive = activeTier === t.id
-        const x1 = cx - t.topWidth / 2
-        const x2 = cx + t.topWidth / 2
-        const x3 = cx + t.bottomWidth / 2
-        const x4 = cx - t.bottomWidth / 2
-        const points = `${x1},${t.y + 8} ${x2},${t.y + 8} ${x3},${t.y + t.height} ${x4},${t.y + t.height}`
-
+        const widthPercent = 40 + i * 20
         return (
-          <g
+          <button
             key={t.id}
+            type="button"
             onClick={() => onSelect(t.id)}
-            style={{ cursor: 'pointer' }}
+            className="transition-all duration-300 cursor-pointer relative group"
+            style={{
+              width: `${widthPercent}%`,
+              backgroundColor: t.fill,
+              opacity: isActive ? 1 : activeTier ? 0.3 : 0.85,
+              padding: 'clamp(0.9rem, 1.8vw, 1.3rem) 1rem',
+              clipPath: i === 0
+                ? 'polygon(12% 0%, 88% 0%, 100% 100%, 0% 100%)'
+                : 'polygon(4% 0%, 96% 0%, 100% 100%, 0% 100%)',
+              outline: isActive ? '2px solid #F1B91E' : 'none',
+              outlineOffset: '2px',
+            }}
           >
-            <polygon
-              points={points}
-              fill={isActive ? t.fill : t.fill}
-              opacity={isActive ? 1 : activeTier ? 0.3 : 0.8}
-              style={{ transition: 'opacity 0.4s ease' }}
-            />
-            {isActive && (
-              <polygon
-                points={points}
-                fill="none"
-                stroke="#F1B91E"
-                strokeWidth="2"
-              />
-            )}
-            <text
-              x={cx}
-              y={t.y + t.height / 2 + 12}
-              textAnchor="middle"
-              fill={t.id === 'C' ? '#999' : t.id === 'B' ? '#ddd' : '#0a0a0a'}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, fontSize: '18px', letterSpacing: '0.12em', textTransform: 'uppercase' as const }}
+            <span
+              style={{
+                fontFamily: 'var(--font-barlow)',
+                fontWeight: 800,
+                fontSize: 'clamp(0.65rem, 1.3vw, 1rem)',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                color: t.textColor,
+              }}
+              className="block text-center"
             >
-              {t.label} — {tiers.find(tier => tier.id === t.id)?.label}
-            </text>
-          </g>
+              {t.id} — {t.label}
+            </span>
+          </button>
         )
       })}
-      {/* Vertical axis label */}
-      <text
-        x="16"
-        y={svgHeight / 2}
-        textAnchor="middle"
-        transform={`rotate(-90, 16, ${svgHeight / 2})`}
-        fill="#555"
-        style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, fontSize: '11px', letterSpacing: '0.2em', textTransform: 'uppercase' as const }}
-      >
-        NIVEL DE EVIDENCIA
-      </text>
-      <line x1="36" y1="20" x2="36" y2={svgHeight - 20} stroke="#333" strokeWidth="1" />
-      <polygon points="36,14 32,24 40,24" fill="#555" />
-    </svg>
+    </div>
   )
 }
 
@@ -471,35 +452,45 @@ export default function NutricionSuplementacion() {
       {/*  2. EVIDENCE PYRAMID                                          */}
       {/* ============================================================ */}
       <section ref={pyramidRef} className="bg-[#111111]" style={{ padding: 'clamp(4rem,8vw,8rem) clamp(1.5rem,5vw,4rem)' }}>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={pyramidInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: [...brandEase] }}
-        >
-          <SectionLabel text="PIRAMIDE DE EVIDENCIA" />
-          <h2
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, letterSpacing: '-0.02em' }}
-            className="text-[clamp(2.4rem,5vw,4.5rem)] leading-[0.92] uppercase text-white mb-4"
+        <div className="max-w-[1200px] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={pyramidInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, ease: [...brandEase] }}
+            className="text-center mb-14"
           >
-            NO TODOS LOS SUPLEMENTOS{' '}
-            <span className="text-[#F1B91E] italic" style={{ textTransform: 'none' }}>son iguales.</span>
-          </h2>
-          <p
-            style={{ fontFamily: 'var(--font-inter)' }}
-            className="text-white/50 text-[1rem] leading-[1.7] max-w-[560px] mb-12"
-          >
-            Cuanto más arriba en la pirámide, más fuerte es la evidencia científica que respalda el suplemento. Haz clic en cada nivel para ver los detalles.
-          </p>
-        </motion.div>
+            <div className="flex items-center justify-center gap-3 mb-8">
+              <div className="w-2 h-2 bg-[#F1B91E] flex-shrink-0" />
+              <span
+                style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+                className="text-[#F1B91E] text-[0.75rem] tracking-[0.25em] uppercase"
+              >
+                PIRAMIDE DE EVIDENCIA
+              </span>
+            </div>
+            <h2
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, letterSpacing: '-0.02em' }}
+              className="text-[clamp(2.4rem,5vw,4.5rem)] leading-[0.92] uppercase text-white mb-5"
+            >
+              NO TODOS LOS SUPLEMENTOS{' '}
+              <span className="text-[#F1B91E] italic" style={{ textTransform: 'none' }}>son iguales.</span>
+            </h2>
+            <p
+              style={{ fontFamily: 'var(--font-inter)' }}
+              className="text-white/50 text-[1rem] leading-[1.7] max-w-[560px] mx-auto"
+            >
+              Cuanto más arriba en la pirámide, más fuerte es la evidencia científica. Pulsa en cada nivel para ver qué suplementos lo respaldan.
+            </p>
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={pyramidInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9, delay: 0.2, ease: [...brandEase] }}
-          className="mb-10"
-        >
-          <EvidencePyramid activeTier={activeTier} onSelect={(id) => setActiveTier(activeTier === id ? null : id)} />
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={pyramidInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.9, delay: 0.2, ease: [...brandEase] }}
+            className="mb-10"
+          >
+            <EvidencePyramid activeTier={activeTier} onSelect={(id) => setActiveTier(activeTier === id ? null : id)} />
+          </motion.div>
 
         {/* Detail card for selected tier */}
         {selectedTier && (
@@ -534,6 +525,7 @@ export default function NutricionSuplementacion() {
             </div>
           </motion.div>
         )}
+        </div>
       </section>
 
       {/* ============================================================ */}
