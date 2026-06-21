@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
+import Image from 'next/image'
 
 const brandEase = [0.16, 1, 0.3, 1] as const
 
@@ -242,6 +243,12 @@ export default function NutricionAlimentacion() {
         className="relative overflow-hidden"
         style={{ backgroundColor: '#0a0a0a', padding: 'clamp(6rem,12vh,10rem) clamp(1.5rem,5vw,4rem) clamp(4rem,8vh,7rem)' }}
       >
+        {/* Background image + overlays */}
+        <div className="absolute inset-0">
+          <Image src="/nutrition-food.jpg" alt="Alimentación deportiva en Sport Training Murcia" fill sizes="100vw" className="object-cover object-center" priority quality={88} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, #0a0a0a 0%, rgba(10,10,10,0.65) 45%, rgba(10,10,10,0.3) 80%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #0a0a0a 4%, transparent 55%)' }} />
+        </div>
         {/* Grid texture overlay */}
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
 
@@ -618,6 +625,14 @@ export default function NutricionAlimentacion() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
+          FULL-BLEED IMAGE — Group Training
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="relative overflow-hidden" style={{ height: 'clamp(280px, 38vh, 460px)' }}>
+        <Image src="/group-training.jpg" alt="Entrenamiento en grupo en Sport Training Murcia" fill sizes="100vw" className="object-cover object-center" quality={85} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #111111 0%, rgba(10,10,10,0.35) 60%, rgba(10,10,10,0.55) 100%)' }} />
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
           SECTION 4 — NUTRIENT TIMING
           ═══════════════════════════════════════════════════════════ */}
       <section
@@ -850,6 +865,14 @@ export default function NutricionAlimentacion() {
             </p>
           </motion.div>
         </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          FULL-BLEED IMAGE — HYROX Community
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="relative overflow-hidden" style={{ height: 'clamp(280px, 38vh, 460px)' }}>
+        <Image src="/hyrox-community.jpg" alt="Comunidad de atletas en Sport Training Murcia" fill sizes="100vw" className="object-cover object-center" quality={85} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #111111 0%, rgba(10,10,10,0.35) 60%, rgba(10,10,10,0.55) 100%)' }} />
       </section>
 
       {/* ═══════════════════════════════════════════════════════════

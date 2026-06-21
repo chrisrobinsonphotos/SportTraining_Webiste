@@ -376,6 +376,12 @@ export default function EntrenamientoFuncional() {
         </div>
       </section>
 
+      {/* ── image band: longevidad → beneficios ── */}
+      <section className="relative overflow-hidden" style={{ height: 'clamp(280px, 38vh, 460px)' }}>
+        <Image src="/gym-wide.jpg" alt="Vista panorámica del gimnasio Sport Training Murcia" fill sizes="100vw" className="object-cover object-center" quality={85} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #111111 0%, rgba(10,10,10,0.35) 60%, rgba(10,10,10,0.45) 100%)' }} />
+      </section>
+
       {/* ═══════════════ BENEFICIOS ═══════════════ */}
       <section ref={benRef} style={{ backgroundColor: '#111111', padding: 'var(--section-pad-y) var(--section-pad-x)' }}>
         <div className="st-container">

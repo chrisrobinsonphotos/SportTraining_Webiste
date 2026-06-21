@@ -272,6 +272,12 @@ export default function EntrenamientoHyrox() {
         </div>
       </section>
 
+      {/* ═══════════════ FULL-BLEED IMAGE ═══════════════ */}
+      <section className="relative overflow-hidden" style={{ height: 'clamp(280px, 38vh, 460px)' }}>
+        <Image src="/hyrox-sled-race.jpg" alt="Carrera de trineos HYROX en competición" fill sizes="100vw" className="object-cover object-center" quality={85} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #0a0a0a 0%, rgba(10,10,10,0.35) 60%, rgba(10,10,10,0.55) 100%)' }} />
+      </section>
+
       {/* ═══════════════ ¿QUÉ ES HYROX? ═══════════════ */}
       <section ref={queRef} style={{ backgroundColor: '#111111', padding: 'var(--section-pad-y) var(--section-pad-x)' }}>
         <div className="st-container">
@@ -323,6 +329,12 @@ export default function EntrenamientoHyrox() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* ═══════════════ FULL-BLEED IMAGE ═══════════════ */}
+      <section className="relative overflow-hidden" style={{ height: 'clamp(280px, 38vh, 460px)' }}>
+        <Image src="/hyrox-team.jpg" alt="Equipo Sport Training en competición HYROX" fill sizes="100vw" className="object-cover object-center" quality={85} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #0a0a0a 0%, rgba(10,10,10,0.35) 60%, rgba(10,10,10,0.55) 100%)' }} />
       </section>
 
       {/* ═══════════════ HYROX PFT ═══════════════ */}

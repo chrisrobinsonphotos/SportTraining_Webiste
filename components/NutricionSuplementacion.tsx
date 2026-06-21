@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
+import Image from 'next/image'
 
 const brandEase = [0.16, 1, 0.3, 1] as const
 
@@ -412,43 +413,51 @@ export default function NutricionSuplementacion() {
       {/* ============================================================ */}
       {/*  1. HERO                                                      */}
       {/* ============================================================ */}
-      <section ref={heroRef} className="relative bg-[#0a0a0a] overflow-hidden" style={{ padding: 'clamp(6rem,12vw,10rem) clamp(1.5rem,5vw,4rem) clamp(4rem,8vw,6rem)' }}>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={heroInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: [...brandEase] }}
-        >
-          <SectionLabel text="SUPLEMENTACION" />
-        </motion.div>
-
-        <div className="max-w-[900px]">
-          <motion.h1
-            initial={{ opacity: 0, y: 50 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.1, ease: [...brandEase] }}
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, letterSpacing: '-0.02em' }}
-            className="text-[clamp(3.5rem,8vw,7.5rem)] leading-[0.88] uppercase text-white mb-6"
-          >
-            LA EVIDENCIA{' '}
-            <span className="text-[#F1B91E] italic" style={{ textTransform: 'none' }}>
-              manda.
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.25, ease: [...brandEase] }}
-            style={{ fontFamily: 'var(--font-inter)' }}
-            className="text-white/60 text-[clamp(1rem,1.3vw,1.2rem)] leading-[1.7] max-w-[640px]"
-          >
-            La suplementación no debería basarse en lo que un influencer promociona ni en el packaging de una marca. Debería basarse en lo que la ciencia ha demostrado, con dosis reales, en personas reales, bajo condiciones controladas. Esto es lo que sabemos — y lo que no.
-          </motion.p>
+      <section ref={heroRef} className="relative bg-[#0a0a0a] overflow-hidden" style={{ minHeight: 'clamp(500px, 70vh, 800px)', padding: 'clamp(6rem,12vw,10rem) clamp(1.5rem,5vw,4rem) clamp(4rem,8vw,6rem)' }}>
+        <div className="absolute inset-0">
+          <Image src="/nutrition-supplements.jpg" alt="Suplementación deportiva basada en evidencia" fill sizes="100vw" className="object-cover object-center" priority quality={88} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, #0a0a0a 0%, rgba(10,10,10,0.65) 45%, rgba(10,10,10,0.3) 80%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #0a0a0a 4%, transparent 55%)' }} />
         </div>
 
-        {/* Decorative lines */}
-        <div className="absolute top-0 right-[10%] w-px h-[40%] bg-gradient-to-b from-transparent via-[#F1B91E]/10 to-transparent" />
-        <div className="absolute bottom-0 right-[25%] w-px h-[30%] bg-gradient-to-t from-transparent via-[#F1B91E]/5 to-transparent" />
+        <div className="relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={heroInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, ease: [...brandEase] }}
+          >
+            <SectionLabel text="SUPLEMENTACION" />
+          </motion.div>
+
+          <div className="max-w-[900px]">
+            <motion.h1
+              initial={{ opacity: 0, y: 50 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.9, delay: 0.1, ease: [...brandEase] }}
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, letterSpacing: '-0.02em' }}
+              className="text-[clamp(3.5rem,8vw,7.5rem)] leading-[0.88] uppercase text-white mb-6"
+            >
+              LA EVIDENCIA{' '}
+              <span className="text-[#F1B91E] italic" style={{ textTransform: 'none' }}>
+                manda.
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.25, ease: [...brandEase] }}
+              style={{ fontFamily: 'var(--font-inter)' }}
+              className="text-white/60 text-[clamp(1rem,1.3vw,1.2rem)] leading-[1.7] max-w-[640px]"
+            >
+              La suplementación no debería basarse en lo que un influencer promociona ni en el packaging de una marca. Debería basarse en lo que la ciencia ha demostrado, con dosis reales, en personas reales, bajo condiciones controladas. Esto es lo que sabemos — y lo que no.
+            </motion.p>
+          </div>
+
+          {/* Decorative lines */}
+          <div className="absolute top-0 right-[10%] w-px h-[40%] bg-gradient-to-b from-transparent via-[#F1B91E]/10 to-transparent" />
+          <div className="absolute bottom-0 right-[25%] w-px h-[30%] bg-gradient-to-t from-transparent via-[#F1B91E]/5 to-transparent" />
+        </div>
       </section>
 
       {/* ============================================================ */}
@@ -561,6 +570,14 @@ export default function NutricionSuplementacion() {
             <BigThreeCard key={item.name} item={item} />
           ))}
         </div>
+      </section>
+
+      {/* ============================================================ */}
+      {/*  IMAGE BAND                                                   */}
+      {/* ============================================================ */}
+      <section className="relative overflow-hidden" style={{ height: 'clamp(280px, 38vh, 460px)' }}>
+        <Image src="/hyrox-medball.jpg" alt="Atleta entrenando con balón medicinal en Sport Training" fill sizes="100vw" className="object-cover object-center" quality={85} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #111111 0%, rgba(10,10,10,0.35) 60%, rgba(10,10,10,0.55) 100%)' }} />
       </section>
 
       {/* ============================================================ */}

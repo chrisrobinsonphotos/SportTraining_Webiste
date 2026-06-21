@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
 
 const brandEase = [0.16, 1, 0.3, 1] as const
@@ -770,9 +771,15 @@ export default function NutricionPlanificacion() {
       <section
         ref={heroRef}
         className="relative bg-[#0a0a0a] overflow-hidden"
-        style={{ padding: 'clamp(6rem,12vh,10rem) clamp(1.5rem,5vw,4rem) clamp(4rem,8vh,7rem)' }}
+        style={{ minHeight: '70vh', padding: 'clamp(6rem,12vh,10rem) clamp(1.5rem,5vw,4rem) clamp(4rem,8vh,7rem)' }}
       >
+        <div className="absolute inset-0">
+          <Image src="/nutrition-textil.jpg" alt="Planificación nutricional deportiva en Sport Training Murcia" fill sizes="100vw" className="object-cover object-center" priority quality={88} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, #0a0a0a 0%, rgba(10,10,10,0.65) 45%, rgba(10,10,10,0.3) 80%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #0a0a0a 4%, transparent 55%)' }} />
+        </div>
         <motion.div
+          className="relative z-10"
           initial={{ opacity: 0, y: 30 }}
           animate={heroInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [...brandEase] }}
@@ -802,7 +809,7 @@ export default function NutricionPlanificacion() {
           animate={heroInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.25, ease: [...brandEase] }}
           style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-          className="text-white/70 text-[clamp(1rem,1.3vw,1.2rem)] leading-[1.6] max-w-[52ch] mt-8"
+          className="relative z-10 text-white/70 text-[clamp(1rem,1.3vw,1.2rem)] leading-[1.6] max-w-[52ch] mt-8"
         >
           La planificaci&oacute;n elimina la improvisaci&oacute;n. Cuando sabes qu&eacute; comer, cu&aacute;ndo y por qu&eacute;,
           dejas de depender de la motivaci&oacute;n y empiezas a depender del sistema.
@@ -1147,6 +1154,14 @@ export default function NutricionPlanificacion() {
             </motion.div>
           ))}
         </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          IMAGE BAND
+      ════════════════════════════════════════════════════════════ */}
+      <section className="relative overflow-hidden" style={{ height: 'clamp(280px, 38vh, 460px)' }}>
+        <Image src="/coaching-personal.jpg" alt="Entrenamiento personalizado en Sport Training Murcia" fill sizes="100vw" className="object-cover object-center" quality={85} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #111111 0%, rgba(10,10,10,0.35) 60%, rgba(10,10,10,0.55) 100%)' }} />
       </section>
 
       {/* ════════════════════════════════════════════════════════════
