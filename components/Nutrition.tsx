@@ -64,8 +64,8 @@ export default function Nutrition() {
             initial={{ opacity: 0, y: 50 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.2 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="relative group overflow-hidden flex flex-col justify-end cursor-pointer"
-            style={{ minHeight: '60vh', padding: '2.5rem' }}
+            className="relative group overflow-hidden flex flex-col justify-end cursor-pointer p-[2.5rem] min-[860px]:pb-[4.25rem]"
+            style={{ minHeight: '60vh' }}
           >
             {/* Background image */}
             <div className="absolute inset-0">
@@ -106,7 +106,7 @@ export default function Nutrition() {
             {/* Hover CTA bar — desktop only */}
             <div
               className="absolute bottom-0 left-0 right-0 z-20 hidden min-[860px]:flex items-center justify-center gap-2 bg-[#F1B91E] translate-y-full group-hover:translate-y-0"
-              style={{ height: '44px', transition: 'transform .3s cubic-bezier(0.16,1,0.3,1)' }}
+              style={{ height: '34px', transition: 'transform .3s cubic-bezier(0.16,1,0.3,1)' }}
             >
               <span
                 style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}

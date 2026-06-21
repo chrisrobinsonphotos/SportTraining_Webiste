@@ -96,7 +96,7 @@ function DisciplineCard({
       )}
 
       {/* Content */}
-      <div className="relative z-10 p-[2rem]">
+      <div className="relative z-10 p-[2rem] sm:pb-[4.25rem]">
         {/* Number */}
         <span
           style={{
@@ -182,7 +182,7 @@ function DisciplineCard({
       <div
         className="absolute bottom-0 left-0 right-0 z-20 hidden sm:flex items-center justify-center gap-2 bg-[#F1B91E]"
         style={{
-          height: '44px',
+          height: '34px',
           transform: hovered ? 'translateY(0)' : 'translateY(100%)',
           transition: 'transform .3s cubic-bezier(0.16,1,0.3,1)',
         }}
