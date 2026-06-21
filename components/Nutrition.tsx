@@ -102,6 +102,22 @@ export default function Nutrition() {
                 {item.desc}
               </p>
             </div>
+
+            {/* Hover CTA bar — desktop only */}
+            <div
+              className="absolute bottom-0 left-0 right-0 z-20 hidden min-[860px]:flex items-center justify-center gap-2 bg-[#F1B91E] translate-y-full group-hover:translate-y-0"
+              style={{ height: '44px', transition: 'transform .3s cubic-bezier(0.16,1,0.3,1)' }}
+            >
+              <span
+                style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+                className="text-[#191919] text-[0.72rem] tracking-[0.2em] uppercase"
+              >
+                Descubre más
+              </span>
+              <svg className="w-3.5 h-3.5 text-[#191919]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </div>
           </motion.div>
           </Link>
         ))}

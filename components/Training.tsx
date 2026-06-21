@@ -176,40 +176,26 @@ function DisciplineCard({
           </p>
         </div>
 
-        {/* More CTA */}
-        <div
-          style={{
-            maxHeight: hovered ? '40px' : 0,
-            overflow: 'hidden',
-            transition: 'max-height .5s cubic-bezier(0.16,1,0.3,1)',
-          }}
+      </div>
+
+      {/* Hover CTA bar — desktop only */}
+      <div
+        className="absolute bottom-0 left-0 right-0 z-20 hidden sm:flex items-center justify-center gap-2 bg-[#F1B91E]"
+        style={{
+          height: '44px',
+          transform: hovered ? 'translateY(0)' : 'translateY(100%)',
+          transition: 'transform .3s cubic-bezier(0.16,1,0.3,1)',
+        }}
+      >
+        <span
+          style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+          className="text-[#191919] text-[0.72rem] tracking-[0.2em] uppercase"
         >
-          <div
-            className="flex items-center"
-            style={{ marginTop: '1rem', gap: '.5rem' }}
-          >
-            <span
-              style={{
-                fontFamily: 'var(--font-inter)',
-                fontWeight: 600,
-                fontSize: '.78rem',
-                letterSpacing: '.2em',
-              }}
-              className="text-[#F1B91E]"
-            >
-              DESCUBRIR
-            </span>
-            <svg
-              className="w-3.5 h-3.5 text-[#F1B91E]"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.5}
-            >
-              <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </div>
-        </div>
+          Descubre más
+        </span>
+        <svg className="w-3.5 h-3.5 text-[#191919]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
       </div>
     </motion.div>
   )
