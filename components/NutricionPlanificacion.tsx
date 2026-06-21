@@ -1160,7 +1160,7 @@ export default function NutricionPlanificacion() {
           IMAGE BAND
       ════════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden" style={{ height: 'clamp(280px, 38vh, 460px)' }}>
-        <Image src="/coaching-personal.jpg" alt="Entrenamiento personalizado en Sport Training Murcia" fill sizes="100vw" className="object-cover object-center" quality={85} />
+        <Image src="/cta-community.jpg" alt="Comunidad Sport Training reunida tras competición HYROX" fill sizes="100vw" className="object-cover object-[center_30%]" quality={85} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #111111 0%, rgba(10,10,10,0.35) 60%, rgba(10,10,10,0.55) 100%)' }} />
       </section>
 

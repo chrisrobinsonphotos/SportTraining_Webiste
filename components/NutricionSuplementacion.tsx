@@ -576,7 +576,7 @@ export default function NutricionSuplementacion() {
       {/*  IMAGE BAND                                                   */}
       {/* ============================================================ */}
       <section className="relative overflow-hidden" style={{ height: 'clamp(280px, 38vh, 460px)' }}>
-        <Image src="/hyrox-medball.jpg" alt="Atleta entrenando con balón medicinal en Sport Training" fill sizes="100vw" className="object-cover object-center" quality={85} />
+        <Image src="/hyrox-medball.jpg" alt="Atleta entrenando con balón medicinal en Sport Training" fill sizes="100vw" className="object-cover object-[center_40%]" quality={85} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #111111 0%, rgba(10,10,10,0.35) 60%, rgba(10,10,10,0.55) 100%)' }} />
       </section>
 

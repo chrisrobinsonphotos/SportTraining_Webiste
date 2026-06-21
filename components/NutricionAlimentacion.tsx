@@ -628,7 +628,7 @@ export default function NutricionAlimentacion() {
           FULL-BLEED IMAGE — Group Training
           ═══════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden" style={{ height: 'clamp(280px, 38vh, 460px)' }}>
-        <Image src="/group-training.jpg" alt="Entrenamiento en grupo en Sport Training Murcia" fill sizes="100vw" className="object-cover object-center" quality={85} />
+        <Image src="/group-training.jpg" alt="Entrenamiento en grupo en Sport Training Murcia" fill sizes="100vw" className="object-cover object-[center_38%]" quality={85} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #111111 0%, rgba(10,10,10,0.35) 60%, rgba(10,10,10,0.55) 100%)' }} />
       </section>
 
@@ -871,7 +871,7 @@ export default function NutricionAlimentacion() {
           FULL-BLEED IMAGE — HYROX Community
           ═══════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden" style={{ height: 'clamp(280px, 38vh, 460px)' }}>
-        <Image src="/hyrox-community.jpg" alt="Comunidad de atletas en Sport Training Murcia" fill sizes="100vw" className="object-cover object-center" quality={85} />
+        <Image src="/hyrox-community.jpg" alt="Comunidad de atletas en Sport Training Murcia" fill sizes="100vw" className="object-cover object-[center_30%]" quality={85} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #111111 0%, rgba(10,10,10,0.35) 60%, rgba(10,10,10,0.55) 100%)' }} />
       </section>
 

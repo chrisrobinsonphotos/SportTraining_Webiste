@@ -274,7 +274,7 @@ export default function EntrenamientoHyrox() {
 
       {/* ═══════════════ FULL-BLEED IMAGE ═══════════════ */}
       <section className="relative overflow-hidden" style={{ height: 'clamp(280px, 38vh, 460px)' }}>
-        <Image src="/hyrox-sled-race.jpg" alt="Carrera de trineos HYROX en competición" fill sizes="100vw" className="object-cover object-center" quality={85} />
+        <Image src="/hyrox-group.jpg" alt="Grupo de atletas Sport Training en competición HYROX" fill sizes="100vw" className="object-cover object-[center_30%]" quality={85} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #0a0a0a 0%, rgba(10,10,10,0.35) 60%, rgba(10,10,10,0.55) 100%)' }} />
       </section>
 
@@ -333,7 +333,7 @@ export default function EntrenamientoHyrox() {
 
       {/* ═══════════════ FULL-BLEED IMAGE ═══════════════ */}
       <section className="relative overflow-hidden" style={{ height: 'clamp(280px, 38vh, 460px)' }}>
-        <Image src="/hyrox-team.jpg" alt="Equipo Sport Training en competición HYROX" fill sizes="100vw" className="object-cover object-center" quality={85} />
+        <Image src="/hyrox-team.jpg" alt="Equipo Sport Training en competición HYROX" fill sizes="100vw" className="object-cover object-[center_25%]" quality={85} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(0deg, #0a0a0a 0%, rgba(10,10,10,0.35) 60%, rgba(10,10,10,0.55) 100%)' }} />
       </section>
 
