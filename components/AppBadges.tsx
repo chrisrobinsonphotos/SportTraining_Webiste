@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 const APP_LINKS = {
   ios: 'https://apps.apple.com/es/app/fitnova/id6745967222',
   android: 'https://play.google.com/store/apps/details?id=com.juanlm91.gyms2',
@@ -29,8 +31,17 @@ export default function AppBadges({ variant = 'default' }: AppBadgesProps) {
   const isFooter = variant === 'footer'
   const isCompact = variant === 'compact'
 
+  const logoHeight = isCompact ? 22 : isFooter ? 20 : 28
+
   return (
     <div className={`flex items-center ${isCompact ? 'gap-2' : 'gap-3'}`}>
+      <Image
+        src="/fitnova-logo.svg"
+        alt="FitNova"
+        width={Math.round(logoHeight * 3)}
+        height={logoHeight}
+        className="flex-shrink-0"
+      />
       <a
         href={APP_LINKS.ios}
         target="_blank"

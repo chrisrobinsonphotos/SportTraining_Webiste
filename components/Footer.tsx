@@ -57,7 +57,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-3 mb-6">
               <div className="relative w-10 h-10 flex-shrink-0">
                 <Image
-                  src="/st-logo-black.png"
+                  src="/st-logo-new.png"
                   alt="Sport Training Murcia — Logo"
                   fill
                   className="object-contain"
