@@ -23,16 +23,13 @@ export default function Nutrition() {
       style={{ minHeight: 'auto' }}
     >
       {/* Header */}
-      <div
-        className="flex flex-wrap items-end justify-between gap-6"
-        style={{ padding: '5rem clamp(1.5rem,5vw,4rem) 2.5rem' }}
-      >
+      <div style={{ padding: '4rem clamp(1.5rem,5vw,4rem) 2.25rem', maxWidth: '900px' }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="flex items-center gap-4 mb-12">
+          <div className="flex items-center gap-4 mb-5">
             <div className="w-2 h-2 bg-[#F1B91E] flex-shrink-0" />
             <span
               style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
@@ -50,34 +47,17 @@ export default function Nutrition() {
               transforman.
             </span>
           </h2>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="flex-shrink-0"
-        >
-          <button
-            data-nutrition
-            className="inline-flex items-center gap-3 bg-transparent text-[#F1B91E] border border-[#F1B91E]/40 hover:bg-[#F1B91E] hover:text-[#191919] transition-all duration-300 group"
-            style={{ padding: '1rem 1.75rem' }}
+          <p
+            style={{ fontFamily: 'var(--font-inter)', fontWeight: 300, maxWidth: '540px' }}
+            className="mt-5 text-[1.05rem] leading-[1.55] text-white/60"
           >
-            <span
-              style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
-              className="text-[0.7rem] tracking-[0.25em] uppercase"
-            >
-              Asesoramiento Nutricional
-            </span>
-            <svg className="w-[15px] h-[15px] group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </button>
+            No hay progreso en el gimnasio sin estructura fuera de él. Alimentación, planificación y suplementación trabajando con tu entrenamiento — no contra él.
+          </p>
         </motion.div>
       </div>
 
       {/* Pillar cards */}
-      <div className="grid gap-[2px]" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))' }}>
+      <div className="grid grid-cols-1 min-[860px]:grid-cols-3 gap-[2px]">
         {pillars.map((item, i) => (
           <Link key={item.num} href={item.href}>
           <motion.div
@@ -85,7 +65,7 @@ export default function Nutrition() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.2 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="relative group overflow-hidden flex flex-col justify-end cursor-pointer"
-            style={{ minHeight: '46vh', padding: '2rem' }}
+            style={{ minHeight: '60vh', padding: '2.5rem' }}
           >
             {/* Background image */}
             <div className="absolute inset-0">
@@ -117,7 +97,7 @@ export default function Nutrition() {
               <div className="h-[2px] bg-[#F1B91E]/60 w-8 mb-4 group-hover:w-full transition-all duration-500" />
               <p
                 style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
-                className="text-[length:var(--fs-lead)] leading-[1.5] text-white/70 max-w-[300px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                className="text-[length:var(--fs-lead)] leading-[1.5] text-white/70 max-w-[300px]"
               >
                 {item.desc}
               </p>
@@ -126,6 +106,38 @@ export default function Nutrition() {
           </Link>
         ))}
       </div>
+
+      {/* Footer CTA */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="flex items-center justify-between flex-wrap gap-6 border-t border-white/[0.07]"
+        style={{ padding: '2.25rem clamp(1.5rem,5vw,4rem)' }}
+      >
+        <span
+          style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800, letterSpacing: '-0.01em' }}
+          className="text-[clamp(20px,2vw,28px)] uppercase text-white"
+        >
+          ¿Por dónde empezar?{' '}
+          <span className="text-[#F1B91E]">Te lo planificamos.</span>
+        </span>
+        <button
+          data-nutrition
+          className="inline-flex items-center gap-3 bg-[#F1B91E] text-[#191919] hover:bg-[#C99200] transition-colors duration-200 group"
+          style={{ padding: '1.05rem 2rem' }}
+        >
+          <span
+            style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}
+            className="text-[0.72rem] tracking-[0.22em] uppercase"
+          >
+            Asesoramiento Nutricional
+          </span>
+          <svg className="w-[15px] h-[15px] group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </button>
+      </motion.div>
     </section>
   )
 }
