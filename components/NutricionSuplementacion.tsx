@@ -229,17 +229,17 @@ function PerformanceBars({ bars, inView }: { bars: typeof bigThree[0]['bars']; i
 
 function DoseResponseCurve({ inView }: { inView: boolean }) {
   return (
-    <svg viewBox="0 0 400 214" className="w-full max-w-[480px] mt-6" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 600 214" className="w-full mt-6" xmlns="http://www.w3.org/2000/svg">
       {/* Grid */}
       {[50, 100, 150].map(y => (
-        <line key={y} x1="50" y1={y} x2="380" y2={y} stroke="#222" strokeWidth="0.5" />
+        <line key={y} x1="75" y1={y} x2="570" y2={y} stroke="#222" strokeWidth="0.5" />
       ))}
       {/* Axes */}
-      <line x1="50" y1="180" x2="380" y2="180" stroke="#444" strokeWidth="1" />
-      <line x1="50" y1="30" x2="50" y2="180" stroke="#444" strokeWidth="1" />
+      <line x1="75" y1="180" x2="570" y2="180" stroke="#444" strokeWidth="1" />
+      <line x1="75" y1="30" x2="75" y2="180" stroke="#444" strokeWidth="1" />
       {/* Curve */}
       <motion.path
-        d="M 50,170 C 100,165 140,120 190,60 C 220,30 260,28 290,35 C 320,45 350,80 380,130"
+        d="M 75,170 C 150,165 210,120 285,60 C 330,30 390,28 435,35 C 480,45 525,80 570,130"
         fill="none"
         stroke="#F1B91E"
         strokeWidth="2.5"
@@ -248,19 +248,19 @@ function DoseResponseCurve({ inView }: { inView: boolean }) {
         transition={{ duration: 2, ease: [...brandEase] }}
       />
       {/* Sweet spot zone */}
-      <rect x="140" y="25" width="120" height="160" fill="#F1B91E" opacity="0.06" />
-      <text x="200" y="18" textAnchor="middle" fill="#F1B91E" style={{ fontFamily: 'var(--font-inter)', fontSize: '9px', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' as const }}>
+      <rect x="210" y="25" width="180" height="160" fill="#F1B91E" opacity="0.06" />
+      <text x="300" y="18" textAnchor="middle" fill="#F1B91E" style={{ fontFamily: 'var(--font-inter)', fontSize: '9px', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase' as const }}>
         ZONA EFECTIVA
       </text>
       {/* Labels */}
-      <text x="50" y="195" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '9px' }}>1mg/kg</text>
-      <text x="190" y="195" fill="#F1B91E" style={{ fontFamily: 'var(--font-inter)', fontSize: '9px', fontWeight: 700 }}>3-6mg/kg</text>
-      <text x="360" y="195" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '9px' }}>9mg/kg+</text>
-      <text x="15" y="170" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '8px' }} transform="rotate(-90, 15, 120)">RENDIMIENTO</text>
-      <text x="215" y="209" fill="#666" textAnchor="middle" style={{ fontFamily: 'var(--font-inter)', fontSize: '8px' }}>DOSIS →</text>
+      <text x="75" y="195" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '9px' }}>1mg/kg</text>
+      <text x="285" y="195" textAnchor="middle" fill="#F1B91E" style={{ fontFamily: 'var(--font-inter)', fontSize: '9px', fontWeight: 700 }}>3-6mg/kg</text>
+      <text x="570" y="195" textAnchor="end" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '9px' }}>9mg/kg+</text>
+      <text x="23" y="170" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '8px' }} transform="rotate(-90, 23, 120)">RENDIMIENTO</text>
+      <text x="322" y="209" fill="#666" textAnchor="middle" style={{ fontFamily: 'var(--font-inter)', fontSize: '8px' }}>DOSIS →</text>
       {/* Diminishing returns annotation */}
-      <text x="345" y="105" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '8px', fontStyle: 'italic' }} textAnchor="middle">Efectos</text>
-      <text x="345" y="115" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '8px', fontStyle: 'italic' }} textAnchor="middle">adversos</text>
+      <text x="518" y="105" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '8px', fontStyle: 'italic' }} textAnchor="middle">Efectos</text>
+      <text x="518" y="115" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '8px', fontStyle: 'italic' }} textAnchor="middle">adversos</text>
     </svg>
   )
 }
