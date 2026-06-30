@@ -229,7 +229,7 @@ function PerformanceBars({ bars, inView }: { bars: typeof bigThree[0]['bars']; i
 
 function DoseResponseCurve({ inView }: { inView: boolean }) {
   return (
-    <svg viewBox="0 0 400 200" className="w-full max-w-[400px] mt-6" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 400 200" className="w-full mt-6" xmlns="http://www.w3.org/2000/svg">
       {/* Grid */}
       {[50, 100, 150].map(y => (
         <line key={y} x1="50" y1={y} x2="380" y2={y} stroke="#222" strokeWidth="0.5" />
