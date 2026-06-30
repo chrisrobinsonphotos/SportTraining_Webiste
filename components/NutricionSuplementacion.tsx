@@ -229,7 +229,7 @@ function PerformanceBars({ bars, inView }: { bars: typeof bigThree[0]['bars']; i
 
 function DoseResponseCurve({ inView }: { inView: boolean }) {
   return (
-    <svg viewBox="0 0 400 200" className="w-full mt-6" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 400 214" className="w-full mt-6" xmlns="http://www.w3.org/2000/svg">
       {/* Grid */}
       {[50, 100, 150].map(y => (
         <line key={y} x1="50" y1={y} x2="380" y2={y} stroke="#222" strokeWidth="0.5" />
@@ -257,7 +257,7 @@ function DoseResponseCurve({ inView }: { inView: boolean }) {
       <text x="190" y="195" fill="#F1B91E" style={{ fontFamily: 'var(--font-inter)', fontSize: '9px', fontWeight: 700 }}>3-6mg/kg</text>
       <text x="360" y="195" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '9px' }}>9mg/kg+</text>
       <text x="15" y="170" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '8px' }} transform="rotate(-90, 15, 120)">RENDIMIENTO</text>
-      <text x="215" y="195" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '8px' }}>DOSIS →</text>
+      <text x="215" y="209" fill="#666" textAnchor="middle" style={{ fontFamily: 'var(--font-inter)', fontSize: '8px' }}>DOSIS →</text>
       {/* Diminishing returns annotation */}
       <text x="345" y="105" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '8px', fontStyle: 'italic' }} textAnchor="middle">Efectos</text>
       <text x="345" y="115" fill="#666" style={{ fontFamily: 'var(--font-inter)', fontSize: '8px', fontStyle: 'italic' }} textAnchor="middle">adversos</text>
