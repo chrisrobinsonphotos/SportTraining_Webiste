@@ -617,7 +617,7 @@ export default function NutricionSuplementacion() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={timelineInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.1 + i * 0.08, ease: [...brandEase] }}
-                className="relative"
+                className="relative flex flex-col h-full"
               >
                 {/* Time dot */}
                 <div className="flex items-center gap-3 md:flex-col md:items-start mb-4">
@@ -628,7 +628,7 @@ export default function NutricionSuplementacion() {
                 </div>
 
                 {/* Card */}
-                <div className="bg-[#191919] border border-white/5" style={{ padding: '1.5625rem' }}>
+                <div className="bg-[#191919] border border-white/5 flex-1" style={{ padding: '1.5625rem' }}>
                   <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color: slot.color }} className="text-[0.9375rem] tracking-[0.2em] uppercase block mb-2">
                     {slot.label}
                   </span>
