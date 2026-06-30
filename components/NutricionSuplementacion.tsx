@@ -606,11 +606,11 @@ export default function NutricionSuplementacion() {
         </motion.div>
 
         {/* Timeline */}
-        <div className="relative max-w-[900px] mx-auto">
+        <div className="relative max-w-[1125px] mx-auto">
           {/* Horizontal line */}
           <div className="hidden md:block absolute top-[28px] left-0 right-0 h-px bg-white/10" />
 
-          <div className="grid md:grid-cols-5 gap-6 md:gap-4">
+          <div className="grid md:grid-cols-5 gap-7 md:gap-5">
             {timeline.map((slot, i) => (
               <motion.div
                 key={slot.time}
@@ -622,20 +622,20 @@ export default function NutricionSuplementacion() {
                 {/* Time dot */}
                 <div className="flex items-center gap-3 md:flex-col md:items-start mb-4">
                   <div className="w-3 h-3 border-2 relative z-10" style={{ borderColor: slot.color, backgroundColor: slot.color === '#F1B91E' ? '#F1B91E' : 'transparent' }} />
-                  <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }} className="text-white/40 text-[0.8rem] tracking-wider">
+                  <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }} className="text-white/40 text-[1rem] tracking-wider">
                     {slot.time}
                   </span>
                 </div>
 
                 {/* Card */}
-                <div className="bg-[#191919] border border-white/5" style={{ padding: '1.25rem' }}>
-                  <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color: slot.color }} className="text-[0.75rem] tracking-[0.2em] uppercase block mb-2">
+                <div className="bg-[#191919] border border-white/5" style={{ padding: '1.5625rem' }}>
+                  <span style={{ fontFamily: 'var(--font-inter)', fontWeight: 700, color: slot.color }} className="text-[0.9375rem] tracking-[0.2em] uppercase block mb-2">
                     {slot.label}
                   </span>
-                  <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }} className="text-white text-[1.1rem] uppercase mb-2">
+                  <h4 style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }} className="text-white text-[1.375rem] uppercase mb-2">
                     {slot.supplement}
                   </h4>
-                  <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/45 text-[0.8rem] leading-[1.6]">
+                  <p style={{ fontFamily: 'var(--font-inter)' }} className="text-white/45 text-[1rem] leading-[1.6]">
                     {slot.note}
                   </p>
                 </div>
