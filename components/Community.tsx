@@ -310,6 +310,11 @@ export default function Community() {
   const [activeSlide, setActiveSlide] = useState(0)
   const [hovering, setHovering] = useState(false)
 
+  // Collection switcher (one gallery card visible at a time)
+  const [activeGallery, setActiveGallery] = useState(0)
+  const nextGallery = () => setActiveGallery(prev => (prev + 1) % galleries.length)
+  const prevGallery = () => setActiveGallery(prev => (prev - 1 + galleries.length) % galleries.length)
+
   // Lightbox
   const [lightboxGalleryId, setLightboxGalleryId] = useState<string | null>(null)
   const [lbIndex, setLbIndex] = useState(0)
@@ -678,29 +683,32 @@ export default function Community() {
                 </motion.div>
               </div>
 
-              {/* Right: Gallery cards */}
+              {/* Right: Collection switcher — one card visible, navigate between collections */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col gap-4 self-center"
+                className="flex flex-col gap-4 self-center w-full"
               >
-                {galleries.map((gallery) => (
-                  <button
-                    key={gallery.id}
-                    onClick={() => openGallery(gallery.id)}
-                    className="gal-card group text-left overflow-hidden transition-colors duration-300"
-                    style={{
-                      border: '1px solid rgba(255,255,255,.1)',
-                    }}
+                {/* Active collection card (cross-fades on switch) */}
+                <AnimatePresence mode="wait">
+                  <motion.button
+                    key={galleries[activeGallery].id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    onClick={() => openGallery(galleries[activeGallery].id)}
+                    className="gal-card group text-left overflow-hidden transition-colors duration-300 w-full"
+                    style={{ border: '1px solid rgba(255,255,255,.1)' }}
                     onMouseEnter={(e) => { (e.currentTarget.style.borderColor = 'rgba(241,185,30,.5)') }}
                     onMouseLeave={(e) => { (e.currentTarget.style.borderColor = 'rgba(255,255,255,.1)') }}
                   >
                     {/* Cover image — 300px height */}
                     <div className="relative overflow-hidden" style={{ height: 300 }}>
                       <Image
-                        src={gallery.cover}
-                        alt={gallery.title}
+                        src={galleries[activeGallery].cover}
+                        alt={galleries[activeGallery].title}
                         fill
                         sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
@@ -726,7 +734,7 @@ export default function Community() {
                             padding: '0.25rem 0.625rem',
                           }}
                         >
-                          {gallery.images.length} fotos
+                          {galleries[activeGallery].images.length} fotos
                         </span>
                       </div>
                     </div>
@@ -748,7 +756,7 @@ export default function Community() {
                             color: '#FFFFFF',
                           }}
                         >
-                          {gallery.title}
+                          {galleries[activeGallery].title}
                         </p>
                         <p
                           style={{
@@ -760,7 +768,7 @@ export default function Community() {
                             marginTop: '0.125rem',
                           }}
                         >
-                          {gallery.date}
+                          {galleries[activeGallery].date}
                         </p>
                       </div>
                       <div className="flex items-center gap-2 text-white/30 group-hover:text-[#F1B91E] transition-colors duration-300">
@@ -778,8 +786,88 @@ export default function Community() {
                         <span style={{ fontSize: '10px' }}>&rarr;</span>
                       </div>
                     </div>
+                  </motion.button>
+                </AnimatePresence>
+
+                {/* Collection navigation — prev · counter + dots · next */}
+                <div
+                  className="flex items-center justify-between"
+                  style={{ border: '1px solid rgba(255,255,255,.1)', padding: '0.625rem 0.875rem' }}
+                >
+                  {/* Prev collection */}
+                  <button
+                    onClick={prevGallery}
+                    aria-label="Colección anterior"
+                    className="flex items-center justify-center text-white/40 hover:text-[#F1B91E] transition-all duration-300 flex-shrink-0"
+                    style={{ width: 40, height: 40, border: '1px solid rgba(255,255,255,.2)' }}
+                    onMouseEnter={(e) => { (e.currentTarget.style.borderColor = '#F1B91E') }}
+                    onMouseLeave={(e) => { (e.currentTarget.style.borderColor = 'rgba(255,255,255,.2)') }}
+                  >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="square" d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
                   </button>
-                ))}
+
+                  {/* Center: label + counter + dots */}
+                  <div className="flex flex-col items-center" style={{ gap: '0.5rem' }}>
+                    <div className="flex items-center gap-3">
+                      <span
+                        style={{
+                          fontFamily: 'var(--font-inter)',
+                          fontWeight: 700,
+                          fontSize: '10px',
+                          letterSpacing: '.25em',
+                          textTransform: 'uppercase',
+                          color: 'rgba(255,255,255,.45)',
+                        }}
+                      >
+                        Colección
+                      </span>
+                      <span
+                        style={{
+                          fontFamily: 'var(--font-inter)',
+                          fontWeight: 600,
+                          fontSize: '12px',
+                          letterSpacing: '.15em',
+                          color: '#F1B91E',
+                          fontVariantNumeric: 'tabular-nums',
+                        }}
+                      >
+                        {String(activeGallery + 1).padStart(2, '0')} / {String(galleries.length).padStart(2, '0')}
+                      </span>
+                    </div>
+                    {/* Position dots — hard-edged bars */}
+                    <div className="flex items-center gap-2">
+                      {galleries.map((g, i) => (
+                        <button
+                          key={g.id}
+                          onClick={() => setActiveGallery(i)}
+                          aria-label={`Ver colección ${g.title} · ${g.date}`}
+                          className="transition-all duration-300"
+                          style={{
+                            width: i === activeGallery ? 24 : 10,
+                            height: 3,
+                            backgroundColor: i === activeGallery ? '#F1B91E' : 'rgba(255,255,255,.25)',
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Next collection */}
+                  <button
+                    onClick={nextGallery}
+                    aria-label="Siguiente colección"
+                    className="flex items-center justify-center text-white/40 hover:text-[#F1B91E] transition-all duration-300 flex-shrink-0"
+                    style={{ width: 40, height: 40, border: '1px solid rgba(255,255,255,.2)' }}
+                    onMouseEnter={(e) => { (e.currentTarget.style.borderColor = '#F1B91E') }}
+                    onMouseLeave={(e) => { (e.currentTarget.style.borderColor = 'rgba(255,255,255,.2)') }}
+                  >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="square" d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
               </motion.div>
             </div>
           </div>
