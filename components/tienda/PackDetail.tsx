@@ -80,7 +80,7 @@ export default function PackDetail({ pack }: { pack: Pack }) {
           <div className="mt-6">
             <AddToCart
               variant="full"
-              line={{ kind: 'pack', id: pack.id, slug: pack.slug, name: pack.name, image: members[0]?.image ?? '/tienda/whey-protein.jpg', priceEUR: pack.priceEUR }}
+              line={{ kind: 'pack', id: pack.id, slug: pack.slug, name: pack.name, image: members[0]?.image ?? '/tienda/whey-protein.png', priceEUR: pack.priceEUR }}
             />
           </div>
           <p className="text-[12px] text-white/40 mt-3" style={{ fontFamily: 'var(--font-inter)' }}>Envío a domicilio o recogida en el gimnasio</p>

@@ -76,7 +76,7 @@ export default function PackCard({ pack, index = 0 }: { pack: Pack; index?: numb
             id: pack.id,
             slug: pack.slug,
             name: pack.name,
-            image: members[0]?.image ?? '/tienda/whey-protein.jpg',
+            image: members[0]?.image ?? '/tienda/whey-protein.png',
             priceEUR: pack.priceEUR,
           }}
         />

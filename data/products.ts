@@ -153,7 +153,7 @@ export const products: Product[] = [
       'Facilita mantener una suplementación diaria constante.',
     ],
     disclaimer: DISCLAIMER_BASE,
-    image: '/tienda/creatina-gummies.jpg',
+    image: '/tienda/creatina-gummies.png',
     imageAlt: 'Creatine ATP Gummies — Sport Training',
     priceEUR: 30.7, // Net €29,99 (app price) grossed for Stripe 1.5% + €0.25
     sku: null,
@@ -233,7 +233,7 @@ export const products: Product[] = [
       'Ideal para cualquier nivel de entrenamiento.',
     ],
     disclaimer: DISCLAIMER_BASE,
-    image: '/tienda/whey-protein.jpg',
+    image: '/tienda/whey-protein.png',
     imageAlt: 'WPC Whey Protein Concentrated — Sport Training',
     priceEUR: 43.9, // Net €42,99 (app "WPC Profesional") grossed for Stripe 1.5% + €0.25
     sku: null,
@@ -306,7 +306,7 @@ export const products: Product[] = [
       'Fácil de incorporar a tu rutina de bienestar.',
     ],
     disclaimer: DISCLAIMER_BASE,
-    image: '/tienda/magnesio-bisglicinato.jpg',
+    image: '/tienda/magnesio-bisglicinato.png',
     imageAlt: 'Magnesium Bisglycinate — Sport Training',
     priceEUR: 17.5, // Net €16,99 (app price) grossed for Stripe 1.5% + €0.25
     sku: null,
@@ -381,7 +381,7 @@ export const products: Product[] = [
       'Ideal para personas activas y deportistas.',
     ],
     disclaimer: DISCLAIMER_BASE,
-    image: '/tienda/omega-3.jpg',
+    image: '/tienda/omega-3.png',
     imageAlt: 'O3 Super Omega — Sport Training',
     priceEUR: 16.49, // Net €15,99 (app price) grossed for Stripe 1.5% + €0.25
     sku: null,
@@ -452,7 +452,7 @@ export const products: Product[] = [
       'Respaldo científico y materias primas de calidad.',
     ],
     disclaimer: DISCLAIMER_BASE,
-    image: '/tienda/vitamina-d3-k2.jpg',
+    image: '/tienda/vitamina-d3-k2.png',
     imageAlt: 'Vitamina D3 + K2 (MenaQ7) — Sport Training',
     priceEUR: 17.5, // Net €16,99 (no app reference — matches magnesio tier) grossed for Stripe
     sku: null,
