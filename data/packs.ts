@@ -42,8 +42,8 @@ export const packs: Pack[] = [
       'La base para quien busca fuerza y potencia: proteína para cubrir tus necesidades diarias y favorecer la recuperación, más creatina para sostener la intensidad repetición tras repetición.',
     productIds: ['whey-protein', 'creatina-gummies'],
     category: 'Rendimiento',
-    discountPct: 15, // ~PLACEHOLDER
-    priceEUR: 49.9, // ~PLACEHOLDER — confirm with María José
+    discountPct: 15, // vs sum of individual charge prices
+    priceEUR: 63.23, // 15% off member nets (42,99+29,99), grossed for Stripe
     stripePriceId: null,
     inStock: true,
   },
@@ -56,8 +56,8 @@ export const packs: Pack[] = [
       'Pensado para la recuperación entre sesiones: proteína para reparar el tejido muscular y magnesio bisglicinato para apoyar la función muscular y nerviosa y reducir el cansancio.',
     productIds: ['whey-protein', 'magnesio'],
     category: 'Recuperación',
-    discountPct: 15, // ~PLACEHOLDER
-    priceEUR: 44.9, // ~PLACEHOLDER — confirm con María José
+    discountPct: 15, // vs sum of individual charge prices
+    priceEUR: 52.01, // 15% off member nets (42,99+16,99), grossed for Stripe
     stripePriceId: null,
     inStock: true,
   },
@@ -70,8 +70,8 @@ export const packs: Pack[] = [
       'Los fundamentos que la dieta no siempre cubre: Omega-3 de alta concentración, Vitamina D3 + K2 para huesos y músculos, y magnesio para el metabolismo energético y el sistema nervioso.',
     productIds: ['omega-3', 'vitamina-d3-k2', 'magnesio'],
     category: 'Salud',
-    discountPct: 15, // ~PLACEHOLDER
-    priceEUR: 46.9, // ~PLACEHOLDER — confirm con María José
+    discountPct: 15, // vs sum of individual charge prices
+    priceEUR: 43.38, // 15% off member nets (15,99+16,99+16,99), grossed for Stripe
     stripePriceId: null,
     inStock: true,
   },

@@ -26,7 +26,7 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
           alt={product.imageAlt}
           fill
           sizes="(max-width: 768px) 50vw, 25vw"
-          className="object-contain p-6 transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+          className="object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-[1.05]"
         />
         {product.badge && (
           <span className="absolute top-0 left-0 bg-[#F1B91E] text-[#191919] px-3 py-1.5 text-[10px] tracking-[0.14em] uppercase max-w-[75%] leading-tight" style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}>

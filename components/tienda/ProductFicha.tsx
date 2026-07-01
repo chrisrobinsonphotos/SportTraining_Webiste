@@ -47,7 +47,7 @@ export default function ProductFicha({ product }: { product: Product }) {
       <section className="px-[clamp(1.5rem,5vw,4rem)] pt-8 pb-[clamp(3rem,6vw,5rem)]">
         <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-px bg-white/[0.06]">
           <div className="relative aspect-square bg-white">
-            <Image src={product.image} alt={product.imageAlt} fill sizes="(max-width:768px) 100vw, 50vw" className="object-contain p-10" priority />
+            <Image src={product.image} alt={product.imageAlt} fill sizes="(max-width:768px) 100vw, 50vw" className="object-contain p-6" priority />
             {product.badge && (
               <span className="absolute top-0 left-0 bg-[#F1B91E] text-[#191919] px-4 py-2 text-[11px] tracking-[0.12em] uppercase max-w-[80%] leading-tight" style={{ fontFamily: 'var(--font-inter)', fontWeight: 700 }}>
                 {product.badge}

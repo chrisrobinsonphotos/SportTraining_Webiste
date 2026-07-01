@@ -54,7 +54,7 @@ export default function PackDetail({ pack }: { pack: Pack }) {
             {members.map((m) => (
               <Link key={m!.id} href={`/tienda/${m!.slug}`} className="group bg-[#1E1E1E] hover:border-[#F1B91E]/30 transition-colors flex flex-col">
                 <div className="relative aspect-square bg-white">
-                  <Image src={m!.image} alt={m!.imageAlt} fill sizes="(max-width:768px) 50vw, 33vw" className="object-contain p-6 group-hover:scale-[1.05] transition-transform duration-700" />
+                  <Image src={m!.image} alt={m!.imageAlt} fill sizes="(max-width:768px) 50vw, 33vw" className="object-contain p-3 group-hover:scale-[1.05] transition-transform duration-700" />
                 </div>
                 <div className="p-5 border-t border-white/[0.06]">
                   <h3 className="text-[18px] uppercase text-white group-hover:text-[#F1B91E] transition-colors" style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}>{m!.name}</h3>
