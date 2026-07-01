@@ -47,6 +47,20 @@ export default function PackDetail({ pack }: { pack: Pack }) {
         </div>
       </section>
 
+      {/* Why together */}
+      {pack.synergy.length > 0 && (
+        <section className="px-[clamp(1.5rem,5vw,4rem)] py-[clamp(3rem,6vw,5rem)] border-t border-white/[0.06]">
+          <div className="max-w-[820px] mx-auto">
+            <Eyebrow text="Por qué juntos" />
+            <div className="space-y-4">
+              {pack.synergy.map((p, i) => (
+                <p key={i} className="text-[16px] leading-relaxed text-white/70" style={{ fontFamily: 'var(--font-inter)' }}>{p}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Members */}
       <section className="px-[clamp(1.5rem,5vw,4rem)] py-[clamp(2rem,5vw,4rem)] border-t border-white/[0.06] bg-[#161616]">
         <div className="max-w-[1000px] mx-auto">
