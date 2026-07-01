@@ -112,12 +112,15 @@ export default function ProductFicha({ product }: { product: Product }) {
         <div className="max-w-[1000px] mx-auto">
           <Eyebrow text="¿Para quién está recomendado?" />
           <div className="grid md:grid-cols-2 gap-px bg-white/[0.06]">
-            {product.forWho.map((f, i) => (
-              <div key={i} className="bg-[#1E1E1E] p-6">
-                <h3 className="text-[18px] uppercase text-white" style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}>{f.title}</h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-white/55" style={{ fontFamily: 'var(--font-inter)' }}>{f.text}</p>
-              </div>
-            ))}
+            {product.forWho.map((f, i) => {
+              const spanFull = product.forWho.length % 2 === 1 && i === product.forWho.length - 1
+              return (
+                <div key={i} className={`bg-[#1E1E1E] p-6 ${spanFull ? 'md:col-span-2' : ''}`}>
+                  <h3 className="text-[18px] uppercase text-white" style={{ fontFamily: 'var(--font-barlow)', fontWeight: 800 }}>{f.title}</h3>
+                  <p className="mt-2 text-[14px] leading-relaxed text-white/55" style={{ fontFamily: 'var(--font-inter)' }}>{f.text}</p>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>

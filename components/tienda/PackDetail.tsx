@@ -18,6 +18,7 @@ function Eyebrow({ text }: { text: string }) {
 
 export default function PackDetail({ pack }: { pack: Pack }) {
   const members = pack.productIds.map(productById).filter(Boolean)
+  const gridCols = members.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'
 
   return (
     <main className="bg-[#191919]">
@@ -50,7 +51,7 @@ export default function PackDetail({ pack }: { pack: Pack }) {
       <section className="px-[clamp(1.5rem,5vw,4rem)] py-[clamp(2rem,5vw,4rem)] border-t border-white/[0.06] bg-[#161616]">
         <div className="max-w-[1000px] mx-auto">
           <Eyebrow text="Qué incluye" />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06]">
+          <div className={`grid ${gridCols} gap-px bg-white/[0.06]`}>
             {members.map((m) => (
               <Link key={m!.id} href={`/tienda/${m!.slug}`} className="group bg-[#1E1E1E] hover:border-[#F1B91E]/30 transition-colors flex flex-col">
                 <div className="relative aspect-square bg-white">
