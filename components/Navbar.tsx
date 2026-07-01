@@ -10,6 +10,7 @@ const navLinks = [
   { label: 'Entrenamientos', href: '/#entrenamientos' },
   { label: 'Membresías', href: '/#modalidades' },
   { label: 'Nutrición', href: '/#nutricion' },
+  { label: 'Tienda', href: '/tienda' },
   { label: 'Día de Prueba', href: '/prueba' },
 ]
 

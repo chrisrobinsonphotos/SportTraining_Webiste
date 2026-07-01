@@ -35,8 +35,7 @@ const nextConfig: NextConfig = {
       { source: "/modalidades", destination: "/", permanent: false },
       { source: "/modalidades/:path*", destination: "/", permanent: false },
 
-      // Shop
-      { source: "/tienda", destination: "/contacto", permanent: false },
+      // NOTE: /tienda is now a REAL page (supplement store) — no longer redirected.
 
       // Community & schedule
       { source: "/comunidad", destination: "/", permanent: false },
