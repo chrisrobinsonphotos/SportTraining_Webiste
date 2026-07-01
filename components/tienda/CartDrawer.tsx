@@ -10,12 +10,14 @@ const brandEase = [0.16, 1, 0.3, 1] as const
 export default function CartDrawer() {
   const { items, isOpen, closeCart, setQty, remove, subtotal, allPriced, clear } = useCart()
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const canCheckout = items.length > 0 && allPriced
 
   async function handleCheckout() {
     if (!canCheckout) return
     setLoading(true)
+    setError(null)
     try {
       const res = await fetch('/api/checkout', {
         method: 'POST',
@@ -24,13 +26,19 @@ export default function CartDrawer() {
           items: items.map((i) => ({ kind: i.kind, id: i.id, qty: i.qty })),
         }),
       })
-      const data = await res.json()
-      if (data?.url) {
+      const data = await res.json().catch(() => null)
+      if (res.ok && data?.url) {
         window.location.href = data.url as string
-      } else {
-        setLoading(false)
+        return
       }
+      setError(
+        data?.error === 'STORE_NOT_CONFIGURED' || data?.error === 'PRICING_PENDING'
+          ? 'La tienda todavía no está activa. Vuelve a intentarlo pronto.'
+          : 'No se ha podido iniciar el pago. Inténtalo de nuevo en unos segundos.',
+      )
+      setLoading(false)
     } catch {
+      setError('No se ha podido conectar con el pago. Revisa tu conexión e inténtalo de nuevo.')
       setLoading(false)
     }
   }
@@ -147,6 +155,12 @@ export default function CartDrawer() {
                 >
                   {loading ? 'Redirigiendo…' : 'Finalizar compra'}
                 </button>
+
+                {error && (
+                  <p className="mt-3 text-[13px] leading-snug text-[#F1B91E] text-center" role="alert" style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}>
+                    {error}
+                  </p>
+                )}
 
                 <p className="text-[11px] text-white/35 text-center mt-3" style={{ fontFamily: 'var(--font-inter)' }}>
                   Pago seguro con Stripe · Envío o recogida en el gimnasio
