@@ -25,15 +25,13 @@ export default function AvisoLegalPage() {
       </p>
       <ul>
         <li>
-          <strong>Razón social:</strong>{" "}
-          <span className="placeholder">[Razón Social Completa]</span>
+          <strong>Razón social:</strong> St Levante Group, S.L.
         </li>
         <li>
           <strong>Nombre comercial:</strong> Sport Training
         </li>
         <li>
-          <strong>NIF / CIF:</strong>{" "}
-          <span className="placeholder">[NIF/CIF]</span>
+          <strong>NIF / CIF:</strong> B26906602
         </li>
         <li>
           <strong>Domicilio social:</strong> C. Cisne, 3, 30009 Murcia, España
@@ -44,7 +42,7 @@ export default function AvisoLegalPage() {
         </li>
         <li>
           <strong>Correo electrónico:</strong>{" "}
-          <span className="placeholder">[email de contacto]</span>
+          <a href="mailto:info@sporttraining.es">info@sporttraining.es</a>
         </li>
         <li>
           <strong>Inscripción registral:</strong>{" "}

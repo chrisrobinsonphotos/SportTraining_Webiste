@@ -4,6 +4,7 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+import CookieConsent from "@/components/CookieConsent";
 
 const barlow = Barlow_Condensed({
   weight: ["400", "600", "700", "800", "900"],
@@ -385,15 +386,23 @@ export default function RootLayout({
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            gtag('consent', 'default', {
+              ad_storage: 'denied',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied',
+              analytics_storage: 'denied',
+              wait_for_update: 500
+            });
+            try {
+              if (localStorage.getItem('st_cookie_consent') === 'granted') {
+                gtag('consent', 'update', { analytics_storage: 'granted' });
+              }
+            } catch (e) {}
             gtag('js', new Date());
             gtag('config', '${GA_MEASUREMENT_ID}');
           `}
         </Script>
-        <Script
-          id="mcjs"
-          strategy="afterInteractive"
-          src="https://chimpstatic.com/mcjs-connected/js/users/e00011af0ea4215e668560151/70fc22bcead51ae5a17dae24a.js"
-        />
+        <CookieConsent />
       </body>
     </html>
   );

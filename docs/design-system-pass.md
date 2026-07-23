@@ -1,6 +1,6 @@
 # Design system pass — "Nutrición cleanness" + systematized type scale
 
-Status: **applied locally, NOT pushed.** Type-checks clean (`tsc --noEmit` ✓).
+Status: **SHIPPED** — landed in commit `19db015` (June 2026), refined in `f6cc0b9`. (Historical doc, kept for reference.)
 Visual + production-build verification still pending (couldn't render headless in the work environment) — preview on your machine before we ship.
 
 ## What this pass did

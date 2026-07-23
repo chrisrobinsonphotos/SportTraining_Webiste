@@ -16,12 +16,18 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false }, { status: 400 })
   }
 
-  const expected = process.env.TIENDA_PASSWORD || 'SportTraining2026'
+  const expected = process.env.TIENDA_PASSWORD
+  const token = process.env.TIENDA_ACCESS_TOKEN
+  if (!expected || !token) {
+    // Gate not configured — fail secure and make the misconfiguration visible in logs.
+    console.error('acceso: TIENDA_PASSWORD / TIENDA_ACCESS_TOKEN not set')
+    return NextResponse.json({ ok: false }, { status: 503 })
+  }
+
   if (password !== expected) {
     return NextResponse.json({ ok: false }, { status: 401 })
   }
 
-  const token = process.env.TIENDA_ACCESS_TOKEN || 'st-tienda-2026-granted'
   const res = NextResponse.json({ ok: true })
   res.cookies.set(ACCESS_COOKIE, token, {
     httpOnly: true,

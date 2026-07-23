@@ -16,7 +16,7 @@ export default function CookiesPage() {
       eyebrow="Cookies"
       title="Política de Cookies"
       subtitle="Esta política explica qué cookies utilizamos en sporttraining.es, con qué finalidad y cómo puedes gestionarlas. Cumple con el artículo 22.2 de la LSSI-CE y las directrices de la AEPD sobre el uso de cookies."
-      lastUpdated="7 de mayo de 2026"
+      lastUpdated="23 de julio de 2026"
     >
       <h2>1. ¿Qué son las cookies?</h2>
       <p>
@@ -66,25 +66,16 @@ export default function CookiesPage() {
         </thead>
         <tbody>
           <tr>
-            <td>Mailchimp (Intuit Inc.)</td>
             <td>
-              Gestión de la newsletter y seguimiento de aperturas y clics en
-              comunicaciones.
+              Google Analytics 4 (Google LLC) — cookies <code>_ga</code> y{" "}
+              <code>_ga_*</code>
+            </td>
+            <td>
+              Análisis estadístico y agregado del uso de la web (páginas
+              visitadas, origen del tráfico). Solo se activan si aceptas las
+              cookies de análisis en el banner de consentimiento.
             </td>
             <td>Hasta 2 años</td>
-          </tr>
-          <tr>
-            <td>
-              <span className="placeholder">[Google Analytics — pendiente]</span>
-            </td>
-            <td>
-              <span className="placeholder">
-                [Análisis de tráfico y comportamiento agregado, si se instala]
-              </span>
-            </td>
-            <td>
-              <span className="placeholder">[Hasta 2 años]</span>
-            </td>
           </tr>
         </tbody>
       </table>
@@ -98,10 +89,16 @@ export default function CookiesPage() {
 
       <h2>3. Consentimiento</h2>
       <p>
-        Al acceder por primera vez al sitio web, mostramos un banner
-        informativo que permite aceptar, rechazar o configurar las cookies no
-        esenciales. Las cookies técnicas no requieren consentimiento, ya que
-        son necesarias para el funcionamiento del sitio.
+        Al acceder por primera vez al sitio web, mostramos un banner que
+        permite aceptar o rechazar las cookies de análisis. Las cookies
+        técnicas no requieren consentimiento, ya que son necesarias para el
+        funcionamiento del sitio. Hasta que no aceptes, las cookies de
+        análisis permanecen desactivadas (Google Consent Mode).
+      </p>
+      <p>
+        Puedes cambiar tu decisión en cualquier momento eliminando las cookies
+        y los datos de sitio de tu navegador para sporttraining.es — el banner
+        volverá a mostrarse en tu siguiente visita.
       </p>
 
       <h2>4. Cómo gestionar o eliminar cookies</h2>

@@ -2,121 +2,78 @@
 
 **Domain:** sporttraining.es
 **Stack:** Next.js 16.2 · React 19 · TypeScript · Tailwind CSS 4 · Framer Motion
-**Deployment:** Vercel (recommended) · `npm run build` · `npm run start`
-**Repo:** local Git at `~/Documents/CoworkOS/SportTraining/development/st-web/`
-**Last updated:** 2026-05-07
+**Deployment:** Vercel, auto-deploy from `main`
+**Repo:** github.com/chrisrobinsonphotos/SportTraining_Webiste — local checkout at `~/Documents/CoworkOS/Clients/SportTraining/development/st-web/`
+**Last updated:** 2026-07-23
 
 ---
 
 ## Public routes
 
-| Path | Page | Purpose | Status |
-|---|---|---|---|
-| `/` | Home | Single long-scroll landing — Hero · Marquee · Philosophy · Training · Modalities · Adaptado · Nutrition · Community · Trainers · Schedule · CTA · Reviews · Footer | ✅ Live |
-| `/contacto` | Contact | Phone, WhatsApp, address, OpenStreetMap embed, contact info | ✅ Live |
-| `/legal` | Aviso Legal | Required by LSSI-CE — site owner ID, terms of use, IP, jurisdiction | ✅ Live (needs client info) |
-| `/privacidad` | Política de Privacidad | Required by RGPD/LOPDGDD — data controller, purposes, rights | ✅ Live (needs client info) |
-| `/cookies` | Política de Cookies | Required by LSSI-CE Art. 22.2 — cookie inventory, consent, browser controls | ✅ Live |
-| `/404` (catch-all) | Not Found | Branded 404 with CTAs back to home and contacto | ✅ Live |
-
-## SEO + indexability
-
-| File | Purpose | Status |
+| Path | Purpose | Status |
 |---|---|---|
-| `app/sitemap.ts` | Auto-generated `/sitemap.xml` | ✅ |
-| `app/robots.ts` | Auto-generated `/robots.txt` | ✅ |
-| `app/layout.tsx` metadata | Title template, description, OG, Twitter, canonical, theme-color | ✅ |
-| `public/og-image.jpg` | 1200×630 link-preview image | ✅ (placeholder — replace with brand-designed version) |
-| JSON-LD `ExerciseGym` schema | Structured data for Google business panel | ✅ in layout |
+| `/` | Home — long-scroll landing (Hero · Marquee · Philosophy · Training · Modalities · Adaptado · Nutrition · Community · Trainers · Schedule · CTA · Reviews) | ✅ Live |
+| `/prueba` | Trial-day funnel — lead form → MailerLite trial group + Resend email | ✅ Live |
+| `/contacto` | Contact — form backend + phone, WhatsApp, map | ✅ Live |
+| `/entrenamientos/hyrox` | HYROX discipline page | ✅ Live |
+| `/entrenamientos/funcional` | Funcional discipline page | ✅ Live |
+| `/nutricion/alimentacion` | Nutrition — alimentación | ✅ Live |
+| `/nutricion/planificacion` | Nutrition — planificación | ✅ Live |
+| `/nutricion/suplementacion` | Nutrition — suplementación | ✅ Live |
+| `/legal` | Aviso Legal (LSSI-CE) | ✅ Live — entity data filled (verify registro mercantil) |
+| `/privacidad` | Política de Privacidad (RGPD) | ✅ Live |
+| `/cookies` | Política de Cookies | ✅ Live — names GA4, consent-mode flow |
+| `/condiciones-de-venta` | Store — condiciones generales de venta | ✅ Built — placeholders: none |
+| `/envios` | Store — shipping terms | ⚠️ Built — placeholders: zone, rate, timing, pickup |
+| `/devoluciones` | Store — returns / desistimiento | ⚠️ Built — placeholder: return shipping cost |
+| `/404` | Branded not-found | ✅ Live |
 
-## Components (`components/`)
+## Store (password-gated until launch)
 
-15 React components, all client-side or server-rendered. None hardcode the gym's NIF, registered name, or contact email — those flow through the legal pages.
+| Path | Purpose |
+|---|---|
+| `/tienda` | Catalog (5 products, 3 packs) |
+| `/tienda/[slug]` | Product ficha |
+| `/tienda/pack/[slug]` | Pack ficha |
+| `/tienda/gracias` · `/tienda/cancelado` | Checkout result pages |
+| `/acceso` | Pre-launch password gate (env-only credentials, fail-secure) |
 
-```
-Hero · Navbar · Marquee · Philosophy · Training · Modalities ·
-Adaptado · Nutrition · Community · Trainers · Schedule ·
-CTASection · Reviews · ContactPage · Footer ·
-LegalPageLayout (NEW)
-```
+Gate: `middleware.ts` protects `/tienda/*` only. Delete the file to open the store.
+Go-live checklist: `docs/stripe-setup.md`. Outstanding: Stripe key, price confirmation, envíos/devoluciones placeholders.
 
-## Integrations
+## API routes
 
-| What | Where | Status |
+| Route | Purpose | Env |
 |---|---|---|
-| Mailchimp embed | `app/layout.tsx` (`chimpstatic.com` script) | ✅ Connected |
-| Reviews API | `app/api/reviews/route.ts` | ⚠️ Source not documented — needs spec |
-| Contact form backend | None yet — `/contacto` shows links to phone/WhatsApp/maps but no email-capture form | ⚠️ Missing |
-| Class booking | None | ⚠️ Missing |
-| Analytics | None | ⚠️ Recommend adding Plausible (privacy-first) or GA4 |
+| `/api/contact` | Contact form → Resend + MailerLite | `RESEND_API_KEY`, `MAILERLITE_*` |
+| `/api/prueba` | Trial-day lead capture | `MAILERLITE_TRIAL_GROUP_ID`, `RESEND_API_KEY` |
+| `/api/reviews` | Google reviews feed | `GOOGLE_PLACES_API_KEY` |
+| `/api/checkout` | Stripe Checkout session | `STRIPE_SECRET_KEY` |
+| `/api/stripe-webhook` | Order confirmation emails | `STRIPE_WEBHOOK_SECRET` |
+| `/api/acceso` | Store gate password check | `TIENDA_PASSWORD`, `TIENDA_ACCESS_TOKEN` |
 
-## Footer link policy
+## Analytics & consent
 
-The footer links to `/privacidad`, `/cookies`, `/legal`. All three now resolve.
+- **GA4** `G-V1SPWK5DVB` (property under Miguel Ángel Sr.'s Google account) with **Consent Mode v2**: `analytics_storage` denied by default; `components/CookieConsent.tsx` banner grants on accept. Choice in `localStorage.st_cookie_consent`.
+- **Vercel Analytics + Speed Insights** — cookieless.
+- Mailchimp embed removed 2026-07 (platform is MailerLite, server-side only — no cookies).
 
-The footer's main nav columns currently link to placeholder routes that are **not yet built**:
+## SEO
 
-- `/gym/historia`, `/gym/equipo`, `/gym/instalaciones`
-- `/entrenamientos/hyrox`, `/entrenamientos/funcional`, `/entrenamientos/crosstraining`, `/entrenamientos/adaptado`
-- `/modalidades/personal`, `/modalidades/grupo`, `/modalidades/libre`
-- `/nutricion`, `/comunidad`, `/tienda`
+`app/sitemap.ts` (includes tienda + legal routes) · `app/robots.ts` · full metadata API + JSON-LD `@graph` (ExerciseGym, Services, FAQPage) in `app/layout.tsx` · one semantic H1 per page · keyword alt text.
 
-These will all 404 today — that's why the new branded 404 page matters. Recommend either building these out incrementally or removing/disabling the links until ready.
+## Known gaps / next steps
 
-## Brand integration
+1. Fill `/envios` + `/devoluciones` placeholders (shipping zone/rate/timing, pickup, return costs) — client decisions
+2. Verify registro mercantil data on `/legal`
+3. Store go-live: Stripe key + real prices (`docs/stripe-setup.md`)
+4. Footer nav still links some unbuilt routes (`/gym/*`, `/entrenamientos/crosstraining`, `/modalidades/*`, `/comunidad`) — build or trim
+5. Replace placeholder `og-image.jpg` with brand-designed 1200×630
+6. Homepage design pass per June 2026 audit (dead space, type scale, hero) — see workstation memory
+7. Class booking integration (`docs/booking-integration.md`)
 
-- **Logo:** `/public/st-logo-black.png`
-- **Brochure:** `/public/SportTraining-Brochure-HQ.pdf` (full) and `_compressed.pdf` (web-light)
-- **Colors:** Gold `#F1B91E` · Dark `#0a0a0a` / `#191919` / `#111111`
-- **Fonts:** Barlow Condensed (display) · Inter (body) — loaded via `next/font/google`
+## Handoff notes
 
-## Action items the client (or Sr.) needs to provide
-
-These complete the legal pages — currently shown as placeholders on the live site:
-
-1. **Razón social** (legal entity name as registered)
-2. **NIF / CIF**
-3. **Inscripción en Registro Mercantil** if applicable (Tomo, Folio, Hoja, etc.)
-4. **Email para protección de datos** (e.g., `protecciondatos@sporttraining.es` or general inbox)
-5. **Cookie consent banner** — needs design/copy decision (accept / reject / configure)
-6. **Confirm analytics tool** to use (Plausible vs GA4 vs none) so the cookies policy can name it
-
-## Recommended next steps for the website
-
-In rough priority order:
-
-1. Replace placeholder legal info once client provides
-2. Decide on analytics tool, install, update cookies policy
-3. Add a **cookie consent banner** (required for any analytics beyond technical cookies)
-4. Add **`/contacto` form backend** so leads convert without needing WhatsApp
-5. Add **`app/not-found.tsx`** behavior for the missing footer-nav routes — either build them or hide the links
-6. Replace `og-image.jpg` with a brand-designed 1200×630
-7. Add `apple-touch-icon.png` and proper favicon set
-8. Set up **Vercel deployment** with environment variables (`NEXT_PUBLIC_SITE_URL`, etc.) and `vercel.json` if needed
-9. Connect a class booking widget or document the third-party booking flow
-
----
-
-## Marketing SEO improvements (2026-05-07 round 2)
-
-In addition to the technical foundation:
-
-- **One semantic H1 per page** — Hero collapsed 3 visual H1s into one keyword-rich `sr-only` H1; Trainers same fix
-- **Alt text overhaul** — every `<Image>` across Hero, Navbar, Footer, CTASection, Adaptado, Philosophy, Modalities, Trainers, Training, Nutrition rewritten with location + service keywords
-- **Expanded JSON-LD `@graph`**: ExerciseGym + 6 per-modality `Service` schemas + `FAQPage` with 7 high-intent local questions + `aggregateRating` (placeholder) + `OpeningHoursSpecification` (placeholder) + `areaServed` (Murcia + nearby municipalities) + `hasOfferCatalog` with real pricing tiers + `amenityFeature` list
-- **Aria-label CTAs** — keyword-rich anchor signals on every primary internal link (Hero CTAs, Modalities Contratar, Adaptado, Community, CTASection)
-- **`/contacto` metadata strengthened** — keywords, OG, canonical, full local-search description
-
-## Files added in this audit pass
-
-- `app/layout.tsx` — full metadata API + JSON-LD schema (replaced minimal version)
-- `app/robots.ts` — modern robots config
-- `app/sitemap.ts` — auto-generated sitemap
-- `app/not-found.tsx` — branded 404 page
-- `app/legal/page.tsx` — Aviso Legal
-- `app/privacidad/page.tsx` — Política de Privacidad
-- `app/cookies/page.tsx` — Política de Cookies
-- `components/LegalPageLayout.tsx` — shared layout for the three legal pages
-- `app/globals.css` — appended `.legal-content` typography
-- `public/og-image.jpg` — placeholder OG share image
-- `SITE_MAP.md` — this document
+- Repo transfer = the handoff mechanism for the codebase (see workstation `july-handoff_proposal_v1.md`). Repo name has a typo (`SportTraining_Webiste`) — rename before transfer; GitHub redirects the old URL.
+- No secrets in the repo — all credentials are Vercel env vars (see README table).
+- `docs/` holds all integration guides; `docs/design-system-pass.md` documents the type-scale system.

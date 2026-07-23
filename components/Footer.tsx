@@ -180,15 +180,22 @@ export default function Footer() {
             © {new Date().getFullYear()} Sport Training. Región de Murcia, España. Est. 2007.
           </p>
 
-          <div className="flex items-center gap-6">
-            {['Privacidad', 'Cookies', 'Legal'].map((item) => (
+          <div className="flex items-center flex-wrap justify-center gap-x-6 gap-y-2">
+            {[
+              { label: 'Privacidad', href: '/privacidad' },
+              { label: 'Cookies', href: '/cookies' },
+              { label: 'Legal', href: '/legal' },
+              { label: 'Condiciones de venta', href: '/condiciones-de-venta' },
+              { label: 'Envíos', href: '/envios' },
+              { label: 'Devoluciones', href: '/devoluciones' },
+            ].map((item) => (
               <Link
-                key={item}
-                href={`/${item.toLowerCase()}`}
+                key={item.href}
+                href={item.href}
                 className="text-white/20 hover:text-white/50 text-[10px] tracking-[0.15em] uppercase transition-colors duration-300"
                 style={{ fontFamily: 'var(--font-inter)', fontWeight: 400 }}
               >
-                {item}
+                {item.label}
               </Link>
             ))}
           </div>
