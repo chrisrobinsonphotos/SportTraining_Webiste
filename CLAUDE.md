@@ -133,3 +133,19 @@ Always check these before hardcoding any content into components.
 - **Gold is `#F1B91E`** — never substitute Tailwind yellow/amber classes
 - All new components go in `components/` as `.tsx` files
 - Client components need `"use client"` at the top; default to server components
+
+---
+
+## Agent skills
+
+### Issue tracker
+
+Issues live as local markdown files under `.scratch/<feature-slug>/` in this repo. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default five-role vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context — `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
