@@ -45,6 +45,7 @@ export const LEAD_SUMMARY = `
     count(*)::int                                                             as total,
     count(*) filter (where status = 'new')::int                               as pending,
     count(*) filter (where created_at >= current_date)::int                   as today,
+    count(*) filter (where created_at >= now() - interval '24 hours')::int    as last_24h,
     count(*) filter (where created_at >= now() - interval '7 days')::int      as last_7d,
     count(*) filter (where created_at >= now() - interval '30 days')::int     as last_30d,
     count(*) filter (where not email_sent)::int                               as undelivered,

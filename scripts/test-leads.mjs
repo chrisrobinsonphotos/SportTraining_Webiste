@@ -113,6 +113,7 @@ const s = (await db.query(Q.LEAD_SUMMARY)).rows[0]
 check('LEAD_SUMMARY total', s.total === 2, `got ${s.total}`)
 check('LEAD_SUMMARY pending', s.pending === 1, `got ${s.pending}`)
 check('LEAD_SUMMARY today', s.today === 1, `got ${s.today}`)
+check('LEAD_SUMMARY last_24h', s.last_24h === 1, `got ${s.last_24h}`)
 check('LEAD_SUMMARY last_7d', s.last_7d === 1, `got ${s.last_7d}`)
 check('LEAD_SUMMARY last_30d', s.last_30d === 2, `got ${s.last_30d}`)
 check('LEAD_SUMMARY undelivered', s.undelivered === 1, `got ${s.undelivered}`)
