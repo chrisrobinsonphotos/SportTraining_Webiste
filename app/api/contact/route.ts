@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     }
 
     // ── Notification email ──────────────────────────────────────────────────
-    await resend.emails.send({
+    const { error: emailError } = await resend.emails.send({
       from: 'Sport Training Web <noreply@sporttraining.es>',
       to: ['chrisccrobinson@gmail.com', 'miguelangelbarrionuevooliveira@gmail.com'],
       subject: `Nuevo contacto web — ${interes} — ${nombre}`,
@@ -34,6 +34,14 @@ export async function POST(req: Request) {
         </div>
       `,
     })
+
+    // The Resend SDK resolves with { data, error } instead of throwing on API
+    // errors, so this has to be inspected explicitly — otherwise a rejected
+    // send is indistinguishable from a delivered one and the enquiry is lost.
+    if (emailError) {
+      console.error('Resend send failed (contact form):', emailError)
+      return NextResponse.json({ error: 'Error al enviar el mensaje' }, { status: 502 })
+    }
 
     // ── MailerLite subscriber (if opted in) ─────────────────────────────────
     if (subscribe && process.env.MAILERLITE_API_KEY) {

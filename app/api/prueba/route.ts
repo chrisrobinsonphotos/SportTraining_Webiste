@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     }
 
     // ── Notification email ──────────────────────────────────────────────────
-    await resend.emails.send({
+    const { error: emailError } = await resend.emails.send({
       from: 'Sport Training Web <noreply@sporttraining.es>',
       to: ['chrisccrobinson@gmail.com', 'miguelangelbarrionuevooliveira@gmail.com'],
       subject: `DÍA DE PRUEBA — ${nombre}${interes ? ` — ${interes}` : ''}`,
@@ -46,6 +46,14 @@ export async function POST(req: Request) {
         </div>
       `,
     })
+
+    // The Resend SDK resolves with { data, error } instead of throwing on API
+    // errors, so this has to be inspected explicitly — otherwise a rejected
+    // send is indistinguishable from a delivered one and the lead is lost.
+    if (emailError) {
+      console.error('Resend send failed (trial request):', emailError)
+      return NextResponse.json({ error: 'Error al enviar la solicitud' }, { status: 502 })
+    }
 
     // ── MailerLite trial lead (best-effort, requires email) ─────────────────
     const trialGroup = process.env.MAILERLITE_TRIAL_GROUP_ID || process.env.MAILERLITE_GROUP_ID

@@ -15,8 +15,8 @@ export async function GET() {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY
 
   if (!apiKey || apiKey === 'your_api_key_here') {
-    // Return mock 5-star reviews for development / demo
-    return NextResponse.json({ reviews: getMockReviews() })
+    console.error('GOOGLE_PLACES_API_KEY is not configured — serving no reviews')
+    return NextResponse.json({ reviews: [] })
   }
 
   try {
@@ -26,12 +26,15 @@ export async function GET() {
         'X-Goog-FieldMask': 'reviews',
         'Accept-Language': 'es',
       },
-      next: { revalidate: 3600 }, // cache for 1 hour
+      next: { revalidate: 86400 }, // cache for 24h — reviews change a few times a month,
+      // and the `reviews` field mask bills at the highest Places SKU. 24h keeps this
+      // to ~30 calls/month, well inside the free allowance. A new review appears
+      // on the site within a day.
     })
 
     if (!res.ok) {
       console.error('Places API error:', res.status, await res.text())
-      return NextResponse.json({ reviews: getMockReviews() })
+      return NextResponse.json({ reviews: [] })
     }
 
     const data = await res.json()
@@ -47,10 +50,10 @@ export async function GET() {
         relativeDate: r.relativePublishTimeDescription ?? '',
       }))
 
-    return NextResponse.json({ reviews: fiveStars.length ? fiveStars : getMockReviews() })
+    return NextResponse.json({ reviews: fiveStars })
   } catch (err) {
     console.error('Failed to fetch reviews:', err)
-    return NextResponse.json({ reviews: getMockReviews() })
+    return NextResponse.json({ reviews: [] })
   }
 }
 
@@ -69,89 +72,4 @@ interface GoogleReview {
     photoUri?: string
   }
   publishTime?: string
-}
-
-// ---------------------------------------------------------------------------
-// Mock reviews — shown when API key is not yet configured
-// ---------------------------------------------------------------------------
-function getMockReviews(): PlaceReview[] {
-  return [
-    {
-      authorName: 'Laura Sánchez',
-      authorPhoto: null,
-      rating: 5,
-      text: 'El mejor gimnasio de Murcia sin duda. Los entrenadores son increíbles, siempre pendientes de cada persona. Las clases de HYROX son una pasada y el ambiente que se respira es único.',
-      relativeDate: 'hace 1 semana',
-    },
-    {
-      authorName: 'Carlos Martínez',
-      authorPhoto: null,
-      rating: 5,
-      text: 'Llevo más de 2 años entrenando en Sport Training y ha sido la mejor decisión que he tomado. La instalación es top, el equipo humano es excepcional y los resultados hablan por sí solos.',
-      relativeDate: 'hace 2 semanas',
-    },
-    {
-      authorName: 'Ana López',
-      authorPhoto: null,
-      rating: 5,
-      text: 'Vine buscando un cambio y encontré mucho más que un gimnasio. El equipo de entrenadores te hace sentir parte de una familia. Las sesiones de entrenamiento adaptado son perfectas para mí.',
-      relativeDate: 'hace 1 mes',
-    },
-    {
-      authorName: 'Pedro García',
-      authorPhoto: null,
-      rating: 5,
-      text: 'Sport Training tiene todo lo que necesitas. Profesionales de primer nivel, instalaciones cuidadas al detalle y un ambiente que te motiva desde el primer día. 100% recomendado.',
-      relativeDate: 'hace 3 semanas',
-    },
-    {
-      authorName: 'María Fernández',
-      authorPhoto: null,
-      rating: 5,
-      text: 'Desde que empecé aquí mi vida ha cambiado. Miguel Ángel y su equipo son referentes en la zona. Las clases en grupo son energéticas y muy bien dirigidas. No cambiaría este gym por nada.',
-      relativeDate: 'hace 2 meses',
-    },
-    {
-      authorName: 'Javier Ruiz',
-      authorPhoto: null,
-      rating: 5,
-      text: 'Completé mi primer HYROX gracias al equipo de Sport Training. La preparación fue brutal pero siempre sintiéndome apoyado. El trato personalizado marca la diferencia.',
-      relativeDate: 'hace 1 mes',
-    },
-    {
-      authorName: 'Sofía Moreno',
-      authorPhoto: null,
-      rating: 5,
-      text: 'Llevo 6 meses entrenando aquí y los cambios son visibles. Los entrenadores tienen un nivel técnico altísimo y se nota que disfrutan lo que hacen. Las instalaciones son de las mejores de Murcia.',
-      relativeDate: 'hace 3 semanas',
-    },
-    {
-      authorName: 'Diego Navarro',
-      authorPhoto: null,
-      rating: 5,
-      text: 'Empecé sin experiencia en HYROX y ahora ya he competido dos veces. El equipo de Miguel Ángel te prepara de forma integral, tanto física como mentalmente. No podría estar más contento.',
-      relativeDate: 'hace 2 semanas',
-    },
-    {
-      authorName: 'Isabel Torres',
-      authorPhoto: null,
-      rating: 5,
-      text: 'El entrenamiento adaptado que ofrecen es increíble. Tenía una lesión previa y en ningún otro sitio me habían dado tanta seguridad y confianza. Los profesionales son de primer nivel.',
-      relativeDate: 'hace 5 semanas',
-    },
-    {
-      authorName: 'Álvaro Jiménez',
-      authorPhoto: null,
-      rating: 5,
-      text: 'Sin duda el mejor gimnasio en el que he estado. La metodología de entrenamiento es muy completa, combinando fuerza, cardio y técnica. Los resultados llegan rápido y el ambiente es inmejorable.',
-      relativeDate: 'hace 1 mes',
-    },
-    {
-      authorName: 'Lucía Ramírez',
-      authorPhoto: null,
-      rating: 5,
-      text: 'Sport Training es mucho más que un gimnasio. La comunidad que han creado es especial — todo el mundo se apoya y eso te empuja a dar el 100% cada día. Totalmente recomendado.',
-      relativeDate: 'hace 2 meses',
-    },
-  ]
 }

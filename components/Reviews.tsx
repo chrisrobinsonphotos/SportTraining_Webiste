@@ -1,27 +1,9 @@
 'use client'
 
-import { useRef, useState, useCallback, useEffect } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
-
-// ---------------------------------------------------------------------------
-// Static review data
-// ---------------------------------------------------------------------------
-
-// These reviews are representative placeholders —
-// replace with real Google reviews before launch.
-const reviews = [
-  { name: 'Laura Martínez', date: 'Hace 2 semanas', text: 'Llevo tres meses entrenando aquí y el cambio ha sido brutal. Los entrenadores te corrigen, te exigen y te motivan. No es un gimnasio más — es otro nivel.', avatar: '/avatar-1.jpg' },
-  { name: 'Carlos Ruiz', date: 'Hace 1 mes', text: 'Probé la clase de HYROX y me enganchó desde el primer día. El ambiente, la gente, los coaches... todo está pensado para que des el máximo.', avatar: '/avatar-2.jpg' },
-  { name: 'Ana Belén', date: 'Hace 3 semanas', text: 'Buscaba un sitio serio para entrenar después de una lesión. Aquí adaptaron todo a mi situación sin hacerme sentir limitada. Profesionalidad total.', avatar: '/avatar-3.jpg' },
-  { name: 'Marta Gómez', date: 'Hace 2 meses', text: 'El mejor gimnasio de Murcia, sin discusión. Instalaciones impecables, grupos reducidos y una comunidad que te empuja a mejorar cada día.', avatar: null },
-  { name: 'David Hernández', date: 'Hace 1 mes', text: 'El entrenamiento personal con Miguel Jr. me ha cambiado la forma de entrenar. Resultados reales en poco tiempo y sin lesiones.', avatar: null },
-  { name: 'Cristina López', date: 'Hace 3 meses', text: 'Me apunté al plan Plata y no me arrepiento. Las clases de funcional son duras pero sales sintiéndote increíble. Y el precio es muy competitivo.', avatar: null },
-  { name: 'Sergio Navarro', date: 'Hace 2 semanas', text: 'Llevo años entrenando solo y decidí probar las clases. La diferencia es abismal — estructura, técnica y motivación que no consigues por tu cuenta.', avatar: null },
-  { name: 'Elena Sánchez', date: 'Hace 1 mes', text: 'Como madre de dos niños, necesitaba un sitio con horarios flexibles y resultados. Sport Training cumple con creces. Mi hora favorita del día.', avatar: null },
-  { name: 'Javier Moreno', date: 'Hace 2 meses', text: 'Preparé mi primera HYROX aquí y conseguí un tiempo que ni soñaba. El equipo sabe lo que hace y se nota en cada sesión.', avatar: null },
-  { name: 'Raquel Ortega', date: 'Hace 3 semanas', text: 'El programa de nutrición complementa perfectamente el entrenamiento. Por fin alguien que no te vende suplementos innecesarios.', avatar: null },
-]
+import { reviews, type Review } from '@/data/reviews'
 
 // ---------------------------------------------------------------------------
 // Star icon — filled gold
@@ -37,28 +19,14 @@ function StarIcon() {
 // ---------------------------------------------------------------------------
 // Single review card
 // ---------------------------------------------------------------------------
-function ReviewCard({
-  review,
-  index,
-}: {
-  review: (typeof reviews)[number]
-  index: number
-}) {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-40px' })
-
+function ReviewCard({ review }: { review: Review }) {
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+    <div
       className="flex flex-col bg-[#1A1A1A] border border-white/[0.06] hover:border-[#F1B91E]/30 transition-colors duration-400 group"
       style={{
         flex: '0 0 min(440px, 86vw)',
-        scrollSnapAlign: 'start',
         padding: '2.25rem',
-        minHeight: '280px',
+        height: '360px',
       }}
     >
       {/* Stars */}
@@ -68,19 +36,32 @@ function ReviewCard({
         ))}
       </div>
 
-      {/* Quote text */}
+      {/* Quote text — line-clamped so every card is the same height. The clamp
+          must own the box height (no flex-1 here) AND the card must be tall
+          enough for every clamped line. If the card squeezes the paragraph
+          below the clamp, overflow hides the tail, no ellipsis is drawn, and
+          the review just stops mid-sentence looking broken. The spacer below
+          takes the slack instead. Full text stays in the DOM, so nothing
+          is hidden from screen readers or search engines. */}
       <p
         style={{
           fontFamily: 'var(--font-inter)',
           fontWeight: 400,
           fontStyle: 'italic',
           fontSize: 'var(--fs-lead)',
+          display: '-webkit-box',
+          WebkitBoxOrient: 'vertical',
+          WebkitLineClamp: 5,
+          overflow: 'hidden',
         }}
-        className="text-white/65 leading-relaxed flex-1 mb-6
+        className="text-white/65 leading-relaxed mb-6
                    group-hover:text-white/80 transition-colors duration-400"
       >
         &ldquo;{review.text}&rdquo;
       </p>
+
+      {/* Takes the leftover space so the footer sits flush at the card base */}
+      <div className="flex-1" />
 
       {/* Footer: author + Google mark */}
       <div
@@ -116,10 +97,10 @@ function ReviewCard({
             )}
           </div>
 
-          <div>
+          <div className="min-w-0">
             <p
               style={{ fontFamily: 'var(--font-inter)', fontWeight: 600, fontSize: '1.15rem' }}
-              className="text-white leading-tight"
+              className="text-white leading-tight truncate"
             >
               {review.name}
             </p>
@@ -133,7 +114,7 @@ function ReviewCard({
         </div>
 
         {/* Google mark */}
-        <div className="flex items-center gap-1.5 opacity-30">
+        <div className="flex items-center gap-1.5 opacity-30 flex-shrink-0">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -148,7 +129,7 @@ function ReviewCard({
           </span>
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }
 
@@ -160,27 +141,50 @@ export default function Reviews() {
   const trackRef = useRef<HTMLDivElement>(null)
   const inView = useInView(sectionRef, { once: true, margin: '-80px' })
 
-  const [canScrollLeft, setCanScrollLeft] = useState(false)
-  const [canScrollRight, setCanScrollRight] = useState(true)
+  const [paused, setPaused] = useState(false)
 
-  const updateScrollState = useCallback(() => {
-    const el = trackRef.current
-    if (!el) return
-    setCanScrollLeft(el.scrollLeft > 8)
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 8)
-  }, [])
-
+  // The track holds the list twice; auto-scroll advances scrollLeft and wraps
+  // at the halfway point, so the loop is seamless. Driving the NATIVE scroll
+  // (rather than a CSS transform) keeps drag, swipe, wheel and the arrows
+  // working — the reader can always take over.
   useEffect(() => {
     const el = trackRef.current
     if (!el) return
-    el.addEventListener('scroll', updateScrollState, { passive: true })
-    updateScrollState()
-    return () => el.removeEventListener('scroll', updateScrollState)
-  }, [updateScrollState])
+    if (paused) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    let raf = 0
+    let last = performance.now()
+    const SPEED = 32 // px per second — slow enough to read a card in passing
+
+    const step = (now: number) => {
+      const dt = Math.min(now - last, 100) / 1000
+      last = now
+      // Wrap distance is measured from the layout, not scrollWidth/2: the track
+      // has horizontal padding, so half of scrollWidth is NOT one copy's width
+      // and the seam would jump by that difference on every loop. The offset of
+      // the first duplicated card is the exact distance.
+      const first = el.children[0] as HTMLElement | undefined
+      const seam = el.children[reviews.length] as HTMLElement | undefined
+      const wrapAt = first && seam ? seam.offsetLeft - first.offsetLeft : 0
+      if (wrapAt > 0) {
+        let next = el.scrollLeft + SPEED * dt
+        if (next >= wrapAt) next -= wrapAt
+        el.scrollLeft = next
+      }
+      raf = requestAnimationFrame(step)
+    }
+    raf = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(raf)
+  }, [paused])
 
   const scrollBy = (dir: 'left' | 'right') => {
     trackRef.current?.scrollBy({ left: dir === 'right' ? 440 : -440, behavior: 'smooth' })
   }
+
+  // No genuine reviews to show — render nothing rather than an empty carousel
+  // under a "Reales." heading.
+  if (reviews.length === 0) return null
 
   return (
     <section
@@ -259,18 +263,16 @@ export default function Reviews() {
                 style={{ fontFamily: 'var(--font-inter)', fontWeight: 600 }}
                 className="text-white/40 text-[11px] tracking-[0.12em] uppercase"
               >
-                4.8 &middot; 158 rese&ntilde;as
+                4.8 &middot; 168 rese&ntilde;as
               </span>
             </div>
 
             {/* Prev */}
             <button
               onClick={() => scrollBy('left')}
-              disabled={!canScrollLeft}
               aria-label="Anterior"
               className="w-[46px] h-[46px] flex items-center justify-center border border-white/15
                          text-white/40 hover:border-[#F1B91E] hover:text-[#F1B91E]
-                         disabled:opacity-20 disabled:cursor-not-allowed
                          transition-all duration-300"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -281,11 +283,9 @@ export default function Reviews() {
             {/* Next */}
             <button
               onClick={() => scrollBy('right')}
-              disabled={!canScrollRight}
               aria-label="Siguiente"
               className="w-[46px] h-[46px] flex items-center justify-center border border-white/15
                          text-white/40 hover:border-[#F1B91E] hover:text-[#F1B91E]
-                         disabled:opacity-20 disabled:cursor-not-allowed
                          transition-all duration-300"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -296,23 +296,36 @@ export default function Reviews() {
         </div>
       </div>
 
-      {/* Carousel track */}
-      <div
-        ref={trackRef}
-        className="flex overflow-x-auto scroll-smooth"
-        style={{
-          gap: '1rem',
-          paddingLeft: 'clamp(1.5rem, 5vw, 4rem)',
-          paddingRight: 'clamp(1.5rem, 5vw, 4rem)',
-          paddingBottom: '5rem',
-          scrollSnapType: 'x mandatory',
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-        }}
-      >
-        {reviews.map((review, i) => (
-          <ReviewCard key={i} review={review} index={i} />
-        ))}
+      {/* Scrolling wall — the list is rendered twice so the loop is seamless */}
+      <div className="relative">
+        {/* Edge fades, matching the Marquee treatment */}
+        <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+             style={{ background: 'linear-gradient(to right, #161616, transparent)' }} />
+        <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+             style={{ background: 'linear-gradient(to left, #161616, transparent)' }} />
+
+        <div
+          ref={trackRef}
+          className="flex overflow-x-auto"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocusCapture={() => setPaused(true)}
+          onBlurCapture={() => setPaused(false)}
+          onPointerDown={() => setPaused(true)}
+          onPointerUp={() => setPaused(false)}
+          style={{
+            gap: '1rem',
+            paddingLeft: 'clamp(1.5rem, 5vw, 4rem)',
+            paddingRight: 'clamp(1.5rem, 5vw, 4rem)',
+            paddingBottom: '5rem',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
+          {[...reviews, ...reviews].map((review, i) => (
+            <ReviewCard key={i} review={review} />
+          ))}
+        </div>
       </div>
 
       {/* Hide scrollbar (WebKit) */}

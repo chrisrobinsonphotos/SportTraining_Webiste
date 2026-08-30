@@ -22,22 +22,23 @@ function buildWhatsAppUrl(name: string, phone: string, goal: string, variant: Mo
 
 /**
  * Capture the lead server-side before handing off to WhatsApp.
- * Fire-and-forget: if it fails, the WhatsApp flow still proceeds —
- * but when it works, the lead is recorded (email + GA4) even if the
- * person never sends the WhatsApp message.
+ * Resolves true only when the server accepted the submission — the caller
+ * shows the success screen on true and an inline fallback on false, so a
+ * rejected capture is never presented to the person as if it had worked.
  */
-function captureLead(name: string, phone: string, goal: string, variant: ModalVariant) {
+async function captureLead(name: string, phone: string, goal: string, variant: ModalVariant): Promise<boolean> {
   try {
     const w = window as unknown as { gtag?: (...args: unknown[]) => void }
     w.gtag?.('event', variant === 'nutrition' ? 'nutrition_request' : 'trial_request', { method: 'modal' })
-    void fetch('/api/prueba', {
+    const res = await fetch('/api/prueba', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nombre: name, telefono: phone, interes: goal, canal: variant === 'nutrition' ? 'modal-nutricion' : 'modal' }),
       keepalive: true,
     })
+    return res.ok
   } catch {
-    // non-fatal — WhatsApp handoff is the primary path
+    return false
   }
 }
 
@@ -102,10 +103,12 @@ export default function ContactModal() {
   const [goal, setGoal] = useState<Goal>('HYROX')
   const [nutritionGoal, setNutritionGoal] = useState<NutritionGoal>('Pérdida de grasa')
   const [submitted, setSubmitted] = useState(false)
+  const [submitFailed, setSubmitFailed] = useState(false)
   const [shakeFields, setShakeFields] = useState<{ name: boolean; phone: boolean }>({ name: false, phone: false })
 
   const nameRef = useRef<HTMLInputElement>(null)
   const phoneRef = useRef<HTMLInputElement>(null)
+  const submittingRef = useRef(false)
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -148,6 +151,7 @@ export default function ContactModal() {
     setOpen(false)
     setTimeout(() => {
       setSubmitted(false)
+      setSubmitFailed(false)
       setName('')
       setPhone('')
       setGoal('HYROX')
@@ -161,8 +165,10 @@ export default function ContactModal() {
     setTimeout(() => setShakeFields(prev => ({ ...prev, [field]: false })), 600)
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (submittingRef.current) return
+
     const trimmedName = name.trim()
     const trimmedPhone = phone.trim()
 
@@ -171,14 +177,30 @@ export default function ContactModal() {
     if (!trimmedPhone) { flashField('phone'); valid = false }
     if (!valid) return
 
+    submittingRef.current = true
+    setSubmitFailed(false)
+
     const activeGoal = variant === 'nutrition' ? nutritionGoal : goal
-    captureLead(trimmedName, trimmedPhone, activeGoal, variant)
+
+    // Opened synchronously, before the await — a window.open() resumed after an
+    // async gap is no longer tied to the click and gets blocked as a popup.
     window.open(buildWhatsAppUrl(trimmedName, trimmedPhone, activeGoal, variant), '_blank')
-    setSubmitted(true)
+
+    const captured = await captureLead(trimmedName, trimmedPhone, activeGoal, variant)
+    submittingRef.current = false
+
+    if (captured) {
+      setSubmitted(true)
+    } else {
+      // Keep the entered values on screen: the WhatsApp button below is the
+      // fallback, and the person should not have to retype anything.
+      setSubmitFailed(true)
+    }
   }
 
   function reset() {
     setSubmitted(false)
+    setSubmitFailed(false)
     setName('')
     setPhone('')
     setGoal('HYROX')
@@ -417,11 +439,37 @@ export default function ContactModal() {
                       </a>
                     </div>
 
+                    {/* Submission failed — values kept, WhatsApp below is the fallback */}
+                    {submitFailed && (
+                      <div
+                        role="alert"
+                        className="mb-4"
+                        style={{
+                          fontFamily: 'var(--font-inter)',
+                          fontWeight: 400,
+                          fontSize: '0.9rem',
+                          lineHeight: 1.6,
+                          color: 'rgba(255,255,255,0.75)',
+                          border: '1px solid #b8920f',
+                          borderLeftWidth: '3px',
+                          background: 'rgba(184,146,15,0.08)',
+                          padding: '1rem 1.25rem',
+                        }}
+                      >
+                        No hemos podido registrar tu solicitud. Escríbenos por WhatsApp
+                        y te atendemos igualmente — tus datos siguen aquí.
+                      </div>
+                    )}
+
                     {/* WhatsApp button */}
                     <a
                       href={`https://wa.me/${WA_NUMBER}`}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => {
+                        const w = window as unknown as { gtag?: (...args: unknown[]) => void }
+                        w.gtag?.('event', 'trial_request', { method: 'modal_whatsapp' })
+                      }}
                       className="w-full bg-[#25D366] text-white flex items-center justify-center gap-3 hover:brightness-110 transition-all duration-150"
                       style={{
                         fontFamily: 'var(--font-inter)',
