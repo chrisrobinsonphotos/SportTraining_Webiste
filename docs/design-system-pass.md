@@ -45,6 +45,6 @@ Plus layout primitives: `--section-pad-y/x`, `--container-max`, and helper class
 
 ## To preview
 ```
-cd ~/Documents/CoworkOS/SportTraining/development/st-web && npm run dev
+cd ~/Developer/CoworkOS/Clients/SportTraining/development/st-web && npm run dev
 ```
 Open http://localhost:3000 — tell me it's up and I'll drive your browser through each section for the before/after. Nothing is committed or pushed.

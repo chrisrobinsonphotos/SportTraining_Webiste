@@ -3,7 +3,7 @@
 **Domain:** sporttraining.es
 **Stack:** Next.js 16.2 · React 19 · TypeScript · Tailwind CSS 4 · Framer Motion
 **Deployment:** Vercel, auto-deploy from `main`
-**Repo:** github.com/chrisrobinsonphotos/SportTraining_Webiste — local checkout at `~/Documents/CoworkOS/Clients/SportTraining/development/st-web/`
+**Repo:** github.com/chrisrobinsonphotos/SportTraining_Webiste — local checkout at `~/Developer/CoworkOS/Clients/SportTraining/development/st-web/`
 **Last updated:** 2026-07-23
 
 ---
