@@ -1,16 +1,22 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
+import { recordLead, markEmail } from '@/lib/leads'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 /**
  * Trial day request endpoint.
  * Receives requests from /prueba (page form) and ContactModal (background capture).
- * 1. Always: notification email to the team via Resend.
- * 2. If email present: push subscriber to MailerLite trial-leads group
+ *
+ * Order matters:
+ * 1. Persist the lead to Postgres. This is the system of record — if it fails
+ *    the request fails, because a submission we cannot store is a lost lead.
+ * 2. Notification email to the team via Resend, recorded against the lead.
+ *    A failed send no longer loses the enquiry, so it does NOT fail the
+ *    request; it is flagged on the row and surfaced in the daily digest.
+ * 3. If email present: push subscriber to MailerLite trial-leads group
  *    (MAILERLITE_TRIAL_GROUP_ID, falls back to MAILERLITE_GROUP_ID).
- * MailerLite failures never fail the request — the notification email is the
- * system of record until FitNova has an API.
+ * MailerLite failures never fail the request.
  */
 export async function POST(req: Request) {
   try {
@@ -19,6 +25,24 @@ export async function POST(req: Request) {
 
     if (!nombre || !telefono) {
       return NextResponse.json({ error: 'Faltan campos obligatorios' }, { status: 400 })
+    }
+
+    // ── Persist first: this is the system of record ─────────────────────────
+    let leadId: number
+    try {
+      const lead = await recordLead({
+        source: 'prueba',
+        canal: canal ?? null,
+        nombre,
+        telefono,
+        email: email ?? null,
+        interes: interes ?? null,
+        mensaje: mensaje ?? null,
+      })
+      leadId = lead.id
+    } catch (dbError) {
+      console.error('Lead store write failed (trial request) — submission NOT saved:', dbError)
+      return NextResponse.json({ error: 'Error al enviar la solicitud' }, { status: 502 })
     }
 
     // ── Notification email ──────────────────────────────────────────────────
@@ -48,11 +72,14 @@ export async function POST(req: Request) {
     })
 
     // The Resend SDK resolves with { data, error } instead of throwing on API
-    // errors, so this has to be inspected explicitly — otherwise a rejected
-    // send is indistinguishable from a delivered one and the lead is lost.
+    // errors, so this has to be inspected explicitly. The lead is already
+    // stored at this point, so a failed send is recorded rather than returned
+    // as an error — the submission genuinely succeeded.
     if (emailError) {
       console.error('Resend send failed (trial request):', emailError)
-      return NextResponse.json({ error: 'Error al enviar la solicitud' }, { status: 502 })
+      await markEmail(leadId, false, String((emailError as { message?: string })?.message ?? emailError))
+    } else {
+      await markEmail(leadId, true)
     }
 
     // ── MailerLite trial lead (best-effort, requires email) ─────────────────

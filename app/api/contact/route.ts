@@ -1,5 +1,6 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
+import { recordLead, markEmail } from '@/lib/leads'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -10,6 +11,26 @@ export async function POST(req: Request) {
 
     if (!nombre || !email) {
       return NextResponse.json({ error: 'Faltan campos obligatorios' }, { status: 400 })
+    }
+
+    // ── Persist first: this is the system of record. A submission we cannot
+    //    store is a lost enquiry, so a failure here fails the request. ───────
+    let leadId: number
+    try {
+      const lead = await recordLead({
+        source: 'contact',
+        canal: 'pagina',
+        nombre,
+        telefono: telefono ?? null,
+        email,
+        interes: interes ?? null,
+        mensaje: mensaje ?? null,
+        subscribe: !!subscribe,
+      })
+      leadId = lead.id
+    } catch (dbError) {
+      console.error('Lead store write failed (contact form) — submission NOT saved:', dbError)
+      return NextResponse.json({ error: 'Error al enviar el mensaje' }, { status: 502 })
     }
 
     // ── Notification email ──────────────────────────────────────────────────
@@ -36,11 +57,13 @@ export async function POST(req: Request) {
     })
 
     // The Resend SDK resolves with { data, error } instead of throwing on API
-    // errors, so this has to be inspected explicitly — otherwise a rejected
-    // send is indistinguishable from a delivered one and the enquiry is lost.
+    // errors, so this has to be inspected explicitly. The enquiry is already
+    // stored, so a failed send is recorded rather than returned as an error.
     if (emailError) {
       console.error('Resend send failed (contact form):', emailError)
-      return NextResponse.json({ error: 'Error al enviar el mensaje' }, { status: 502 })
+      await markEmail(leadId, false, String((emailError as { message?: string })?.message ?? emailError))
+    } else {
+      await markEmail(leadId, true)
     }
 
     // ── MailerLite subscriber (if opted in) ─────────────────────────────────
