@@ -199,13 +199,21 @@ await db.query(`
     ('contact', 'R4', 'new',       now() - interval '2 days',  null, null, null, null),
     ('contact', 'R5', 'new',       now() - interval '40 days', null, null, null, null)
 `)
-check('fixtures loaded', (await db.query('select count(*)::int as n from leads')).rows[0].n === 5)
+// R4 was captured after attribution shipped and genuinely had no source.
+// R6 predates instrumentation entirely. Both have null utm and null referrer,
+// so landing_page is the only thing that tells them apart.
+await db.query(`update leads set landing_page = '/' where nombre = 'R4'`)
+await db.query(`
+  insert into leads (source, nombre, status, created_at, contacted_at, utm_source, utm_medium, referrer)
+  values ('contact', 'R6', 'new', now() - interval '3 days', null, null, null, null)
+`)
+check('fixtures loaded', (await db.query('select count(*)::int as n from leads')).rows[0].n === 6)
 
 console.log('\nresponse times')
 const rt = (await db.query(Q.RESPONSE_TIMES, ['30'])).rows[0]
 check('RESPONSE_TIMES counts the answered ones', rt.answered === 3, `got ${rt.answered}`)
 check('RESPONSE_TIMES excludes the 40-day-old row from the window',
-  rt.unanswered === 1, `got ${rt.unanswered}`)
+  rt.unanswered === 2, `got ${rt.unanswered}`)
 check('RESPONSE_TIMES median is the middle of 2 h / 6 h / 40 h',
   Math.abs(Number(rt.median_hours) - 6) < 0.01, `got ${rt.median_hours}`)
 check('RESPONSE_TIMES worst is the 40 h one',
@@ -234,9 +242,24 @@ const counts = Object.fromEntries(
 check('STATUS_COUNTS counts contacted', counts.contacted === 2, JSON.stringify(counts))
 check('STATUS_COUNTS counts converted', counts.converted === 1, JSON.stringify(counts))
 check('STATUS_COUNTS is all-time, so the 40-day-old new lead still counts',
-  counts.new === 2, JSON.stringify(counts))
+  counts.new === 3, JSON.stringify(counts))
 check('STATUS_COUNTS omits statuses with no rows (the caller fills the zeros)',
   counts.lost === undefined, JSON.stringify(counts))
+
+// The windowed variant is what the dashboard funnel reads. If it ever returned
+// all-time numbers the funnel would widen as it descends, which is not a funnel.
+const w = Object.fromEntries(
+  (await db.query(Q.STATUS_COUNTS_WINDOW, ['30'])).rows.map(r => [r.status, r.n]))
+check('STATUS_COUNTS_WINDOW excludes the 40-day-old lead that STATUS_COUNTS counts',
+  w.new === 2 && counts.new === 3, `windowed ${JSON.stringify(w)} vs all-time ${JSON.stringify(counts)}`)
+check('STATUS_COUNTS_WINDOW still counts the answered ones',
+  w.contacted === 2 && w.converted === 1, JSON.stringify(w))
+// The funnel invariant: replied can never exceed the enquiries it came from.
+const arrived30 = (await db.query(
+  `select count(*)::int as n from leads where created_at >= now() - interval '30 days'`)).rows[0].n
+check('windowed statuses sum to the number of leads that arrived in the window',
+  Object.values(w).reduce((a, b) => a + b, 0) === arrived30,
+  `${JSON.stringify(w)} vs ${arrived30} arrived`)
 
 console.log('\nattribution breakdown')
 const attrRows = await db.query(Q.ATTRIBUTION_BREAKDOWN, ['30'])
@@ -247,10 +270,15 @@ check('ATTRIBUTION_BREAKDOWN groups tagged traffic by utm_source',
 check('ATTRIBUTION_BREAKDOWN falls back to the referring host, www stripped',
   by['google.com']?.n === 1 && by['google.com']?.medio === 'referral',
   JSON.stringify(attrRows.rows))
-check("ATTRIBUTION_BREAKDOWN calls untagged, unreferred traffic 'directo'",
+check("ATTRIBUTION_BREAKDOWN calls instrumented, unreferred traffic 'directo'",
   by.directo?.n === 1, JSON.stringify(attrRows.rows))
+// The distinction that stops the panel reporting "100% direct" for a month.
+check("ATTRIBUTION_BREAKDOWN calls pre-instrumentation rows 'sin datos', not 'directo'",
+  by['sin datos']?.n === 1, JSON.stringify(attrRows.rows))
+check("'sin datos' is not silently folded into 'directo'",
+  by.directo?.n !== 2, JSON.stringify(attrRows.rows))
 check('ATTRIBUTION_BREAKDOWN window excludes the 40-day-old row',
-  attrRows.rows.reduce((t, r) => t + r.n, 0) === 4,
+  attrRows.rows.reduce((t, r) => t + r.n, 0) === 5,
   JSON.stringify(attrRows.rows))
 check('ATTRIBUTION_BREAKDOWN reports how many of each source were worked',
   by.instagram?.contactados === 2 && by.directo?.contactados === 0,

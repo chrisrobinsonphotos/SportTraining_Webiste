@@ -6,6 +6,7 @@ import {
   getInterestBreakdown,
   getResponseTimes,
   getStatusCounts,
+  getStatusCountsWindow,
   getAttributionBreakdown,
 } from '@/lib/leads'
 
@@ -36,7 +37,7 @@ export async function GET(req: Request) {
   }
 
   try {
-    const [summary, pending, recent, interests, response, statuses, attribution] =
+    const [summary, pending, recent, interests, response, statuses, statuses30, attribution] =
       await Promise.all([
         getLeadSummary(),
         getPendingLeads(),
@@ -44,6 +45,7 @@ export async function GET(req: Request) {
         getInterestBreakdown(30),
         getResponseTimes(30),
         getStatusCounts(),
+        getStatusCountsWindow(30),
         getAttributionBreakdown(30),
       ])
 
@@ -67,6 +69,13 @@ export async function GET(req: Request) {
 
       /** Every status key present, zeros included. All time — a 'new' lead never ages out. */
       status_counts: statuses,
+
+      /**
+       * The same counts restricted to leads that ARRIVED in the window. The
+       * dashboard funnel needs this: its Enquiries stage is a 30-day figure, so
+       * an all-time reply count beside it could read higher than the stage above.
+       */
+      status_counts_30d: statuses30,
 
       /**
        * Where the last 30 days of enquiries came from: utm_source when tagged,

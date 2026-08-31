@@ -122,23 +122,59 @@ export const STATUS_COUNTS = `
 `
 
 /**
+ * The same counts, but only for leads that ARRIVED in the window.
+ *
+ * The funnel on the dashboard needs this rather than the all-time version.
+ * Its Enquiries stage is a 30-day figure, so pairing it with an all-time
+ * "replied" count would let a later stage read higher than the one above it —
+ * a funnel that widens as it descends is not measuring a funnel.
+ */
+export const STATUS_COUNTS_WINDOW = `
+  select status, count(*)::int as n
+  from leads
+  where created_at >= now() - ($1 || ' days')::interval
+  group by status
+  order by n desc, status asc
+`
+
+/**
  * Where enquiries actually came from, last N days.
  *
  * utm_source wins when it is there; otherwise the referring host, which is what
  * distinguishes a Business Profile click from Instagram from organic search.
- * Neither present means the person typed the address or arrived with the
- * referrer stripped — that is 'directo', not missing data.
+ *
+ * The last fallback is split in two, and the distinction is the whole point:
+ *
+ *   'directo'   — instrumented, and genuinely no source. The person typed the
+ *                 address, used a bookmark, or arrived with the referrer stripped.
+ *   'sin datos' — never instrumented. Submitted before attribution existed
+ *                 (everything before 30 Aug 2026), so there is nothing to know.
+ *
+ * `landing_page` is the discriminator because the client sets it from
+ * `location.pathname + search` on every capture, including direct traffic — see
+ * lib/attribution.ts. So a null there means the row predates the instrumentation,
+ * not that the visit had no page.
+ *
+ * Collapsing the two would be actively misleading: every one of the 25 leads in
+ * the store at the time this shipped predates attribution, so a single 'directo'
+ * bucket would have reported 100% direct traffic for a month when the honest
+ * answer was "not measured yet".
  */
 export const ATTRIBUTION_BREAKDOWN = `
   select
     coalesce(
       nullif(utm_source, ''),
       nullif(substring(referrer from '^[a-zA-Z][a-zA-Z0-9+.-]*://(?:www[.])?([^/?#]+)'), ''),
-      'directo'
+      case when landing_page is null then 'sin datos' else 'directo' end
     )                                                                as fuente,
     coalesce(
       nullif(utm_medium, ''),
-      case when coalesce(referrer, '') = '' then 'directo' else 'referral' end
+      -- Referrer first: if we know where they came from, the row is not
+      -- 'sin datos' whatever landing_page says. Checking landing_page first
+      -- let a row report fuente 'google.com' alongside medio 'sin datos'.
+      case when coalesce(referrer, '') <> ''      then 'referral'
+           when landing_page is null              then 'sin datos'
+           else 'directo' end
     )                                                                as medio,
     count(*)::int                                                    as n,
     count(*) filter (where contacted_at is not null)::int             as contactados

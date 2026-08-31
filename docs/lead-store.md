@@ -88,6 +88,17 @@ nothing — there was no way for a lead to leave the queue.
 With neither, it refuses. With a secret unset it returns `503` rather than
 falling open.
 
+The confirmation page offers three outcomes, not one. The emailed link only
+ever authorises `contacted`; the page mints separate signed tokens for
+`converted` and `lost` server-side, where the key lives. No token-format change
+was needed — the format already binds one status per token, which is what makes
+issuing three of them safe.
+
+Without those buttons `status_counts.converted` could never leave zero, and the
+dashboard's Converted funnel stage would be a decoration. `converted` and `lost`
+are terminal: the page stops offering actions once a lead reaches either, rather
+than letting a closed lead be reopened by whoever still holds an old link.
+
 `contacted_at` is a **first**-response timestamp. Moving a lead on to
 `converted` or `lost` keeps the original stamp — otherwise every later status
 change would reset the clock and flatter the response-time figures. Moving a
@@ -145,6 +156,25 @@ before it reaches the insert.
 `canal` is untouched and still means what it meant: **which control** they
 used. Attribution answers **which channel** they came from. Both are useful.
 
+### 'directo' is not the same as 'sin datos'
+
+Added 2026-08-31. `ATTRIBUTION_BREAKDOWN` reports two different kinds of
+absence, and collapsing them is actively misleading:
+
+- **`directo`** — instrumented, and genuinely no source. Typed the address,
+  used a bookmark, or arrived with the referrer stripped.
+- **`sin datos`** — never instrumented. Submitted before attribution existed.
+
+`landing_page` is the discriminator: the client sets it from
+`location.pathname + search` on every capture, *including* direct traffic, so a
+null there means the row predates instrumentation rather than that the visit had
+no page.
+
+This matters because every one of the 25 leads in the store when attribution
+shipped predates it. With a single bucket the dashboard reported **`directo`
+25 — 100% direct traffic** for the whole 30-day window, when the honest answer
+was "not measured yet". That was observed on the live endpoint, not theorised.
+
 ### Reading it
 
 `GET /api/leads/summary` gained three keys:
@@ -156,6 +186,10 @@ used. Attribution answers **which channel** they came from. Both are useful.
   2-hour response time.
 - `status_counts` — all four statuses, zeros included. All time, because a
   `new` lead never ages out of the queue.
+- `status_counts_30d` — the same, restricted to leads that **arrived** in the
+  window. This is the one the dashboard funnel reads: its Enquiries stage is a
+  30-day figure, so an all-time reply count beside it could read higher than the
+  stage above, and a funnel that widens as it descends is not a funnel.
 - `attribution` — last 30 days grouped by `utm_source`, falling back to the
   referring host (`www.` stripped), falling back to `directo`. `contactados`
   per row shows how many of each source were actually worked.
@@ -206,9 +240,10 @@ it now back-dates the first stamp by three hours so it actually bites.
   there, so the first month of numbers covers only leads worked after that
   date. That is accurate, not a gap — but do not read it as "we never
   responded to anyone before September".
-- The monitoring dashboard (`development/monitoring/render_dashboard.py`) does
-  not yet render `response_times`, `status_counts` or `attribution`. The API
-  serves them; nothing draws them.
+- ~~The monitoring dashboard does not yet render `response_times`,
+  `status_counts` or `attribution`.~~ **Done 2026-08-31** — the funnel now runs
+  through to Converted, the Enquiries stage carries median/worst reply times
+  with their coverage, and there is a "Where enquiries come from" panel.
 - The three Nutrición components still point at `wa.me/34600000000`, a
   placeholder number. Deferred by the owner, so they carry no origin token
   either.

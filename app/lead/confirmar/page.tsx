@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { verifyLeadToken } from '@/lib/lead-token'
+import { verifyLeadToken, signLeadToken } from '@/lib/lead-token'
 import { getLead } from '@/lib/leads'
-import LeadStatusConfirm from '@/components/LeadStatusConfirm'
+import LeadStatusConfirm, { type LeadAction } from '@/components/LeadStatusConfirm'
 
 /**
  * Confirmation page for the one-click link in the daily digest.
@@ -147,6 +147,50 @@ export default async function ConfirmarPage({
   const alreadyDone = currentStatus !== 'new'
   const contactedAt = lead.contacted_at ? new Date(String(lead.contacted_at)) : null
 
+  // 'converted' and 'lost' are terminal — there is nothing left to record, so
+  // the page stops offering actions rather than letting a closed lead be
+  // reopened by whoever still holds an old link.
+  const terminal = currentStatus === 'converted' || currentStatus === 'lost'
+
+  /**
+   * Each outcome gets its own freshly-signed token, minted here on the server
+   * where LEAD_ACTION_SECRET lives. The emailed link only ever authorises
+   * 'contacted'; these are additional grants for THIS lead, issued because a
+   * human is already looking at the page.
+   *
+   * Without them `status_counts.converted` could never move off zero, and the
+   * funnel's Converted stage would be a decoration.
+   */
+  const actions: LeadAction[] = []
+  if (!terminal) {
+    if (!alreadyDone) {
+      actions.push({
+        token: t as string,
+        label: 'Marcar como contactada',
+        doneLabel: 'Marcada como contactada',
+        tone: 'primary',
+      })
+    }
+    const converted = signLeadToken(result.id, 'converted')
+    const lost = signLeadToken(result.id, 'lost')
+    if (converted) {
+      actions.push({
+        token: converted,
+        label: 'Se apuntó',
+        doneLabel: 'Marcada como convertida',
+        tone: alreadyDone ? 'primary' : 'secondary',
+      })
+    }
+    if (lost) {
+      actions.push({
+        token: lost,
+        label: 'No siguió',
+        doneLabel: 'Marcada como perdida',
+        tone: 'secondary',
+      })
+    }
+  }
+
   const fecha = created.toLocaleString('es-ES', {
     day: 'numeric',
     month: 'long',
@@ -196,24 +240,30 @@ export default async function ConfirmarPage({
         </a>
       )}
 
-      {alreadyDone ? (
+      {terminal ? (
         <Body>
-          Ya estaba marcada como <strong className="text-white/80">{(STATUS_LABEL[currentStatus] ?? currentStatus).toLowerCase()}</strong>, así que
-          no hay nada que hacer aquí. Desaparecerá del resumen diario.
+          Está marcada como <strong className="text-white/80">{(STATUS_LABEL[currentStatus] ?? currentStatus).toLowerCase()}</strong>, así que
+          no hay nada más que hacer aquí.
         </Body>
       ) : (
         <>
-          <LeadStatusConfirm
-            token={t as string}
-            label="Marcar como contactada"
-            doneLabel="Marcada como contactada"
-          />
+          {alreadyDone && (
+            <p
+              style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
+              className="text-white/50 text-[0.95rem] leading-relaxed mb-5"
+            >
+              Ya estaba marcada como <strong className="text-white/80">contactada</strong>. Si ya sabes
+              cómo ha terminado, ciérrala aquí.
+            </p>
+          )}
+          <LeadStatusConfirm actions={actions} />
           <p
             style={{ fontFamily: 'var(--font-inter)', fontWeight: 300 }}
             className="text-white/35 text-[0.8rem] leading-relaxed mt-4"
           >
-            Sale de la lista de pendientes y queda registrado cuánto ha tardado la respuesta.
-            Nada cambia hasta que pulses el botón.
+            {alreadyDone
+              ? 'Cerrarla la saca de la lista para siempre. Nada cambia hasta que pulses un botón.'
+              : 'Sale de la lista de pendientes y queda registrado cuánto ha tardado la respuesta. Nada cambia hasta que pulses un botón.'}
           </p>
         </>
       )}

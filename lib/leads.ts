@@ -11,6 +11,7 @@ import {
   GET_LEAD,
   RESPONSE_TIMES,
   STATUS_COUNTS,
+  STATUS_COUNTS_WINDOW,
   ATTRIBUTION_BREAKDOWN,
 } from './leads-sql'
 
@@ -207,4 +208,20 @@ export async function getAttributionBreakdown(days = 30) {
     n: number
     contactados: number
   }[]
+}
+
+/**
+ * Status counts for leads that arrived in the window. Same zero-filling as the
+ * all-time version — a dashboard reading `converted` needs 0, not undefined.
+ */
+export async function getStatusCountsWindow(days = 30): Promise<Record<LeadStatus, number>> {
+  const rows = (await db().query(STATUS_COUNTS_WINDOW, [String(days)])) as {
+    status: string
+    n: number
+  }[]
+  const out = Object.fromEntries(LEAD_STATUSES.map((s) => [s, 0])) as Record<LeadStatus, number>
+  for (const row of rows) {
+    if (isLeadStatus(row.status)) out[row.status] = Number(row.n)
+  }
+  return out
 }
