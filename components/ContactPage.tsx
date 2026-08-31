@@ -8,7 +8,12 @@ import ContactForm from './ContactForm'
 
 const PHONE = '622443495'
 const PHONE_DISPLAY = '622 443 495'
-const WHATSAPP_URL = `https://wa.me/34${PHONE}`
+// Origin token in the pre-filled message — see components/ContactModal.tsx.
+// /contacto is its own placement, so it gets its own token rather than
+// borrowing web-modal and blurring two different journeys together.
+const WA_ORIGIN = 'web-contacto'
+const WA_MESSAGE = `Hola Sport Training, quiero información. (${WA_ORIGIN})`
+const WHATSAPP_URL = `https://wa.me/34${PHONE}?text=${encodeURIComponent(WA_MESSAGE)}`
 const CALL_URL = `tel:+34${PHONE}`
 const ADDRESS = 'C. Cisne, 3, 30009 Murcia'
 const MAPS_LINK = `https://maps.google.com/?q=Sport+Training+Murcia,+C.+Cisne+3,+30009+Murcia`

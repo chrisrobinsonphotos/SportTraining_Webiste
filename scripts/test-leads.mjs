@@ -42,7 +42,8 @@ check('schema is idempotent (re-run is clean)', true)
 
 console.log('\nconstraints')
 try {
-  await db.query(Q.INSERT_LEAD, ['facebook', null, 'X', null, null, null, null, false])
+  await db.query(Q.INSERT_LEAD, ['facebook', null, 'X', null, null, null, null, false,
+    null, null, null, null, null, null])
   check('rejects an unknown source', false, 'the check constraint did not fire')
 } catch {
   check('rejects an unknown source', true)
@@ -63,6 +64,7 @@ try {
 console.log('\ninsert')
 const ins = await db.query(Q.INSERT_LEAD, [
   'prueba', 'modal', 'Laura Sahelices', '666375898', null, 'HYROX', null, false,
+  'instagram', 'social', 'hyrox-abril', 'story-2', 'https://l.instagram.com/', '/prueba?utm_source=instagram',
 ])
 const id = ins.rows[0]?.id
 check('INSERT_LEAD returns id and created_at', !!id && !!ins.rows[0]?.created_at)
@@ -70,6 +72,19 @@ check('INSERT_LEAD returns id and created_at', !!id && !!ins.rows[0]?.created_at
 const defaults = await db.query('select status, email_sent, subscribe from leads where id = $1', [id])
 check("status defaults to 'new'", defaults.rows[0].status === 'new', `got ${defaults.rows[0].status}`)
 check('email_sent defaults to false', defaults.rows[0].email_sent === false)
+check('contacted_at starts null',
+  (await db.query('select contacted_at from leads where id = $1', [id])).rows[0].contacted_at === null)
+
+console.log('\nattribution columns')
+const attr = (await db.query(
+  'select utm_source, utm_medium, utm_campaign, utm_content, referrer, landing_page from leads where id = $1',
+  [id])).rows[0]
+check('INSERT_LEAD stores all six attribution columns',
+  attr.utm_source === 'instagram' && attr.utm_medium === 'social' &&
+  attr.utm_campaign === 'hyrox-abril' && attr.utm_content === 'story-2' &&
+  attr.referrer === 'https://l.instagram.com/' &&
+  attr.landing_page === '/prueba?utm_source=instagram',
+  JSON.stringify(attr))
 
 console.log('\nemail telemetry')
 await db.query(Q.MARK_EMAIL_FAILED, [id, 'Domain not verified'])
@@ -128,6 +143,118 @@ const withBlank = await db.query(Q.INTEREST_BREAKDOWN, ['30'])
 check("INTEREST_BREAKDOWN labels blank interest as 'sin especificar'",
   withBlank.rows.some(r => r.interes === 'sin especificar'),
   JSON.stringify(withBlank.rows))
+
+console.log('\nsingle lead')
+const one = (await db.query(Q.GET_LEAD, [id])).rows[0]
+check('GET_LEAD returns the lead the confirmation page shows',
+  one && one.nombre === 'Laura Sahelices' && one.status === 'new',
+  JSON.stringify(one))
+check('GET_LEAD on a missing id returns nothing',
+  (await db.query(Q.GET_LEAD, [999999])).rows.length === 0)
+
+console.log('\nstatus transitions')
+const moved = (await db.query(Q.SET_LEAD_STATUS, [id, 'contacted'])).rows[0]
+check('SET_LEAD_STATUS returns the updated row',
+  !!moved && moved.status === 'contacted', JSON.stringify(moved))
+check('SET_LEAD_STATUS stamps contacted_at', moved.contacted_at !== null)
+
+// The metric is time to FIRST response, so a later move must not rewrite it —
+// otherwise marking an old lead 'converted' would silently reset its clock and
+// flatter every response-time figure that reads the column.
+// Back-dated deliberately. Comparing two consecutive now() calls would not
+// prove anything here — PGlite answers both within the same millisecond, so
+// the assertion passed even with the coalesce removed. Hours apart, it bites.
+await db.query(`update leads set contacted_at = now() - interval '3 hours' where id = $1`, [id])
+const firstStamp = String(
+  (await db.query('select contacted_at from leads where id = $1', [id])).rows[0].contacted_at)
+const converted = (await db.query(Q.SET_LEAD_STATUS, [id, 'converted'])).rows[0]
+check('a later status change keeps the FIRST contacted_at',
+  String(converted.contacted_at) === firstStamp,
+  `${firstStamp} -> ${converted.contacted_at}`)
+
+const reopened = (await db.query(Q.SET_LEAD_STATUS, [id, 'new'])).rows[0]
+check("moving back to 'new' clears contacted_at — it is unanswered again",
+  reopened.contacted_at === null, `got ${reopened.contacted_at}`)
+
+check('SET_LEAD_STATUS on a missing id returns no row (callers must 404)',
+  (await db.query(Q.SET_LEAD_STATUS, [999999, 'contacted'])).rows.length === 0)
+
+try {
+  await db.query(Q.SET_LEAD_STATUS, [id, 'banana'])
+  check('SET_LEAD_STATUS cannot write an unknown status', false, 'the check constraint did not fire')
+} catch {
+  check('SET_LEAD_STATUS cannot write an unknown status', true)
+}
+
+// ── Aggregates need a table whose every row is known, so the median and the
+//    window boundaries can be asserted as exact numbers rather than "looks
+//    about right". Everything above has already run against the earlier rows.
+console.log('\nreporting fixtures')
+await db.query('delete from leads')
+await db.query(`
+  insert into leads (source, nombre, status, created_at, contacted_at, utm_source, utm_medium, referrer) values
+    ('prueba',  'R1', 'contacted', now() - interval '10 days', now() - interval '10 days' + interval '2 hours',  'instagram', 'social', null),
+    ('prueba',  'R2', 'contacted', now() - interval '9 days',  now() - interval '9 days'  + interval '6 hours',  'instagram', 'social', null),
+    ('prueba',  'R3', 'converted', now() - interval '8 days',  now() - interval '8 days'  + interval '40 hours', null, null, 'https://www.google.com/search?q=gimnasio+murcia'),
+    ('contact', 'R4', 'new',       now() - interval '2 days',  null, null, null, null),
+    ('contact', 'R5', 'new',       now() - interval '40 days', null, null, null, null)
+`)
+check('fixtures loaded', (await db.query('select count(*)::int as n from leads')).rows[0].n === 5)
+
+console.log('\nresponse times')
+const rt = (await db.query(Q.RESPONSE_TIMES, ['30'])).rows[0]
+check('RESPONSE_TIMES counts the answered ones', rt.answered === 3, `got ${rt.answered}`)
+check('RESPONSE_TIMES excludes the 40-day-old row from the window',
+  rt.unanswered === 1, `got ${rt.unanswered}`)
+check('RESPONSE_TIMES median is the middle of 2 h / 6 h / 40 h',
+  Math.abs(Number(rt.median_hours) - 6) < 0.01, `got ${rt.median_hours}`)
+check('RESPONSE_TIMES worst is the 40 h one',
+  Math.abs(Number(rt.worst_hours) - 40) < 0.01, `got ${rt.worst_hours}`)
+
+// With nothing answered there is no median to report, and reporting 0 would
+// read as "instant replies" on the dashboard. It has to be null.
+await db.query(`update leads set status = 'new', contacted_at = null`)
+const rtEmpty = (await db.query(Q.RESPONSE_TIMES, ['30'])).rows[0]
+check('RESPONSE_TIMES reports null, not zero, when nothing was answered',
+  rtEmpty.answered === 0 && rtEmpty.median_hours === null && rtEmpty.worst_hours === null,
+  JSON.stringify(rtEmpty))
+await db.query(`
+  update leads set status = 'contacted', contacted_at = created_at + interval '2 hours'  where nombre = 'R1';
+`)
+await db.query(`
+  update leads set status = 'contacted', contacted_at = created_at + interval '6 hours'  where nombre = 'R2';
+`)
+await db.query(`
+  update leads set status = 'converted', contacted_at = created_at + interval '40 hours' where nombre = 'R3';
+`)
+
+console.log('\nstatus counts')
+const counts = Object.fromEntries(
+  (await db.query(Q.STATUS_COUNTS)).rows.map(r => [r.status, r.n]))
+check('STATUS_COUNTS counts contacted', counts.contacted === 2, JSON.stringify(counts))
+check('STATUS_COUNTS counts converted', counts.converted === 1, JSON.stringify(counts))
+check('STATUS_COUNTS is all-time, so the 40-day-old new lead still counts',
+  counts.new === 2, JSON.stringify(counts))
+check('STATUS_COUNTS omits statuses with no rows (the caller fills the zeros)',
+  counts.lost === undefined, JSON.stringify(counts))
+
+console.log('\nattribution breakdown')
+const attrRows = await db.query(Q.ATTRIBUTION_BREAKDOWN, ['30'])
+const by = Object.fromEntries(attrRows.rows.map(r => [r.fuente, r]))
+check('ATTRIBUTION_BREAKDOWN groups tagged traffic by utm_source',
+  by.instagram?.n === 2 && by.instagram?.medio === 'social',
+  JSON.stringify(attrRows.rows))
+check('ATTRIBUTION_BREAKDOWN falls back to the referring host, www stripped',
+  by['google.com']?.n === 1 && by['google.com']?.medio === 'referral',
+  JSON.stringify(attrRows.rows))
+check("ATTRIBUTION_BREAKDOWN calls untagged, unreferred traffic 'directo'",
+  by.directo?.n === 1, JSON.stringify(attrRows.rows))
+check('ATTRIBUTION_BREAKDOWN window excludes the 40-day-old row',
+  attrRows.rows.reduce((t, r) => t + r.n, 0) === 4,
+  JSON.stringify(attrRows.rows))
+check('ATTRIBUTION_BREAKDOWN reports how many of each source were worked',
+  by.instagram?.contactados === 2 && by.directo?.contactados === 0,
+  JSON.stringify(attrRows.rows))
 
 console.log(failures === 0 ? '\nAll checks passed.\n' : `\n${failures} check(s) FAILED.\n`)
 process.exit(failures === 0 ? 0 : 1)

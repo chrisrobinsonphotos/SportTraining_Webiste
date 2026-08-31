@@ -1,13 +1,13 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
-import { recordLead, markEmail } from '@/lib/leads'
+import { recordLead, markEmail, normalizeAttribution } from '@/lib/leads'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
   try {
     const body = await req.json()
-    const { nombre, email, telefono, interes, mensaje, subscribe } = body
+    const { nombre, email, telefono, interes, mensaje, subscribe, attribution } = body
 
     if (!nombre || !email) {
       return NextResponse.json({ error: 'Faltan campos obligatorios' }, { status: 400 })
@@ -26,6 +26,9 @@ export async function POST(req: Request) {
         interes: interes ?? null,
         mensaje: mensaje ?? null,
         subscribe: !!subscribe,
+        // First-touch attribution from the browser. Absent for anyone with
+        // storage blocked, which stores cleanly as nulls rather than failing.
+        ...normalizeAttribution(attribution),
       })
       leadId = lead.id
     } catch (dbError) {

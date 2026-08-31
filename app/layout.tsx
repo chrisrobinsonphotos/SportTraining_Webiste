@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import CookieConsent from "@/components/CookieConsent";
+import AttributionCapture from "@/components/AttributionCapture";
 
 const barlow = Barlow_Condensed({
   weight: ["400", "600", "700", "800", "900"],
@@ -403,6 +404,7 @@ export default function RootLayout({
           `}
         </Script>
         <CookieConsent />
+        <AttributionCapture />
       </body>
     </html>
   );

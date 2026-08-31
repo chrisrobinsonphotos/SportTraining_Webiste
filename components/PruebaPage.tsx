@@ -3,9 +3,13 @@
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
+import { getAttribution } from '@/lib/attribution'
 
+// Origin token in the pre-filled message — see components/ContactModal.tsx for
+// why it is a trailing parenthetical rather than anything more machine-shaped.
 const WA_NUMBER = '34622443495'
-const WA_MESSAGE = 'Hola Sport Training. Quiero pedir mi día de prueba.'
+const WA_ORIGIN = 'web-prueba'
+const WA_MESSAGE = `Hola Sport Training. Quiero pedir mi día de prueba. (${WA_ORIGIN})`
 const WA_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`
 
 const brandEase = [0.16, 1, 0.3, 1] as const
@@ -99,7 +103,9 @@ export default function PruebaPage() {
       const res = await fetch('/api/prueba', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, canal: 'form' }),
+        // Attribution is the session's FIRST touch, which for this page is
+        // usually the ad or profile link that landed the person on /prueba.
+        body: JSON.stringify({ ...form, canal: 'form', attribution: getAttribution() }),
       })
 
       if (res.ok) {

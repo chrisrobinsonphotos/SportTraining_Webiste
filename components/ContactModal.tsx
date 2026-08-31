@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { getAttribution } from '@/lib/attribution'
 
 const GOALS = ['HYROX', 'Funcional', 'Personal', 'Adaptado'] as const
 type Goal = (typeof GOALS)[number]
@@ -13,10 +14,36 @@ type ModalVariant = 'training' | 'nutrition'
 
 const WA_NUMBER = '34622443495'
 
+/**
+ * Origin token, carried in the pre-filled WhatsApp message.
+ *
+ * A wa.me chat arrives with no indication of where the person came from, so
+ * an Instagram enquiry and a Business Profile one look identical in the
+ * inbox. The token sits in the message the person sends, which is the only
+ * channel WhatsApp gives us.
+ *
+ * It has to survive being read by a human: this is a real message from a real
+ * person, and it must not read as a tracking code with a greeting attached.
+ * Hence a short parenthetical at the end of an otherwise natural sentence —
+ * the same shape as a reference number, which people already expect to see.
+ */
+const WA_ORIGIN: Record<ModalVariant, string> = {
+  training: 'web-modal',
+  nutrition: 'web-nutricion',
+}
+
 function buildWhatsAppUrl(name: string, phone: string, goal: string, variant: ModalVariant) {
   const msg = variant === 'nutrition'
-    ? `Hola Sport Training, soy ${name} (tel: ${phone}). Me interesa ${goal} y quiero pedir una consulta nutricional.`
-    : `Hola Sport Training, soy ${name} (tel: ${phone}). Me interesa ${goal} y quiero pedir mi día de prueba.`
+    ? `Hola Sport Training, soy ${name} (tel: ${phone}). Me interesa ${goal} y quiero pedir una consulta nutricional. (${WA_ORIGIN.nutrition})`
+    : `Hola Sport Training, soy ${name} (tel: ${phone}). Me interesa ${goal} y quiero pedir mi día de prueba. (${WA_ORIGIN.training})`
+  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`
+}
+
+/** The fallback button, used before anyone has typed a name or a phone number. */
+function fallbackWhatsAppUrl(variant: ModalVariant) {
+  const msg = variant === 'nutrition'
+    ? `Hola Sport Training, quiero información sobre la consulta nutricional. (${WA_ORIGIN.nutrition})`
+    : `Hola Sport Training, quiero información sobre el día de prueba. (${WA_ORIGIN.training})`
   return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`
 }
 
@@ -33,7 +60,15 @@ async function captureLead(name: string, phone: string, goal: string, variant: M
     const res = await fetch('/api/prueba', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombre: name, telefono: phone, interes: goal, canal: variant === 'nutrition' ? 'modal-nutricion' : 'modal' }),
+      body: JSON.stringify({
+        nombre: name,
+        telefono: phone,
+        interes: goal,
+        canal: variant === 'nutrition' ? 'modal-nutricion' : 'modal',
+        // First touch of this session, not this page: someone who arrived from
+        // Instagram and opened the modal three pages later is still Instagram.
+        attribution: getAttribution(),
+      }),
       keepalive: true,
     })
     return res.ok
@@ -463,7 +498,7 @@ export default function ContactModal() {
 
                     {/* WhatsApp button */}
                     <a
-                      href={`https://wa.me/${WA_NUMBER}`}
+                      href={fallbackWhatsAppUrl(variant)}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => {

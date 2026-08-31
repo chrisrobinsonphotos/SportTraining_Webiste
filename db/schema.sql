@@ -49,3 +49,39 @@ create table if not exists leads (
 create index if not exists leads_created_at_idx on leads (created_at desc);
 create index if not exists leads_status_idx     on leads (status);
 create index if not exists leads_telefono_idx   on leads (telefono);
+
+-- ---------------------------------------------------------------------------
+-- Attribution — added 2026-08-30.
+--
+-- `canal` answers "which control did they use" (modal, página, nutrición).
+-- These answer a different question: "where did this person come from" —
+-- Business Profile, Instagram, an ad, organic search. Both are useful and
+-- neither substitutes for the other, so canal is untouched.
+--
+-- Captured FIRST-touch on the client and held for the browser session, so a
+-- visitor who lands on /prueba from Instagram, reads three pages and then
+-- submits the modal is still credited to Instagram. Last-touch would credit
+-- the internal page they happened to be on.
+--
+-- Every column is nullable: direct traffic genuinely has no utm and no
+-- referrer, and a null there is a fact, not a gap.
+--
+-- `add column if not exists` keeps this file re-runnable as a whole.
+-- ---------------------------------------------------------------------------
+
+alter table leads add column if not exists utm_source   text;
+alter table leads add column if not exists utm_medium   text;
+alter table leads add column if not exists utm_campaign text;
+alter table leads add column if not exists utm_content  text;
+
+-- Full referring URL as the browser reported it; same-origin referrers are
+-- dropped client-side, so a value here always means an external source.
+alter table leads add column if not exists referrer     text;
+
+-- First page of the session, path + query. Not the page they submitted from.
+alter table leads add column if not exists landing_page text;
+
+create index if not exists leads_utm_source_idx   on leads (utm_source);
+
+-- Response-time reporting reads contacted_at across the whole table.
+create index if not exists leads_contacted_at_idx on leads (contacted_at);

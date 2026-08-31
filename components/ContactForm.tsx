@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { getAttribution } from '@/lib/attribution'
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -46,7 +47,9 @@ export default function ContactForm() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        // First touch of the session, so a visitor who arrived from the
+        // Business Profile and wandered to /contacto is still credited there.
+        body: JSON.stringify({ ...form, attribution: getAttribution() }),
       })
 
       if (res.ok) {
