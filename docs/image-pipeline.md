@@ -15,10 +15,20 @@ Last updated: 2026-05-08
 | JPEG quality | **90** |
 | Output sharpen | **Unsharp mask, radius 0.8, amount 90%, threshold 3** — applied *after* the resize |
 | Progressive | Yes |
-| Camera master | Kept beside it as `<name>_orig.jpg` |
+| Camera master | **Moved out of this repo** to `photography/web-masters/<name>.jpg` in the workstation |
 
 Typical result: a 25–40 MB camera file lands at **1.3–2.3 MB**, a 92–96% reduction, with no visible
 softening at normal viewing distance.
+
+**Masters do not live in this repository.** Anything committed to `public/` is in the git history
+permanently — 120 MB of camera masters would be 120 MB nobody can ever remove without a force-push.
+Optimise into `public/`, put the master in `photography/web-masters/`, and let `.gitignore`'s
+`public/*_orig.jpg` rule catch anything that slips.
+
+*Four `_orig` files remain tracked here — `hyrox-group`, `hyrox-medball`, `hyrox-women`,
+`mas-que-un-gimnasio`, about 106 MB. They predate this rule and are already in history, so removing
+them from the working tree saves checkout and deploy size but not repository size. `.gitignore` does
+not untrack files that are already tracked.*
 
 ```python
 from PIL import Image, ImageFilter
@@ -53,8 +63,8 @@ enough pixels to work from — not to be small for its own sake.
 | `hyrox-effort.jpg` | 5366 × 8044 · 25.5 MB | 2668 × 4000 · 1.34 MB |
 | `cta-group.jpg` | 7112 × 4000 · 23.8 MB | 4000 × 2250 · 1.98 MB |
 
-**120 MB → 7.1 MB.** All four masters retained as `_orig`. Component references unchanged — the
-filenames the app imports did not move.
+**120 MB → 7.1 MB.** Committed as `faee7ef`. The four masters were kept out of the commit and moved
+to `photography/web-masters/`. Component references unchanged — the filenames the app imports did not move.
 
 ### Still outstanding in /public
 

@@ -49,3 +49,7 @@ public/SportTraining-Brochure*.pdf
 public/RelayDay_Mayo_26*/
 "public/RelayDay_Mayo_26'/"
 public/relay-may-26/Miguel*/
+
+# Camera masters never belong in the web repo — they live in photography/web-masters/.
+# The four still tracked here predate this rule (see docs/image-pipeline.md).
+public/*_orig.jpg
