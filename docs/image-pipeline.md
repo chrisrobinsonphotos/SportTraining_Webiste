@@ -4,30 +4,66 @@ Last updated: 2026-05-08
 
 ---
 
-## Current state — what needs fixing
+## The spec — follow this for every image entering /public
 
-Several source images in `/public` are raw camera JPEGs at 24–40 MB each. Next.js serves these through the `<Image>` component with on-the-fly optimisation (WebP conversion, resizing), but the source files are still massive. This affects:
+*Revised 1 Sept 2026 after the four remaining raw camera files were processed. The earlier
+"under 500 KB" target is superseded — see **Why 500 KB was wrong** below.*
 
-- **Build time** on Vercel — large files slow the build
-- **Vercel bandwidth** — every unique size/quality combo is generated and cached on first hit
-- **Cold-start latency** — uncached images take noticeably longer on first load
-- **Repository size** — 870 MB in `public/` is too heavy for a Git-tracked web project
+| Setting | Value |
+|---|---|
+| Long edge | **4000 px** |
+| JPEG quality | **90** |
+| Output sharpen | **Unsharp mask, radius 0.8, amount 90%, threshold 3** — applied *after* the resize |
+| Progressive | Yes |
+| Camera master | Kept beside it as `<name>_orig.jpg` |
 
-**Worst offenders (confirm before next deploy):**
+Typical result: a 25–40 MB camera file lands at **1.3–2.3 MB**, a 92–96% reduction, with no visible
+softening at normal viewing distance.
 
-| File | Current size | Problem |
+```python
+from PIL import Image, ImageFilter
+im = Image.open(orig).convert("RGB")
+s  = 4000 / max(im.size)
+r  = im.resize((round(im.width*s), round(im.height*s)), Image.LANCZOS)
+r  = r.filter(ImageFilter.UnsharpMask(0.8, 90, 3))
+r.save(dest, "JPEG", quality=90, optimize=True, progressive=True)
+```
+
+### Why 500 KB was wrong
+
+The original target was 500 KB, which for these images means roughly 2400 px on the long edge. It was
+tried and **rejected on inspection — visibly soft.** Two reasons the old spec produced that:
+
+1. **The softness comes from resampling, not compression.** Going from 5464 px to 1601 px is a 3.4×
+   reduction; raising JPEG quality cannot restore detail the resampler discarded. Only keeping more
+   pixels does.
+2. **The spec had no sharpening step.** Every downscale softens an image — sharpening afterwards is
+   standard practice, not an enhancement. Without it, even a generous resize looks mushy.
+
+A 2.3 MB source is still a 94% reduction and is not a meaningful build or bandwidth cost, because
+`next/image` re-encodes and resizes for delivery anyway. The source exists to give the optimiser
+enough pixels to work from — not to be small for its own sake.
+
+## Applied 1 Sept 2026
+
+| File | Before | After |
 |---|---|---|
-| `flash-3.jpg` | 40 MB | Raw camera JPEG — resize + compress |
-| `hyrox-coaching.jpg` | 39 MB | Raw camera JPEG — resize + compress |
-| `hyrox-team.jpg` | 36 MB | Raw camera JPEG — resize + compress |
-| `flash-1.jpg` / `flash-7.jpg` | 36 / 34 MB | Raw camera JPEG — resize + compress |
-| `hyrox-community.jpg` | 33 MB | Raw camera JPEG — resize + compress |
-| `mas-que-un-gimnasio.jpg` | 29 MB | Raw camera JPEG — resize + compress |
-| *(multiple others 23–31 MB)* | — | Same |
+| `hyrox-coaching.jpg` | 5464 × 8192 · 38.5 MB | 2668 × 4000 · 2.30 MB |
+| `hyrox-community.jpg` | 5375 × 8059 · 32.3 MB | 2668 × 4000 · 1.44 MB |
+| `hyrox-effort.jpg` | 5366 × 8044 · 25.5 MB | 2668 × 4000 · 1.34 MB |
+| `cta-group.jpg` | 7112 × 4000 · 23.8 MB | 4000 × 2250 · 1.98 MB |
 
-Target: **all source files in `public/` under 500 KB** before Next.js optimisation runs.
+**120 MB → 7.1 MB.** All four masters retained as `_orig`. Component references unchanged — the
+filenames the app imports did not move.
 
----
+### Still outstanding in /public
+
+- `flash-1.jpg` … `flash-7.jpg` — 215 MB, committed, and **referenced by nothing**. The root
+  `CLAUDE.md` lists them as "Marquee / gallery" but `components/Marquee.tsx` does not use them.
+  Establish whether they are wanted before optimising or removing.
+- `hyrox-team.jpg` (35 MB), `hyrox-bw.jpg` (9.6 MB) — committed, unreferenced.
+- The eight `_orig` masters total ~226 MB. They are working as designed, but a web repository is
+  arguably the wrong home for camera masters — `photography/` in the workstation holds the rest.
 
 ## How image optimisation works in this project
 
