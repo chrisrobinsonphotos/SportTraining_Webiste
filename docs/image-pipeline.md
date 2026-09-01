@@ -66,14 +66,25 @@ enough pixels to work from — not to be small for its own sake.
 **120 MB → 7.1 MB.** Committed as `faee7ef`. The four masters were kept out of the commit and moved
 to `photography/web-masters/`. Component references unchanged — the filenames the app imports did not move.
 
-### Still outstanding in /public
+### Unused assets cleared, 1 Sept 2026
 
-- `flash-1.jpg` … `flash-7.jpg` — 215 MB, committed, and **referenced by nothing**. The root
-  `CLAUDE.md` lists them as "Marquee / gallery" but `components/Marquee.tsx` does not use them.
-  Establish whether they are wanted before optimising or removing.
-- `hyrox-team.jpg` (35 MB), `hyrox-bw.jpg` (9.6 MB) — committed, unreferenced.
-- The eight `_orig` masters total ~226 MB. They are working as designed, but a web repository is
-  arguably the wrong home for camera masters — `photography/` in the workstation holds the rest.
+Every file in `public/` over 1 MB was checked against `app/`, `components/`, `lib/` and `data/`.
+**22 files totalling 423 MB were referenced by nothing** and were moved to the workstation:
+
+- `flash-1` … `flash-7` (222 MB) — used by a homepage flash strip that was deliberately removed in
+  `db51e75` (27 May 2026); the images were never cleaned up.
+- `hyrox-team`, `hyrox-event`, `hyrox-bw` (75 MB) — raw camera files, never wired into a component.
+- Six `gym-*` interiors, `ropa.png`, `portrait-miguel.jpg` (19 MB) — web-sized, unused.
+- All eight `_orig` masters (~226 MB) — now in `photography/web-masters/`.
+
+Unused images live in `photography/web-unused/`, masters in `photography/web-masters/`. Both have
+READMEs. **`public/` went from 990 MB to 169 MB across this session**, and the images the site
+actually serves now total about 29 MB.
+
+Two stale claims in the root `CLAUDE.md` asset table were found in the process and should be
+corrected there: `flash-1 … flash-7` are listed as "Marquee / gallery" (the marquee is text-only and
+never used them), and `portrait-miguel.jpg` is listed for trainer cards (those use
+`trainer-miguel.jpg`).
 
 ## How image optimisation works in this project
 
