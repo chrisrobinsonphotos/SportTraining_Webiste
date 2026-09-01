@@ -95,32 +95,69 @@ Always check these before hardcoding any content into components.
 
 ## Image Assets (`public/`)
 
-**Core brand images — used in components:**
-| File | Used in |
-|---|---|
-| `logo-transparent.png` | Navbar, Footer |
-| `st-logo-black.png` | Light-bg contexts |
-| `og-image.jpg` | OG share image (1200×630, placeholder) |
-| `portrait-jr.jpg`, `portrait-miguel.jpg` | Trainer cards |
-| `jr-hyrox-win.jpg`, `jr-skierg.jpg`, `jr-sled.jpg`, `jr-wallball.jpg` | Hero / training sections |
-| `trainer-maria.jpg`, `trainer-miguel.jpg` | Trainer section |
-| `coaching-personal.jpg` | Modalities card |
-| `cta-community.jpg`, `cta-group.jpg` | CTA section backgrounds |
-| `funcional-wallball.jpg` | Training / modalities |
-| `mas-que-un-gimnasio.jpg` | Philosophy / community |
-| `nutrition-food.jpg`, `nutrition-supplements.jpg`, `nutrition-textil.jpg` | Nutrition section |
-| `avatar-1.jpg` … `avatar-6.jpg` | Reviews avatars |
-| `flash-1.jpg` … `flash-7.jpg` | Marquee / gallery |
-| `hyrox-team.jpg`, `hyrox-women.jpg` | HYROX sections |
+*This table was regenerated from the codebase on 1 Sept 2026. The previous one had nine stale rows —
+it listed files that had been deleted, and files that no component had ever used. Regenerate it
+rather than editing by hand; anything not listed here is not referenced.*
 
-**Event photography (not used in main UI):**
-- `_MG_*.jpg` — raw event photos (bulk)
-- `relay-may-26/` — Relay Race May 2026 event
-- `RelayDay_Mayo_26'/` — same event, alternate folder
+| File | Size | Used by |
+|---|---|---|
+| `coaching-personal.jpg` | 476 KB | Modalities |
+| `cta-community.jpg` | 798 KB | CTASection, NutricionPlanificacion |
+| `cta-group.jpg` | 2033 KB | PruebaPage |
+| `fitnova-logo.svg` | 19 KB | AppBadges |
+| `funcional-wallball.jpg` | 725 KB | EntrenamientoFuncional |
+| `funcional.jpg` | 725 KB | Training |
+| `google62b3d7dd09808aac.html` | 0 KB | crawler / framework, not referenced in code |
+| `group-training.jpg` | 500 KB | Modalities, NutricionAlimentacion |
+| `gym-crossfit.jpg` | 2513 KB | disciplines |
+| `gym-functional.jpg` | 2632 KB | EntrenamientoFuncional, disciplines |
+| `gym-rig.jpg` | 2785 KB | EntrenamientoFuncional |
+| `gym-wide.jpg` | 2665 KB | Adaptado, EntrenamientoFuncional, Modalities |
+| `hero-gym.jpg` | 669 KB | Hero |
+| `hyrox/` | 7 files | CTASection, Community, EntrenamientoHyrox, NutricionAlimentacion, NutricionSuplementacion, Schedule, StatementSection, Training, disciplines, page, schedule |
+| `hyrox-coaching.jpg` | 2358 KB | EntrenamientoHyrox, disciplines |
+| `hyrox-community.jpg` | 1473 KB | NutricionAlimentacion |
+| `hyrox-effort.jpg` | 1369 KB | EntrenamientoHyrox, StatementSection |
+| `hyrox-group.jpg` | 924 KB | Community, EntrenamientoHyrox, Schedule |
+| `hyrox-medball.jpg` | 533 KB | Community, NutricionSuplementacion, disciplines |
+| `hyrox-sled.jpg` | 357 KB | Training |
+| `hyrox-women.jpg` | 692 KB | Community |
+| `icon-192.png` | 7 KB | manifest |
+| `icon-512.png` | 24 KB | manifest |
+| `jr-skierg.jpg` | 430 KB | EntrenamientoHyrox |
+| `mas-que-un-gimnasio.jpg` | 669 KB | Community |
+| `nutrition-food.jpg` | 337 KB | NutricionAlimentacion, Nutrition |
+| `nutrition-supplements.jpg` | 158 KB | NutricionSuplementacion, Nutrition |
+| `nutrition-textil.jpg` | 184 KB | NutricionPlanificacion, Nutrition |
+| `og-image.jpg` | 134 KB | layout |
+| `portrait-jr.jpg` | 2124 KB | Philosophy |
+| `qr-hyrox-grupo.png` | 28 KB | CTASection |
+| `relay-jun-26/` | 74 files | Community |
+| `relay-may-26/` | 114 files | Community |
+| `st-logo-black.png` | 168 KB | layout |
+| `st-logo-new.png` | 178 KB | AccesoGate, Footer, Navbar |
+| `tienda/` | 5 files | AccesoGate, CartDrawer, Navbar, PackCard, PackDetail, ProductCard, ProductFicha, cart-context, layout, page, products, route, sitemap |
+| `trainer-dani.jpg` | 1759 KB | trainers |
+| `trainer-jr.jpg` | 2124 KB | Trainers, trainers |
+| `trainer-maria.jpg` | 1429 KB | Trainers, trainers |
+| `trainer-miguel.jpg` | 1777 KB | Philosophy, Trainers, trainers |
+| `trainer-pablo.jpg` | 1759 KB | Trainers |
+| `_MG_*.jpg` ×43 | 16 MB | Community — the "Archivo Sport Training" gallery (2024–2025). All 43 are referenced individually |
 
-**Documents:**
-- `SportTraining-Brochure-HQ.pdf` / `_compressed.pdf` — membership brochure
-- `google62b3d7dd09808aac.html` — Google Search Console verification (do not remove)
+**Rules for this folder**
+
+- Every file here ships in every deployment. If nothing references it, it does not belong.
+- New images follow `docs/image-pipeline.md` — 4000 px long edge, quality 90, unsharp 0.8/90/3.
+- **Camera masters never go in here.** They live in the workstation at `photography/web-masters/`.
+  `.gitignore` blocks `public/*_orig.jpg` as a backstop.
+- `google62b3d7dd09808aac.html` is Google Search Console verification — fetched directly by Google,
+  referenced by nothing. **Do not remove.** The same applies to the icons and `og-image.jpg`.
+
+**Cleared 1 Sept 2026** — `public/` went from 990 MB to 143 MB across two commits. 423 MB of
+unreferenced assets and every camera master moved to `photography/`; unused images are in
+`photography/web-unused/` with a README. The `flash-1` … `flash-7` set, previously listed here as
+"Marquee / gallery", was orphaned by commit `db51e75` (27 May 2026) which removed the flash strip —
+`components/Marquee.tsx` is a text marquee and never used images at all.
 
 ---
 
