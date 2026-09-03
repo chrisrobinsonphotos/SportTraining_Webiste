@@ -252,3 +252,59 @@ it now back-dates the first stamp by three hours so it actually bites.
   them.
 - `/privacidad` does not yet mention web-form enquiries or a retention period.
   It should, now that personal data is being stored rather than passed through.
+
+---
+
+## The inbox — `/lead/bandeja`
+
+**Added:** 2026-09-03
+**Files:** `app/lead/bandeja/page.tsx`, `components/LeadInbox.tsx`, `lib/gates.ts`, `INBOX_LEADS` in `lib/leads-sql.ts`
+
+### Why it exists
+
+The Daily Surface dashboard is a published Claude artifact, and a published
+artifact is sandboxed: it cannot make a network request to this site. Marking
+an enquiry answered there is therefore only ever an *intention*, which a
+nightly job carries across. On this page the button and the database are on the
+same side of the wall, so the lead moves the moment someone presses it.
+
+It is also the honest history Chris asked for: every row says which website
+form the person used and where they came from, so "they came in through the
+web" is visible on the record rather than inferred.
+
+### How it is protected
+
+A password gate (`lib/gates.ts`, applied by `middleware.ts`) with its **own**
+password and cookie, separate from the store gate. The page is `force-dynamic`
+and `noindex, nofollow, nocache` — it shows real names, phone numbers and
+messages, so no part of it may be cached, crawled, or served stale.
+
+**No write credential reaches the browser.** `LEADS_DIGEST_TOKEN` stays on the
+server. Each button carries a token signed by `LEAD_ACTION_SECRET` naming ONE
+lead and ONE target status, minted per request — the same mechanism the digest
+email uses. The worst a leaked page can do is what the page already shows.
+
+If `LEAD_ACTION_SECRET` is missing the list still renders (the phone numbers
+are the point and they still work) and the page says why the buttons are gone,
+rather than shipping controls that fail silently.
+
+### The ordering rule
+
+`INBOX_LEADS` sorts unworked leads first, and within them **oldest first** —
+the queue is worked from the front, so the eleven-day-old enquiry is the one
+the page puts in front of you. Everything already worked sorts newest first,
+because that half is history.
+
+Unworked-first is also what makes the 500-row cap safe: if it ever bites it
+discards the oldest *closed* lead, never someone still waiting. A plain
+`created_at desc` with a limit would drop the most-neglected enquiries off the
+bottom of the page — which is precisely the bug the monitoring side shipped and
+had to fix.
+
+### Tests
+
+`node scripts/test-leads.mjs` runs `INBOX_LEADS` against real Postgres (PGlite),
+including the ordering guarantees and the cap-safety property.
+`node scripts/test-gates.mjs` covers what each gate protects, what it
+deliberately does not, and that a destination from the query string cannot
+redirect off-site or cross from one gate into the other.

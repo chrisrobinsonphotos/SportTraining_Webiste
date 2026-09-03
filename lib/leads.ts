@@ -13,6 +13,7 @@ import {
   STATUS_COUNTS,
   STATUS_COUNTS_WINDOW,
   ATTRIBUTION_BREAKDOWN,
+  INBOX_LEADS,
 } from './leads-sql'
 
 /**
@@ -208,6 +209,21 @@ export async function getAttributionBreakdown(days = 30) {
     n: number
     contactados: number
   }[]
+}
+
+/**
+ * The inbox list: the queue to work, plus everything already worked.
+ *
+ * The cap is a bound on the page, not a view of the business — and because
+ * INBOX_LEADS sorts unworked leads first, hitting it drops the oldest CLOSED
+ * lead rather than hiding someone still waiting. The page says so when the
+ * cap is reached rather than silently showing a shorter list; a monitor that
+ * truncated quietly is exactly how nine waiting enquiries went unseen.
+ */
+export const INBOX_LIMIT = 500
+
+export async function getInboxLeads(limit = INBOX_LIMIT) {
+  return (await db().query(INBOX_LEADS, [limit])) as Record<string, unknown>[]
 }
 
 /**
