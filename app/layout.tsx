@@ -146,7 +146,7 @@ export default function RootLayout({
                   logo: `${SITE_URL}/st-logo-black.png`,
                   image: `${SITE_URL}/og-image.jpg`,
                   description: SITE_DESCRIPTION,
-                  telephone: "+34647797693",
+                  telephone: "+34622443495",
                   email: "info@sporttraining.es",
                   foundingDate: "2007",
                   priceRange: "€30–€450",
