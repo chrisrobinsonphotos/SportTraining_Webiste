@@ -284,5 +284,51 @@ check('ATTRIBUTION_BREAKDOWN reports how many of each source were worked',
   by.instagram?.contactados === 2 && by.directo?.contactados === 0,
   JSON.stringify(attrRows.rows))
 
+console.log('\ninbox list')
+const inbox = (await db.query(Q.INBOX_LEADS, [500])).rows
+const total = (await db.query(`select count(*)::int as n from leads`)).rows[0].n
+check('INBOX_LEADS returns the worked and the unworked together',
+  inbox.length === total, `${inbox.length} of ${total}`)
+
+// The ordering is the whole safety property: a lead still waiting for a reply
+// must never be the row a limit throws away.
+const firstNonNew = inbox.findIndex(r => r.status !== 'new')
+const lastNew = inbox.map(r => r.status).lastIndexOf('new')
+check('INBOX_LEADS puts every unworked lead above every worked one',
+  firstNonNew === -1 || lastNew < firstNonNew, `last new at ${lastNew}, first worked at ${firstNonNew}`)
+// The queue is worked from the front, so the longest wait must be the first
+// thing on the page — not buried under whatever arrived this morning.
+const news = inbox.filter(r => r.status === 'new').map(r => +new Date(r.created_at))
+check('INBOX_LEADS puts the LONGEST-waiting enquiry at the top of the queue',
+  news.every((t, i) => i === 0 || news[i - 1] <= t), JSON.stringify(news))
+// The worked half is history, and history reads backwards.
+const done = inbox.filter(r => r.status !== 'new').map(r => +new Date(r.created_at))
+check('INBOX_LEADS orders the worked half newest first',
+  done.every((t, i) => i === 0 || done[i - 1] >= t), JSON.stringify(done))
+
+// A tight limit must bite the closed history, never the queue.
+const pendingTotal = (await db.query(
+  `select count(*)::int as n from leads where status = 'new'`)).rows[0].n
+const clipped = (await db.query(Q.INBOX_LEADS, [pendingTotal])).rows
+check('a limit at exactly the queue size still returns every waiting lead',
+  clipped.length === pendingTotal && clipped.every(r => r.status === 'new'),
+  JSON.stringify(clipped.map(r => r.status)))
+
+check('INBOX_LEADS carries the phone number needed to actually answer the lead',
+  inbox.every(r => 'telefono' in r && 'nombre' in r && 'interes' in r))
+check('INBOX_LEADS carries attribution so the history says where they came from',
+  inbox.every(r => 'utm_source' in r && 'referrer' in r && 'landing_page' in r && 'source' in r))
+
+// response_hours must separate "answered fast" from "never answered".
+const answered = inbox.filter(r => r.contacted_at !== null)
+const unanswered = inbox.filter(r => r.contacted_at === null)
+check('response_hours is a number for answered leads',
+  answered.length > 0 && answered.every(r => r.response_hours !== null))
+check('response_hours is null for unanswered leads, not zero',
+  unanswered.length > 0 && unanswered.every(r => r.response_hours === null),
+  JSON.stringify(unanswered.map(r => r.response_hours)))
+check('age_days grows with how long a lead has been sitting',
+  inbox.every(r => Number(r.age_days) >= 0))
+
 console.log(failures === 0 ? '\nAll checks passed.\n' : `\n${failures} check(s) FAILED.\n`)
 process.exit(failures === 0 ? 0 : 1)

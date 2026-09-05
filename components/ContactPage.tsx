@@ -18,6 +18,20 @@ const CALL_URL = `tel:+34${PHONE}`
 const ADDRESS = 'C. Cisne, 3, 30009 Murcia'
 const MAPS_LINK = `https://maps.google.com/?q=Sport+Training+Murcia,+C.+Cisne+3,+30009+Murcia`
 
+/**
+ * These two links are the site's only remaining untracked contact touches
+ * (added 3 Sep 2026): a direct WhatsApp button and click-to-call, neither of
+ * which collects a name or phone the way the trial/nutrition modal does, so
+ * there is nothing to write to the leads table. A GA4 custom event is the
+ * right weight for "someone touched this" with no visitor data attached —
+ * same pattern already used for the modal's own trial_request/nutrition_request
+ * events. Counts land on the Daily Surface's Website traffic panel.
+ */
+function track(event: 'whatsapp_click' | 'call_click', method: string) {
+  const w = window as unknown as { gtag?: (...args: unknown[]) => void }
+  w.gtag?.('event', event, { method })
+}
+
 export default function ContactPage() {
   const heroRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -86,6 +100,7 @@ export default function ContactPage() {
               Teléfono
             </p>
             <a href={CALL_URL}
+              onClick={() => track('call_click', 'contacto')}
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
               className="block text-white text-5xl md:text-6xl lg:text-7xl uppercase leading-none mb-4 hover:text-[#F1B91E] transition-colors duration-300">
               {PHONE_DISPLAY}
@@ -110,6 +125,7 @@ export default function ContactPage() {
               WhatsApp
             </p>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
+              onClick={() => track('whatsapp_click', 'contacto_directo')}
               style={{ fontFamily: 'var(--font-barlow)', fontWeight: 900 }}
               className="block text-white text-5xl md:text-6xl lg:text-7xl uppercase leading-none mb-4 hover:text-[#F1B91E] transition-colors duration-300">
               {PHONE_DISPLAY}

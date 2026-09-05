@@ -183,3 +183,43 @@ export const ATTRIBUTION_BREAKDOWN = `
   group by 1, 2
   order by n desc, 1 asc
 `
+
+/**
+ * Everything the inbox at /lead/bandeja shows: the queue to work, plus the
+ * leads already worked, so the page doubles as the history of who came in
+ * through the website and what happened to them.
+ *
+ * The ordering is load-bearing, not cosmetic, and the two halves of the list
+ * are ordered OPPOSITE ways on purpose.
+ *
+ * Unworked leads sort first, and within them OLDEST first — the queue is
+ * worked from the front, and the person who has been waiting eleven days is
+ * the one the page must put in front of you. Sorting the queue newest-first
+ * would bury exactly the enquiries the page exists to rescue, and the stale
+ * markers in the UI would sit at the bottom where nobody scrolls.
+ *
+ * Everything already worked sorts newest first, because that half is history
+ * and history reads backwards.
+ *
+ * Unworked-first also makes the limit safe: if it ever bites it discards the
+ * oldest CLOSED lead, never someone still waiting for a reply. A plain
+ * `created_at desc` with a limit would drop the queue's most-neglected
+ * enquiries off the bottom of the page, which is the precise failure the
+ * monitoring side already shipped once.
+ *
+ * `response_hours` is null for anything unanswered, which is what lets the
+ * page distinguish "answered instantly" from "never answered" without a
+ * second query.
+ */
+export const INBOX_LEADS = `
+  select id, created_at, source, canal, nombre, telefono, email, interes, mensaje,
+         status, contacted_at, email_sent,
+         utm_source, utm_medium, utm_campaign, referrer, landing_page,
+         extract(epoch from (now() - created_at)) / 86400          as age_days,
+         extract(epoch from (contacted_at - created_at)) / 3600    as response_hours
+  from leads
+  order by (status = 'new') desc,
+           case when status = 'new' then created_at end asc,
+           created_at desc
+  limit $1::int
+`

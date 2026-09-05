@@ -452,6 +452,13 @@ export default function ContactModal() {
                       {/* Teléfono */}
                       <a
                         href="tel:+34622443495"
+                        onClick={() => {
+                          // No name/phone collected here (it's the info footer, not the
+                          // form) — see ContactPage.tsx's `track()` for why this is a
+                          // GA4 event rather than a leads-table row.
+                          const w = window as unknown as { gtag?: (...args: unknown[]) => void }
+                          w.gtag?.('event', 'call_click', { method: 'modal' })
+                        }}
                         className="flex items-center gap-4 py-3 group"
                       >
                         <span className="w-[36px] h-[36px] flex items-center justify-center border border-[rgba(241,185,30,0.3)] shrink-0">

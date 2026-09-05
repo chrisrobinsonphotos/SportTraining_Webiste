@@ -23,6 +23,9 @@ Set in `.env.local` for development and in Vercel → Project → Settings → E
 | `NEXT_PUBLIC_SITE_URL` | Canonical URLs, Stripe redirect URLs | Recommended |
 | `TIENDA_PASSWORD` | Store pre-launch gate password (`/acceso`) | Yes, while store is gated — no code fallback |
 | `TIENDA_ACCESS_TOKEN` | Opaque store access cookie value | Yes, while store is gated — no code fallback |
+| `BANDEJA_PASSWORD` | Enquiry inbox gate password (`/lead/bandeja`) | Yes — no code fallback |
+| `BANDEJA_ACCESS_TOKEN` | Opaque inbox access cookie value | Yes — no code fallback |
+| `LEAD_ACTION_SECRET` | Signs the per-lead action tokens the inbox and the digest use | Yes, to mark leads from either |
 | `STRIPE_SECRET_KEY` | Checkout (`/api/checkout`) | Yes, for store |
 | `STRIPE_WEBHOOK_SECRET` | Order webhook (`/api/stripe-webhook`) | Yes, for order emails |
 | `STRIPE_SHIPPING_RATE_CENTS` | Flat shipping rate in cents | Optional |
@@ -32,7 +35,17 @@ Set in `.env.local` for development and in Vercel → Project → Settings → E
 | `MAILERLITE_TRIAL_GROUP_ID` | Trial-day (`/prueba`) lead group | Yes, for `/prueba` |
 | `GOOGLE_PLACES_API_KEY` | Google reviews (`/api/reviews`) | Yes, for reviews section |
 
-**Store gate is fail-secure:** if `TIENDA_PASSWORD` / `TIENDA_ACCESS_TOKEN` are not set, `/tienda` is inaccessible to everyone. To open the store to the public, delete `middleware.ts`.
+**Both gates are fail-secure:** a gate whose password and token are not set is
+inaccessible to everyone rather than open to everyone. The two are separate
+credentials on purpose — the store gate hides an unreleased catalogue, the
+inbox gate hides real people's names and phone numbers, and one being shared
+with a supplier must not hand over the other. The gate table is
+`lib/gates.ts`; `middleware.ts` only applies it. To open the store to the
+public, remove the `/tienda` entry from that table.
+
+`/lead/confirmar` is deliberately NOT gated: it is opened from a link in the
+daily digest by someone who has no password, and authenticates with its own
+signed, expiring, single-lead token instead.
 
 ## Key areas
 
